@@ -1,0 +1,94 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>Bob's backgammmon game</title>
+        <meta name="backgammon game with multiple starting positions" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="manifest" href="site.webmanifest">
+        <link rel="apple-touch-icon" href="icon.png">
+        <!-- Place favicon.ico in the root directory -->
+
+        <link rel="stylesheet" href="css/normalize.css">
+        <link rel="stylesheet" href="css/backg.css">
+    </head>
+    <body>
+        <!--[if lte IE 9]>
+            <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience and security.</p>
+        <![endif]-->
+
+        <!-- Add your site or application content here -->
+<div id='boardSetup'>
+    <a href="#" onclick="setboard('backgammon');">Backgammon</a>    
+    <a href="#" onclick="setboard('nackgammon');">nackgammon</a>    
+    <a href="#" onclick="setboard('hypergammon');">hypergammon</a>    
+    <a href="#" onclick="setboard('longgammon');">longgammon</a>    
+    <a href="#" onclick="setboard('dutchgammon');">Dutchgammon</a>    
+</div>
+<div id='myboard1' style="float: left;">
+<table>
+    <tr>
+        <th rowspan=4 id='sidepanel'>
+            <h3>Variations</h3>
+    <a href="#" onclick="setboard('backgammon');">Backgammon</a>    
+<br /><a href="#" onclick="setboard('nackgammon');">nackgammon</a>    
+<br /><a href="#" onclick="setboard('hypergammon');">hypergammon</a>    
+<br /><a href="#" onclick="setboard('longgammon');">longgammon</a>    
+<br /><a href="#" onclick="setboard('dutchgammon');">Dutchgammon</a>    
+        </th>
+        <th colspan=13 id='p1kitty'></th>
+    </tr>
+    <tr>
+    <td id="01" valign="top" align="center" background="img/birt.png" ></td>
+    <td id="02" valign="top" align="center" background="img/dirt.png" ></td>
+    <td id="03" valign="top" align="center" background="img/birt.png" ></td>
+    <td id="04" valign="top" align="center" background="img/dirt.png" ></td>
+    <td id="05" valign="top" align="center" background="img/birt.png" ></td>
+    <td id="06" valign="top" align="center" background="img/dirt.png" ></td>
+        <th id="bar" rowspan=2 width="30">z</th>
+    <td id="07" valign="top" align="center" background="img/birt.png" ></td>
+    <td id="08" valign="top" align="center" background="img/dirt.png" ></td>
+    <td id="09" valign="top" align="center" background="img/birt.png" ></td>
+    <td id="10" valign="top" align="center" background="img/dirt.png" ></td>
+    <td id="11" valign="top" align="center" background="img/birt.png" ></td>
+    <td id="12" valign="top" align="center" background="img/dirt.png" ></td>
+</tr>
+<tr>
+    <td id="24" valign="bottom" align="center" background="img/trid.png" ></td>
+    <td id="23" valign="bottom" align="center" background="img/trib.png" ></td>
+    <td id="22" valign="bottom" align="center" background="img/trid.png" ></td>
+    <td id="21" valign="bottom" align="center" background="img/trib.png" ></td>
+    <td id="20" valign="bottom" align="center" background="img/trid.png" ></td>
+    <td id="19" valign="bottom" align="center" background="img/trib.png" ></td>
+    <td id="18" valign="bottom" align="center" background="img/trid.png" ></td>
+    <td id="17" valign="bottom" align="center" background="img/trib.png" ></td>
+    <td id="16" valign="bottom" align="center" background="img/trid.png" ></td>
+    <td id="15" valign="bottom" align="center" background="img/trib.png" ></td>
+    <td id="14" valign="bottom" align="center" background="img/trid.png" ></td>
+    <td id="13" valign="bottom" align="center" background="img/trib.png" ></td>
+    </td>
+</tr>
+<tr>
+    <th id="p2kitty" colspan="13"></th>
+</tr>
+</table>
+</div> <!-- id=myboard -->
+
+
+
+        <script src="js/vendor/modernizr-3.5.0.min.js"></script>
+        <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+        <script>window.jQuery || document.write('<script src="js/vendor/jquery-3.2.1.min.js"><\/script>')</script>
+        <script src="js/plugins.js"></script>
+        <script src="js/backgammon_main.js"></script>
+
+        <!-- Google Analytics: for www.rcanzlovar.com -->
+        <script>
+            window.ga=function(){ga.q.push(arguments)};ga.q=[];ga.l=+new Date;
+            ga('create','UA-12556299-2','auto');ga('send','pageview')
+        </script>
+        <script src="https://www.google-analytics.com/analytics.js" async defer></script>
+    </body>
+</html>
