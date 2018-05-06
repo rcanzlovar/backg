@@ -8,7 +8,8 @@ var br = "<br />";
 var boards = {};
 
 // traditional backgammon
-boards['backgammon']  =   { 
+boards['backgammon']  =   { 'long':'Trad Backgammon',
+'url':' http://www.bkgm.com/rules.html',
 "01":-2, "02":0, "03":0, "04":0, "05":0, "06":5, 
 "07":0, "08":3, "09":0, "10":0, "11":0, "12":-5,
 "13":5, "14":0, "15":0,"16":0, "17":-3, "18":0,
@@ -20,7 +21,8 @@ boards['backgammon']  =   {
 // -5  0  0  0 +3  0 +5  0  0  0  0 -2
 // 12 11 10 09 08 07 06 05 04 03 02 01 
 
-boards['longgammon'] =   { 
+boards['longgammon'] =   {  'long':'Trad Backgammon',
+'url':'  http://www.bkgm.com/variants/LongGammon.html',
 "01":-15, "02":0, "03":0, "04":0, "05":0, "06":0, 
 "07":0, "08":0, "09":0, "10":0, "11":0, "12":0,
 "13":0, "14":0, "15":0,"16":0, "17":0, "18":0,
@@ -32,7 +34,8 @@ boards['longgammon'] =   {
 //  0  0  0  0  0  0  0  0  0  0  0 -15
 // 12 11 10 09 08 07 06 05 04 03 02 01 
 
-boards['dutchgammon'] =   { 'kitty':15,
+boards['dutchgammon'] =   { 'kitty':15, 'long':'Dutch Backgammon',
+'url':' http',
 "01":0, "02":0, "03":0, "04":0, "05":0, "06":0, 
 "07":0, "08":0, "09":0, "10":0, "11":0, "12":0,
 "13":0, "14":0, "15":0,"16":0, "17":0, "18":0,
@@ -44,7 +47,8 @@ boards['dutchgammon'] =   { 'kitty':15,
 //  0  0  0  0  0  0  0  0  0 -1 -1 -1
 // 12 11 10 09 08 07 06 05 04 03 02 01 
 
-boards['hypergammon'] =   { 
+boards['hypergammon'] =   {  'long':'HyperBackgammon',
+'url':' http://www.bkgm.com/faq/Variants.html#what_is_hyper_backgammon',
 "01":-1, "02":-1, "03":-1, "04":0, "05":0, "06":0, 
 "07":0, "08":0, "09":0, "10":0, "11":0, "12":0,
 "13":0, "14":0, "15":0,"16":0, "17":0, "18":0,
@@ -56,7 +60,8 @@ boards['hypergammon'] =   {
 //  0  0  0  0  0  0  0  0  0 -1 -1 -1
 // 12 11 10 09 08 07 06 05 04 03 02 01 
 
-boards['nackgammon'] =   { 
+boards['nackgammon'] =   {  'long':'NackGammon',
+'url':'http://www.bkgm.com/variants/Nackgammon.html',
 "01":-2, "02":-2, "03":0, "04":0, "05":0, "06":4, 
 "07":0, "08":3, "09":0, "10":0, "11":0, "12":-4,
 "13":4, "14":0, "15":0,"16":0, "17":-3, "18":0,
@@ -69,6 +74,11 @@ boards['nackgammon'] =   {
 // 12 11 10 09 08 07 06 05 04 03 02 01 
 
 
+function makeBoardSelect () {
+    for (var i = boards.length - 1; i >= 0; i--) {
+        console.log(boards[i].long);
+    }
+}
 
 
 var makepieces = function (e)
@@ -137,15 +147,31 @@ var setboard = function (e) {
 	        document.getElementById("p2kitty").innerHTML = 
 	        	makepieces({'value': backgammonBoard["kitty"]});    
 //	        	makepieces({'value': backgammonBoard["kitty"],'wide':1 });    
-    	} else if (key == null ) {
+//    	} else if (// backgammonBoard.key == null  ||
+//             backgammonBoard.key == undefined)  {
+//            console.log('key without a home' + key);
+//            document.getElementById(key).innerHTML  
+        } else if (key == null ) {
     		console.log('null key?');
     	} else {
-//    		console.log('2key=' + key);
-	    	document.getElementById(key).innerHTML = makepieces({'value': backgammonBoard[key] });    
-    	}
+    		console.log('2key=' + key);
+            try {
+                   document.getElementById(key).innerHTML = makepieces({'value': backgammonBoard[key] });    
+            }
+            catch(err) {
+                console.log(key + ": " + err.message);
+            //     document.getElementById("demo").innerHTML = err.message;
+            }
+        }
 
     }
-    document.getElementById("p1status").innerHTML = document.getElementById("game").innerHTML;
+        try {
+                    document.getElementById("p1status").innerHTML = backgammonBoard["long"];
+            }
+            catch(err) {
+                console.log(key + ": " + err.message);
+            //     document.getElementById("demo").innerHTML = err.message;
+            }//    document.getElementById("p1status").innerHTML = document.getElementById("game").innerHTML;
 }
 
 // set up the board here. We can rotate the board and flip it by using a different one. 
@@ -354,4 +380,11 @@ layboard('board1');
 //document.getElementById("game").innerHTML = "backgammon";
 
 var backgammonBoard = boards['hypergammon'];
+  document.getElementById('01').onclick = function() {
+    console.log(this.id);
+    console.log(this);
 
+    alert(this.value);
+
+
+  }
