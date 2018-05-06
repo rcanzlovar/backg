@@ -17,6 +17,8 @@
     <body>
         <!--[if lte IE 9]>
             <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience and security.</p>
+
+    <select onclick='alert(this.value);setboard(this.valiue);'>
         <![endif]-->
 
         <!-- Add your site or application content here -->
@@ -24,16 +26,29 @@
 
 </div> <!-- id=myboard -->
 <div id='boardLayout'>
+<!--
+    <a href="#" onclick="setboard('nackgammon');">Nackgammon</a>    
+-->
+<select onchange='setboard(this.value);console.log("this value=" + this.value)'>
+  <option value="backgammon">Select</option>
+  <option value="backgammon">Backgammon</option>
+  <option value="nackgammon">Nackgammon</option>
+  <option value="hypergammon">hypergammon</option>
+  <option value="longgammon">LongGammon</option>
+  <option value="dutchgammon">Dutch Ggmmon</option>
+</select>
+<!-- 
     <a href="#" onclick="setboard('backgammon');">Backgammon</a>    
     <a href="#" onclick="setboard('nackgammon');">Nackgammon</a>    
     <a href="#" onclick="setboard('hypergammon');">HyperGammon</a>    
     <a href="#" onclick="setboard('longgammon');">LongGammon</a>    
     <a href="#" onclick="setboard('dutchgammon');">DutchGammon</a><br />    
-    <a href="#" onclick="layboard('board1');">W1!</a>    
+-->
+    <a href="#" onclick="layboard('board1');">W1</a>    
     <a href="#" onclick="layboard('board2');">W2</a>    
     <a href="#" onclick="layboard('board3');">B1</a>    
     <a href="#" onclick="layboard('board4');">B2</a>    
-    <span id='game'>backgammon<span>
+    <span id='game'><span>
 </div>
 
 
