@@ -89,9 +89,8 @@ var makepieces = function (e)
 		}
 
 		for (var i = val - 1; i >= 0; i--) {
-			if (val > 5) { console.log(returnString); }
-//			console.log('i='+i);
 
+//wide is in case we want to display the piecds in a row rather than a column
 			if (returnString.length > 0
 				&& !e.wide) {
 				returnString += br; 
@@ -330,8 +329,8 @@ var board4 =
 
 //##########
 function layboard(arrayin) {
-	var game = document.getElementById("game").value;
-		console.log('game '+game);
+	var game = document.getElementById("game").innerHTML;
+		console.log('savegame='+game);
 	if (arrayin == "board1") {
 		document.getElementById("myboard").innerHTML = board1;
 		console.log('loading board1');
@@ -352,6 +351,7 @@ function layboard(arrayin) {
 }
 
 layboard('board1');
+//document.getElementById("game").innerHTML = "backgammon";
 
 var backgammonBoard = boards['hypergammon'];
 
