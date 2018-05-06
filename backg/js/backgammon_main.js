@@ -71,8 +71,6 @@ boards['nackgammon'] =   {
 
 
 
-var backgammonBoard = boards['hypergammon'];
-
 var makepieces = function (e)
 {
 	var returnString = '';
@@ -135,57 +133,66 @@ var setboard = function (e) {
     	console.log('key=' + key);
     	if (key == 'kitty') {
 	        document.getElementById("p1kitty").innerHTML = 
-	        	makepieces({'value': -1 * backgammonBoard["kitty"],'wide':1 });    
+	        	makepieces({'value': -1 * backgammonBoard["kitty"]});    
+//	        	makepieces({'value': -1 * backgammonBoard["kitty"],'wide':1 });    
 	        document.getElementById("p2kitty").innerHTML = 
-	        	makepieces({'value': backgammonBoard["kitty"],'wide':1 });    
+	        	makepieces({'value': backgammonBoard["kitty"]});    
+//	        	makepieces({'value': backgammonBoard["kitty"],'wide':1 });    
     	} else if (key == null ) {
     		console.log('null key?');
     	} else {
     		console.log('2key=' + key);
-	    	console.log("document.getElementById(" + key + ").innerHTML = makepieces({'value': backgammonBoard[" + key + "] })");    
 	    	document.getElementById(key).innerHTML = makepieces({'value': backgammonBoard[key] });    
     	}
 
     }
 }
 
+// set up the board here. We can rotate the board and flip it by using a different one. 
+// for now just one. 
+var board1 = 
+"<table>\
+    <tr>\
+        <th rowspan=4 id='sidepanel'></th>\
+        <td rowspan=2 id='p1kitty' style='background-color: #FA0;'></td>\
+        <th colspan=13 id='p1status' style='background-color: #FA0;'>&nbsp;</th>\
+    </tr>\
+    <tr>\
+    <td id='01' valign='top' align='center' background='img/birt.png' ></td>\
+    <td id='02' valign='top' align='center' background='img/dirt.png' ></td>\
+    <td id='03' valign='top' align='center' background='img/birt.png' ></td>\
+    <td id='04' valign='top' align='center' background='img/dirt.png' ></td>\
+    <td id='05' valign='top' align='center' background='img/birt.png' ></td>\
+    <td id='06' valign='top' align='center' background='img/dirt.png' ></td>\
+        <th id='bar' rowspan=2 width='30'>e<br>m<br>p<br>t<br>y</th>\
+    <td id='07' valign='top' align='center' background='img/birt.png' ></td>\
+    <td id='08' valign='top' align='center' background='img/dirt.png' ></td>\
+    <td id='09' valign='top' align='center' background='img/birt.png' ></td>\
+    <td id='10' valign='top' align='center' background='img/dirt.png' ></td>\
+    <td id='11' valign='top' align='center' background='img/birt.png' ></td>\
+    <td id='12' valign='top' align='center' background='img/dirt.png' ></td>\
+</tr>\
+<tr>\
+        <td rowspan=2 id='p2kitty' style='background-color: #FA0;'></td>\
+    <td id='24' valign='bottom' align='center' background='img/trid.png' ></td>\
+    <td id='23' valign='bottom' align='center' background='img/trib.png' ></td>\
+    <td id='22' valign='bottom' align='center' background='img/trid.png' ></td>\
+    <td id='21' valign='bottom' align='center' background='img/trib.png' ></td>\
+    <td id='20' valign='bottom' align='center' background='img/trid.png' ></td>\
+    <td id='19' valign='bottom' align='center' background='img/trib.png' ></td>\
+    <td id='18' valign='bottom' align='center' background='img/trid.png' ></td>\
+    <td id='17' valign='bottom' align='center' background='img/trib.png' ></td>\
+    <td id='16' valign='bottom' align='center' background='img/trid.png' ></td>\
+    <td id='15' valign='bottom' align='center' background='img/trib.png' ></td>\
+    <td id='14' valign='bottom' align='center' background='img/trid.png' ></td>\
+    <td id='13' valign='bottom' align='center' background='img/trib.png' ></td>\
+    </td>\
+</tr>\
+<tr>\
+    <th id='p2status' colspan='13' style='background-color: #FA0;'>&nbsp;</th>\
+</tr>\
+</table>";
 
-//###################################################
-var oldsetboard= function(e) {
-	var backgammonBoard;
-	console.log('typeof e' + typeof e);
-	if ( typeof e == 'array' && typeof e['10'] == 'number') {
-		backgammonBoard = e;
-//	if ( typeof e == 'object' && typeof e. == 'number') {
-	} else if (typeof e == 'string') {
-		backgammonBoard = boards[e];
-	}
+document.getElementById("myboard").innerHTML = board1;
+var backgammonBoard = boards['hypergammon'];
 
-//	if ( typeof e == 'string' && typeof e.value == 'number') {
-	document.getElementById("01").innerHTML = makepieces({'value': backgammonBoard["01"] });    
-	document.getElementById("02").innerHTML = makepieces({'value': backgammonBoard["02"] });    
-	document.getElementById("03").innerHTML = makepieces({'value': backgammonBoard["03"] });    
-	document.getElementById("04").innerHTML = makepieces({'value': backgammonBoard["04"] });    
-	document.getElementById("05").innerHTML = makepieces({'value': backgammonBoard["05"] });    
-	document.getElementById("06").innerHTML = makepieces({'value': backgammonBoard["06"] });    
-	document.getElementById("07").innerHTML = makepieces({'value': backgammonBoard["07"] });    
-	document.getElementById("08").innerHTML = makepieces({'value': backgammonBoard["08"] });    
-	document.getElementById("09").innerHTML = makepieces({'value': backgammonBoard["09"] });    
-	document.getElementById("10").innerHTML = makepieces({'value': backgammonBoard["10"] });    
-	document.getElementById("11").innerHTML = makepieces({'value': backgammonBoard["11"] });    
-	document.getElementById("12").innerHTML = makepieces({'value': backgammonBoard["12"] });    
-	document.getElementById("13").innerHTML = makepieces({'value': backgammonBoard["13"] });    
-	document.getElementById("14").innerHTML = makepieces({'value': backgammonBoard["14"] });    
-	document.getElementById("15").innerHTML = makepieces({'value': backgammonBoard["15"] });    
-	document.getElementById("16").innerHTML = makepieces({'value': backgammonBoard["16"] });    
-	document.getElementById("17").innerHTML = makepieces({'value': backgammonBoard["17"] });    
-	document.getElementById("18").innerHTML = makepieces({'value': backgammonBoard["18"] });    
-	document.getElementById("19").innerHTML = makepieces({'value': backgammonBoard["19"] });    
-	document.getElementById("20").innerHTML = makepieces({'value': backgammonBoard["20"] });    
-	document.getElementById("21").innerHTML = makepieces({'value': backgammonBoard["21"] });    
-	document.getElementById("22").innerHTML = makepieces({'value': backgammonBoard["22"] });    
-	document.getElementById("23").innerHTML = makepieces({'value': backgammonBoard["23"] });    
-	document.getElementById("24").innerHTML = makepieces({'value': backgammonBoard["24"] });    
-	document.getElementById("p1kitty").innerHTML = makepieces({'value': backgammonBoard["kitty"] });    
-	document.getElementById("p2kitty").innerHTML = makepieces({'value': -1 * backgammonBoard["kitty"] });    
-}
