@@ -26,16 +26,17 @@
 
 </div> <!-- id=myboard -->
 <div id='boardLayout'>
+ move <span id='from'></span> / <span id='to'></span>
 <!--
     <a href="#" onclick="setboard('nackgammon');">Nackgammon</a>    
 -->
-<select onchange='setboard(this.value);console.log("this value=" + this.value)'>
+<select onchange='myBoard = boards[this.value]; setboard(myBoard);console.log("this value=" + this.value)'>
   <option value="backgammon">Select</option>
   <option value="backgammon">Backgammon</option>
   <option value="nackgammon">Nackgammon</option>
   <option value="hypergammon">hypergammon</option>
   <option value="longgammon">LongGammon</option>
-  <option value="dutchgammon">Dutch Ggmmon</option>
+  <option value="dutchgammon">Dutch Backgammon</option>
 </select>
 <!-- 
     <a href="#" onclick="setboard('backgammon');">Backgammon</a>    
@@ -48,7 +49,7 @@
     <a href="#" onclick="layboard('board2');">W2</a>    
     <a href="#" onclick="layboard('board3');">B1</a>    
     <a href="#" onclick="layboard('board4');">B2</a>    
-    <span id='game'><span>
+    <span id='game'></span>
 </div>
 
 
