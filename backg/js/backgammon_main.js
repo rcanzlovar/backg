@@ -191,10 +191,26 @@ var boardlayout = [];
 var board1 = 
 "<table>\
     <tr>\
-        <th rowspan=4 id='sidepanel'></th>\
-        <td rowspan=2 id='p1kitty' style='background-color: #FA0;'></td>\
+        <th rowspan=6 id='sidepanel' style='background-color: #fa0;'></th>\
+        <td rowspan=3 id='p1kitty' style='background-color: #FA0;'></td>\
         <th colspan=13 id='p1status' style='background-color: #FA0;'>&nbsp;</th>\
-        <td rowspan=4 id='rightpanel' style='background-color: #FA0;'></td>\
+        <td rowspan=6 id='rightpanel' style='background-color: #FA0;'></td>\
+        <th rowspan=6 id='sidepanel' style='background-color: #FA0;'></th>\
+    </tr>\
+    <tr style='background-color: #FA0;'>\
+    <th>01</th>\
+    <th>02</th>\
+    <th>03</th>\
+    <th>04</th>\
+    <th>05</th>\
+    <th>06</th>\
+        <th id='bar' rowspan=4 width='30'>e<br>m<br>p<br>t<br>y</th>\
+    <th>07</th>\
+    <th>08</th>\
+    <th>09</th>\
+    <th>10</th>\
+    <th>11</th>\
+    <th>12</th>\
     </tr>\
     <tr>\
     <td id='01' valign='top' align='center' background='img/t1.png'></td>\
@@ -203,7 +219,6 @@ var board1 =
     <td id='04' valign='top' align='center' background='img/t2.png'></td>\
     <td id='05' valign='top' align='center' background='img/t1.png'></td>\
     <td id='06' valign='top' align='center' background='img/t2.png'></td>\
-        <th id='bar' rowspan=2 width='30'>e<br>m<br>p<br>t<br>y</th>\
     <td id='07' valign='top' align='center' background='img/t1.png'></td>\
     <td id='08' valign='top' align='center' background='img/t2.png'></td>\
     <td id='09' valign='top' align='center' background='img/t1.png'></td>\
@@ -212,7 +227,7 @@ var board1 =
     <td id='12' valign='top' align='center' background='img/t2.png'></td>\
 </tr>\
 <tr>\
-    <td rowspan=2 id='p2kitty' style='background-color: #FA0;'></td>\
+    <td rowspan=3 id='p2kitty' style='background-color: #FA0;'></td>\
     <td id='24' valign='bottom' align='center' background='img/m2.png'></td>\
     <td id='23' valign='bottom' align='center' background='img/m1.png'></td>\
     <td id='22' valign='bottom' align='center' background='img/m2.png'></td>\
@@ -227,6 +242,20 @@ var board1 =
     <td id='13' valign='bottom' align='center' background='img/m1.png'></td>\
     </td>\
 </tr>\
+<tr style='background-color: #FA0;'>\
+    <th>24</th>\
+    <th>23</th>\
+    <th>22</th>\
+    <th>21</th>\
+    <th>20</th>\
+    <th>19</th>\
+    <th>18</th>\
+    <th>17</th>\
+    <th>16</th>\
+    <th>15</th>\
+    <th>14</th>\
+    <th>13</th>\
+</tr>\
 <tr>\
     <th id='p2status' colspan='13' style='background-color: #FA0;'>&nbsp;</th>\
 </tr>\
@@ -235,10 +264,26 @@ var board1 =
 var board2 = 
 "<table>\
     <tr>\
-        <th rowspan=4 id='sidepanel'></th>\
-        <td rowspan=2 id='p1kitty' style='background-color: #FA0;'></td>\
+        <th rowspan=6 id='sidepanel' style='background-color: #728;'></th>\
+        <td rowspan=3 id='p1kitty' style='background-color: #FA0;'></td>\
         <th colspan=13 id='p1status' style='background-color: #FA0;'>&nbsp;</th>\
-        <td rowspan=4 id='rightpanel' style='background-color: #FA0;'></td>\
+        <td rowspan=6 id='rightpanel' style='background-color: #FA0;'></td>\
+        <th rowspan=6 id='sidepanel' style='background-color: #728;'></th>\
+    </tr>\
+    <tr style='background-color: #FA0;'>\
+    <th>12</th>\
+    <th>11</th>\
+    <th>10</th>\
+    <th>09</th>\
+    <th>08</th>\
+    <th>07</th>\
+        <th id='bar' rowspan=4 width='30'>e<br>m<br>p<br>t<br>y</th>\
+    <th>06</th>\
+    <th>05</th>\
+    <th>04</th>\
+    <th>03</th>\
+    <th>02</th>\
+    <th>01</th>\
     </tr>\
     <tr>\
     <td id='12' valign='top' align='center' background='img/t1.png' ></td>\
@@ -247,7 +292,6 @@ var board2 =
     <td id='09' valign='top' align='center' background='img/t2.png' ></td>\
     <td id='08' valign='top' align='center' background='img/t1.png' ></td>\
     <td id='07' valign='top' align='center' background='img/t2.png' ></td>\
-        <th id='bar' rowspan=2 width='30'>e<br>m<br>p<br>t<br>y</th>\
     <td id='06' valign='top' align='center' background='img/t1.png' ></td>\
     <td id='05' valign='top' align='center' background='img/t2.png' ></td>\
     <td id='04' valign='top' align='center' background='img/t1.png' ></td>\
@@ -256,7 +300,7 @@ var board2 =
     <td id='01' valign='top' align='center' background='img/t2.png' ></td>\
 </tr>\
 <tr>\
-    <td rowspan=2 id='p2kitty' style='background-color: #FA0;'></td>\
+    <td rowspan=3 id='p2kitty' style='background-color: #FA0;'></td>\
     <td id='13' valign='bottom' align='center' background='img/m2.png' ></td>\
     <td id='14' valign='bottom' align='center' background='img/m1.png' ></td>\
     <td id='15' valign='bottom' align='center' background='img/m2.png' ></td>\
@@ -271,6 +315,20 @@ var board2 =
     <td id='24' valign='bottom' align='center' background='img/m1.png' ></td>\
     </td>\
 </tr>\
+<tr style='background-color: #FA0;'>\
+    <th>13</th>\
+    <th>14</th>\
+    <th>15</th>\
+    <th>16</th>\
+    <th>17</th>\
+    <th>18</th>\
+    <th>19</th>\
+    <th>20</th>\
+    <th>21</th>\
+    <th>22</th>\
+    <th>23</th>\
+    <th>24</th>\
+</tr>\
 <tr>\
     <th id='p2status' colspan='13' style='background-color: #FA0;'>&nbsp;</th>\
 </tr>\
@@ -279,89 +337,149 @@ var board2 =
 var board3 = 
 "<table>\
     <tr>\
-        <th rowspan=4 id='sidepanel'></th>\
-        <td rowspan=2 id='p1kitty' style='background-color: #FA0;'></td>\
+        <th rowspan=6 id='sidepanel'></th>\
+        <td rowspan=3 id='p1kitty' style='background-color: #FA0;'></td>\
         <th colspan=13 id='p1status' style='background-color: #FA0;'>&nbsp;</th>\
-        <td rowspan=4 id='p1kitty' style='background-color: #FA0;'></td>\
+        <td rowspan=6 id='rightpanel' style='background-color: #FA0;'></td>\
+        <th rowspan=6 id='sidepanel' style='background-color: #FA0;'></th>\
     </tr>\
-<tr>\
-    <td id='24' valign='top' align='center' background='img/t2.png' ></td>\
-    <td id='23' valign='top' align='center' background='img/t1.png' ></td>\
-    <td id='22' valign='top' align='center' background='img/t2.png' ></td>\
-    <td id='21' valign='top' align='center' background='img/t1.png' ></td>\
-    <td id='20' valign='top' align='center' background='img/t2.png' ></td>\
-    <td id='19' valign='top' align='center' background='img/t1.png' ></td>\
-        <th id='bar' rowspan=2 width='30'>e<br>m<br>p<br>t<br>y</th>\
-    <td id='18' valign='top' align='center' background='img/t2.png' ></td>\
-    <td id='17' valign='top' align='center' background='img/t1.png' ></td>\
-    <td id='16' valign='top' align='center' background='img/t2.png' ></td>\
-    <td id='15' valign='top' align='center' background='img/t1.png' ></td>\
-    <td id='14' valign='top' align='center' background='img/t2.png' ></td>\
-    <td id='13' valign='top' align='center' background='img/t1.png' ></td>\
+<tr style='background-color: #FA0;'>\
+    <th>24</th>\
+    <th>23</th>\
+    <th>22</th>\
+    <th>21</th>\
+    <th>20</th>\
+    <th>19</th>\
+        <th id='bar' rowspan=4 width='30'>e<br>m<br>p<br>t<br>y</th>\
+    <th>18</th>\
+    <th>17</th>\
+    <th>16</th>\
+    <th>15</th>\
+    <th>14</th>\
+    <th>13</th>\
+</tr>\
+    <tr>\
+    <td id='01' valign='top' align='center' background='img/t1.png'></td>\
+    <td id='02' valign='top' align='center' background='img/t2.png'></td>\
+    <td id='03' valign='top' align='center' background='img/t1.png'></td>\
+    <td id='04' valign='top' align='center' background='img/t2.png'></td>\
+    <td id='05' valign='top' align='center' background='img/t1.png'></td>\
+    <td id='06' valign='top' align='center' background='img/t2.png'></td>\
+    <td id='07' valign='top' align='center' background='img/t1.png'></td>\
+    <td id='08' valign='top' align='center' background='img/t2.png'></td>\
+    <td id='09' valign='top' align='center' background='img/t1.png'></td>\
+    <td id='10' valign='top' align='center' background='img/t2.png'></td>\
+    <td id='11' valign='top' align='center' background='img/t1.png'></td>\
+    <td id='12' valign='top' align='center' background='img/t2.png'></td>\
 </tr>\
 <tr>\
-    <td rowspan=2 id='p2kitty' style='background-color: #FA0;'></td>\
-    <td id='01' valign='bottom' align='center' background='img/m1.png' ></td>\
-    <td id='02' valign='bottom' align='center' background='img/m2.png' ></td>\
-    <td id='03' valign='bottom' align='center' background='img/m1.png' ></td>\
-    <td id='04' valign='bottom' align='center' background='img/m2.png' ></td>\
-    <td id='05' valign='bottom' align='center' background='img/m1.png' ></td>\
-    <td id='06' valign='bottom' align='center' background='img/m2.png' ></td>\
-    <td id='07' valign='bottom' align='center' background='img/m1.png' ></td>\
-    <td id='08' valign='bottom' align='center' background='img/m2.png' ></td>\
-    <td id='09' valign='bottom' align='center' background='img/m1.png' ></td>\
-    <td id='10' valign='bottom' align='center' background='img/m2.png' ></td>\
-    <td id='11' valign='bottom' align='center' background='img/m1.png' ></td>\
-    <td id='12' valign='bottom' align='center' background='img/m2.png' ></td>\
+    <td rowspan=3 id='p2kitty' style='background-color: #FA0;'></td>\
+    <td id='24' valign='bottom' align='center' background='img/m2.png'></td>\
+    <td id='23' valign='bottom' align='center' background='img/m1.png'></td>\
+    <td id='22' valign='bottom' align='center' background='img/m2.png'></td>\
+    <td id='21' valign='bottom' align='center' background='img/m1.png'></td>\
+    <td id='20' valign='bottom' align='center' background='img/m2.png'></td>\
+    <td id='19' valign='bottom' align='center' background='img/m1.png'></td>\
+    <td id='18' valign='bottom' align='center' background='img/m2.png'></td>\
+    <td id='17' valign='bottom' align='center' background='img/m1.png'></td>\
+    <td id='16' valign='bottom' align='center' background='img/m2.png'></td>\
+    <td id='15' valign='bottom' align='center' background='img/m1.png'></td>\
+    <td id='14' valign='bottom' align='center' background='img/m2.png'></td>\
+    <td id='13' valign='bottom' align='center' background='img/m1.png'></td>\
+    </td>\
+</tr>\
+<tr style='background-color: #FA0;'>\
+    <th>01</th>\
+    <th>02</th>\
+    <th>03</th>\
+    <th>04</th>\
+    <th>05</th>\
+    <th>06</th>\
+    <th>07</th>\
+    <th>08</th>\
+    <th>09</th>\
+    <th>10</th>\
+    <th>11</th>\
+    <th>12</th>\
 </tr>\
 <tr>\
     <th id='p2status' colspan='13' style='background-color: #FA0;'>&nbsp;</th>\
 </tr>\
 </table>";
-//####
+//########################################################################
 var board4 = 
 "<table>\
     <tr>\
-        <th rowspan=4 id='sidepanel'></th>\
-        <td rowspan=2 id='p1kitty' style='background-color: #FA0;'></td>\
+        <th rowspan=6 id='sidepanel' style='background-color: #728;'></th>\
+        <td rowspan=3 id='p1kitty' style='background-color: #FA0;'></td>\
         <th colspan=13 id='p1status' style='background-color: #FA0;'>&nbsp;</th>\
-        <td rowspan=4 id='rightpanel' style='background-color: #FA0;'></td>\
+        <td rowspan=6 id='rightpanel' style='background-color: #FA0;'></td>\
+        <th rowspan=6 id='sidepanel' style='background-color: #728;'></th>\
     </tr>\
-<tr>\
-    <td id='13' valign='top' align='center' background='img/t2.png' ></td>\
-    <td id='14' valign='top' align='center' background='img/t1.png' ></td>\
-    <td id='15' valign='top' align='center' background='img/t2.png' ></td>\
-    <td id='16' valign='top' align='center' background='img/t1.png' ></td>\
-    <td id='17' valign='top' align='center' background='img/t2.png' ></td>\
-    <td id='18' valign='top' align='center' background='img/t1.png' ></td>\
-        <th id='bar' rowspan=2 width='30'>e<br>m<br>p<br>t<br>y</th>\
-    <td id='19' valign='top' align='center' background='img/t2.png' ></td>\
-    <td id='20' valign='top' align='center' background='img/t1.png' ></td>\
-    <td id='21' valign='top' align='center' background='img/t2.png' ></td>\
-    <td id='22' valign='top' align='center' background='img/t1.png' ></td>\
-    <td id='23' valign='top' align='center' background='img/t2.png' ></td>\
-    <td id='24' valign='top' align='center' background='img/t1.png' ></td>\
+<tr style='background-color: #FA0;'>\
+    <th>13</td>\
+    <th>14</td>\
+    <th>15</td>\
+    <th>16</td>\
+    <th>17</td>\
+    <th>18</td>\
+        <th id='bar' rowspan=4 width='30'>e<br>m<br>p<br>t<br>y</th>\
+    <th>19</td>\
+    <th>20</td>\
+    <th>21</td>\
+    <th>22</td>\
+    <th>23</td>\
+    <th>24</td>\
 </tr>\
 <tr>\
-    <td rowspan=2 id='p2kitty' style='background-color: #FA0;'></td>\
-    <td id='12' valign='bottom' align='center' background='img/m1.png' ></td>\
-    <td id='11' valign='bottom' align='center' background='img/m2.png' ></td>\
-    <td id='10' valign='bottom' align='center' background='img/m1.png' ></td>\
-    <td id='09' valign='bottom' align='center' background='img/m2.png' ></td>\
-    <td id='08' valign='bottom' align='center' background='img/m1.png' ></td>\
-    <td id='07' valign='bottom' align='center' background='img/m2.png' ></td>\
-    <td id='06' valign='bottom' align='center' background='img/m1.png' ></td>\
-    <td id='05' valign='bottom' align='center' background='img/m2.png' ></td>\
-    <td id='04' valign='bottom' align='center' background='img/m1.png' ></td>\
-    <td id='03' valign='bottom' align='center' background='img/m2.png' ></td>\
-    <td id='02' valign='bottom' align='center' background='img/m1.png' ></td>\
-    <td id='01' valign='bottom' align='center' background='img/m2.png' ></td>\
+    <td id='12' valign='top' align='center' background='img/t1.png' ></td>\
+    <td id='11' valign='top' align='center' background='img/t2.png' ></td>\
+    <td id='10' valign='top' align='center' background='img/t1.png' ></td>\
+    <td id='09' valign='top' align='center' background='img/t2.png' ></td>\
+    <td id='08' valign='top' align='center' background='img/t1.png' ></td>\
+    <td id='07' valign='top' align='center' background='img/t2.png' ></td>\
+    <td id='06' valign='top' align='center' background='img/t1.png' ></td>\
+    <td id='05' valign='top' align='center' background='img/t2.png' ></td>\
+    <td id='04' valign='top' align='center' background='img/t1.png' ></td>\
+    <td id='03' valign='top' align='center' background='img/t2.png' ></td>\
+    <td id='02' valign='top' align='center' background='img/t1.png' ></td>\
+    <td id='01' valign='top' align='center' background='img/t2.png' ></td>\
+</tr>\
+<tr>\
+    <td rowspan=3 id='p2kitty' style='background-color: #FA0;'></td>\
+    <td id='13' valign='bottom' align='center' background='img/m2.png' ></td>\
+    <td id='14' valign='bottom' align='center' background='img/m1.png' ></td>\
+    <td id='15' valign='bottom' align='center' background='img/m2.png' ></td>\
+    <td id='16' valign='bottom' align='center' background='img/m1.png' ></td>\
+    <td id='17' valign='bottom' align='center' background='img/m2.png' ></td>\
+    <td id='18' valign='bottom' align='center' background='img/m1.png' ></td>\
+    <td id='19' valign='bottom' align='center' background='img/m2.png' ></td>\
+    <td id='20' valign='bottom' align='center' background='img/m1.png' ></td>\
+    <td id='21' valign='bottom' align='center' background='img/m2.png' ></td>\
+    <td id='22' valign='bottom' align='center' background='img/m1.png' ></td>\
+    <td id='23' valign='bottom' align='center' background='img/m2.png' ></td>\
+    <td id='24' valign='bottom' align='center' background='img/m1.png' ></td>\
+</tr>\
+<tr style='background-color: #FA0;'>\
+    <th>12</td>\
+    <th>11</td>\
+    <th>10</td>\
+    <th>09</td>\
+    <th>08</td>\
+    <th>07</td>\
+    <th>06</td>\
+    <th>05</td>\
+    <th>04</td>\
+    <th>03</td>\
+    <th>02</td>\
+    <th>01</td>\
 </tr>\
 <tr>\
     <th id='p2status' colspan='13' style='background-color: #FA0;'>&nbsp;</th>\
 </tr>\
 </table>";
 //############
+
 
 //##########
 function layboard(arrayin) {
@@ -384,12 +502,21 @@ function layboard(arrayin) {
 		console.log("Board Not Found... You Shouldn't See This");
 	}
 	setboard(game ? game : 'backgammon');
+    setevents();
+}
+
+function pieceValue(e) {
+    if ( typeof e == 'number') {
+        if (e > 0) { return 1; }
+        if (e < 0) { return -1; }
+    }
 }
 
 //#############################################
 function move(e) {
 
     console.log(e);
+    console.log(e.align);
     console.log('typeof e=' + typeof e);
     console.log('typeof e.from=' + typeof e['from']);
     console.log('typeof e.to=' + typeof e['to']);
@@ -409,17 +536,17 @@ function move(e) {
         return(e.board); // and bail..
     } 
 
-    var piecevalue = 1;
-    if (e.board.from < 0) {
-        piecevalue = -1;
+    var piecevalue = pieceValue(e.board[from]);
+//    alert('piecevalue = ' + piecevalue + ' to=' + e.board[to]);
+    if (pieceValue(e.board[to]) == pieceValue(e.board[from])
+        || e.board[to] == 0) {
+        e.board[from] -= piecevalue;
+        e.board[to] += piecevalue;
     }
-    alert('piecevalue =' + piecevalue + ' to=' + e.board.to);
 
 
 
 
-    e.board[from] -= piecevalue;
-    e.board[to] += piecevalue;
 
     console.log('board.from=' + e.board[from] 
         + 'board.to=' + e.board[to]);
@@ -427,48 +554,43 @@ function move(e) {
     return e.board;
 }
 //#############################################
-layboard('board1');
-//var backgammonBoddard = boards['hypergammon'];
-//document.getElementById("game").innerHTML = "backgammon";
-myBoard = boards['backgammon'];
-setboard(myBoard);
-console.log(myBoard);
 
-alert('before=' + myBoard['06']);
-myBoard = move({'from':'08','to':'05','board':myBoard});
-myBoard = move({'from':'06','to':'05','board':myBoard});
-//var newboard = move({'from':'06','to':'11','board':myBoard});
-//alert('after=' + myBoard['06']);
-setboard(myBoard);
-
-  var moveprocessor = function() {
+var moveprocessor = function() {
     console.log(this);
+    var id = this.id;
     console.log(this.innerHTML);
     console.log("background = " + this.background);
     console.log("align = " + this.align);
     console.log("background = " + this.background);
     console.log("from is " + 
         document.getElementById("from").innerHTML);
+    // first.. if we haven't picked a piece, then the from should be
+    // blank. If the place we're grabbing is ==0, then drop out with an err. 
     if (document.getElementById("from").innerHTML == "") {
-        document.getElementById("from").innerHTML = this.id;
+        if (myBoard[id] != 0) {
+            document.getElementById("from").textContent = this.id;
+        } else {
+            alert('nothing to move');
+            return;
+        }
     } else if (document.getElementById("to").innerHTML == "") {
-        document.getElementById("to").innerHTML = this.id;
+        document.getElementById("to").textContent = this.id;
     }
     if ( document.getElementById("from").innerHTML != '' 
         && document.getElementById("to").innerHTML != '' ) {
 
-        myBoard= move({
+        setboard( move({
             'from':document.getElementById("from").innerHTML,
             'to':document.getElementById("to").innerHTML,
             'board':myBoard
-        });
+        }));
+
         document.getElementById("from").innerHTML = '';
         document.getElementById("to").innerHTML = '';
-
-
-
     }
   }
+
+function setevents() {
   document.getElementById('01').onclick =moveprocessor;
   document.getElementById('02').onclick =moveprocessor;
   document.getElementById('03').onclick =moveprocessor;
@@ -493,7 +615,34 @@ setboard(myBoard);
   document.getElementById('22').onclick =moveprocessor;
   document.getElementById('23').onclick =moveprocessor;
   document.getElementById('24').onclick =moveprocessor;
+}
 
 
+//#################################################################
+/*
+Getting stuff out of an element summary
 
+- nodeValue is a little more confusing to use, but faster than innerHTML.
+- innerHTML parses content as HTML and takes longer.
+- textContent uses straight text, does not parse HTML, and is faster.
+- innerText Takes styles into consideration. It won't get hidden text for instance.
 
+innerText didn't exist in firefox until FireFox 45 according to caniuse but is now supported in all major browsers.
+*/
+//#################################################################
+
+layboard('board1');
+//var backgammonBoddard = boards['hypergammon'];
+//document.getElementById("game").innerHTML = "backgammon";
+myBoard = boards['backgammon'];
+setboard(myBoard);
+console.log(myBoard);
+
+//myBoard = move({'from':'08','to':'05','board':myBoard});
+//myBoard = move({'from':'06','to':'05','board':myBoard});
+//var newboard = move({'from':'06','to':'11','board':myBoard});
+//alert('after=' + myBoard['06']);
+setboard(myBoard);
+
+var foo  =   document.getElementById('24');
+//alert('foo.firstelemet ' + foo.td#9.firstElement);
