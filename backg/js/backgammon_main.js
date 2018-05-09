@@ -140,29 +140,64 @@ var setboard = function (e) {
 	}
 
 // set the kitty slots to 0 in case we don't set it
-    document.getElementById("p1kitty").innerHTML = makepieces({'value':0});    
-    document.getElementById("p2kitty").innerHTML = makepieces({'value':0});    
+//    document.getElementById("k1").innerHTML = makepieces({'value':0});    
+/*
+            makestack({
+            'point':'m',
+            'stack':4,
+            'pieces':13,
+            'color':'w'
+        });
+            makestack({
+            'point':'t',
+            'stack':4,
+            'pieces':7,
+            'color':'b'
+        });
+*/
+
+ //   document.getElementById("k2").innerHTML = makepieces({'value':0});    
 
     //now we do the things... 
+            document.getElementById("k1").innerHTML = 
+                makestack({
+                    'point':'m',
+                    'stack':4,
+                    'pieces':0});
+            document.getElementById("k2").innerHTML = 
+                makestack({
+                    'point':'m',
+                    'stack':4,
+                    'pieces':0});
     for (var key  in backgammonBoard) {
 //    	console.log('value = '+ backgammonBoard[key]);
 //    	console.log('key=' + key);
 
     	//Kitty or reserve is where unplayed pieces start like in acey deucy or Dutch bacmgammon
-
         if (key == 'kitty') {
-	        document.getElementById("p1kitty").innerHTML = 
-	        	makepieces({'value': -1 * backgammonBoard["kitty"]});    
-//	        	makepieces({'value': -1 * backgammonBoard["kitty"],'wide':1 });    
-	        document.getElementById("p2kitty").innerHTML = 
-	        	makepieces({'value': backgammonBoard["kitty"]});    
+	        document.getElementById("k1").innerHTML = 
+                makestack({
+                    'point':'m',
+                    'stack':4,
+                    'pieces':backgammonBoard["kitty"]});
+	        document.getElementById("k2").innerHTML = 
+                makestack({
+                    'point':'m',
+                    'stack':4,
+                    'pieces':-1 * backgammonBoard["kitty"]});
         } else if (key == null ) {
     		console.log('ERROR null key? does this even happen?');
     	} else {
             // try to set the board pieces, and if there isn't a matching HTML element, print a warning
 //    		console.log('2key=' + key);
             try {
-                   document.getElementById(key).innerHTML = makepieces({'value': backgammonBoard[key] });    
+//                makepieces({'value': backgammonBoard[key] });    
+                document.getElementById(key).innerHTML = 
+                makestack({
+                    'point':'m',
+                    'stack':4,
+                    'pieces':backgammonBoard[key]});
+//                });
             }
             catch(err) {
                 console.log("WARN: " + key + " " + err.message);
@@ -171,7 +206,7 @@ var setboard = function (e) {
 
     }
     try {
-        document.getElementById("p2status").innerHTML = "<a href='" + backgammonBoard["url"] + "' target='_blank'>About</a>";
+        document.getElementById("p1status").innerHTML += "<a href='" + backgammonBoard["url"] + "' target='_blank'>About</a>";
     }
     catch(err) {
         console.log(key + ": " + err.message);
@@ -192,7 +227,7 @@ var board1 =
 "<table>\
     <tr>\
         <th rowspan=6 id='sidepanel' style='background-color: #fa0;'></th>\
-        <td rowspan=3 id='p1kitty' style='background-color: #FA0;'></td>\
+        <td rowspan=3 id='k1' style='background-color: #FA0;'></td>\
         <th colspan=13 id='p1status' style='background-color: #FA0;'>&nbsp;</th>\
         <td rowspan=6 id='rightpanel' style='background-color: #FA0;'></td>\
         <th rowspan=6 id='sidepanel' style='background-color: #FA0;'></th>\
@@ -227,7 +262,7 @@ var board1 =
     <td id='12' valign='top' align='center' background='img/t2.png'></td>\
 </tr>\
 <tr>\
-    <td rowspan=3 id='p2kitty' style='background-color: #FA0;'></td>\
+    <td rowspan=3 id='k2' style='background-color: #FA0;'></td>\
     <td id='24' valign='bottom' align='center' background='img/m2.png'></td>\
     <td id='23' valign='bottom' align='center' background='img/m1.png'></td>\
     <td id='22' valign='bottom' align='center' background='img/m2.png'></td>\
@@ -265,7 +300,7 @@ var board2 =
 "<table>\
     <tr>\
         <th rowspan=6 id='sidepanel' style='background-color: #728;'></th>\
-        <td rowspan=3 id='p1kitty' style='background-color: #FA0;'></td>\
+        <td rowspan=3 id='k1' style='background-color: #FA0;'></td>\
         <th colspan=13 id='p1status' style='background-color: #FA0;'>&nbsp;</th>\
         <td rowspan=6 id='rightpanel' style='background-color: #FA0;'></td>\
         <th rowspan=6 id='sidepanel' style='background-color: #728;'></th>\
@@ -300,7 +335,7 @@ var board2 =
     <td id='01' valign='top' align='center' background='img/t2.png' ></td>\
 </tr>\
 <tr>\
-    <td rowspan=3 id='p2kitty' style='background-color: #FA0;'></td>\
+    <td rowspan=3 id='k2' style='background-color: #FA0;'></td>\
     <td id='13' valign='bottom' align='center' background='img/m2.png' ></td>\
     <td id='14' valign='bottom' align='center' background='img/m1.png' ></td>\
     <td id='15' valign='bottom' align='center' background='img/m2.png' ></td>\
@@ -338,7 +373,7 @@ var board3 =
 "<table>\
     <tr>\
         <th rowspan=6 id='sidepanel'></th>\
-        <td rowspan=3 id='p1kitty' style='background-color: #FA0;'></td>\
+        <td rowspan=3 id='k1' style='background-color: #FA0;'></td>\
         <th colspan=13 id='p1status' style='background-color: #FA0;'>&nbsp;</th>\
         <td rowspan=6 id='rightpanel' style='background-color: #FA0;'></td>\
         <th rowspan=6 id='sidepanel' style='background-color: #FA0;'></th>\
@@ -373,7 +408,7 @@ var board3 =
     <td id='12' valign='top' align='center' background='img/t2.png'></td>\
 </tr>\
 <tr>\
-    <td rowspan=3 id='p2kitty' style='background-color: #FA0;'></td>\
+    <td rowspan=3 id='k2' style='background-color: #FA0;'></td>\
     <td id='24' valign='bottom' align='center' background='img/m2.png'></td>\
     <td id='23' valign='bottom' align='center' background='img/m1.png'></td>\
     <td id='22' valign='bottom' align='center' background='img/m2.png'></td>\
@@ -411,7 +446,7 @@ var board4 =
 "<table>\
     <tr>\
         <th rowspan=6 id='sidepanel' style='background-color: #728;'></th>\
-        <td rowspan=3 id='p1kitty' style='background-color: #FA0;'></td>\
+        <td rowspan=3 id='k1' style='background-color: #FA0;'></td>\
         <th colspan=13 id='p1status' style='background-color: #FA0;'>&nbsp;</th>\
         <td rowspan=6 id='rightpanel' style='background-color: #FA0;'></td>\
         <th rowspan=6 id='sidepanel' style='background-color: #728;'></th>\
@@ -446,7 +481,7 @@ var board4 =
     <td id='01' valign='top' align='center' background='img/t2.png' ></td>\
 </tr>\
 <tr>\
-    <td rowspan=3 id='p2kitty' style='background-color: #FA0;'></td>\
+    <td rowspan=3 id='k2' style='background-color: #FA0;'></td>\
     <td id='13' valign='bottom' align='center' background='img/m2.png' ></td>\
     <td id='14' valign='bottom' align='center' background='img/m1.png' ></td>\
     <td id='15' valign='bottom' align='center' background='img/m2.png' ></td>\
