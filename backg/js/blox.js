@@ -111,9 +111,6 @@ function makestack  (e) {
 		}
 	}
 	
-	if (DEBUG) {
-		console.log( out );
-	}
 	return out;
 }
 DEBUG=1

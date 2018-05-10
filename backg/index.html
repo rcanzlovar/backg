@@ -3,8 +3,8 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="x-ua-compatible" content="ie=edge">
-        <title>Bob's backgammmon game</title>
-        <meta name="backgammon game with multiple starting positions" content="">
+        <title>BADB0B's Backgammmon</title>
+        <meta content="backgammon game designed for mobild with multiple starting positions" name="description">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
         <link rel="manifest" href="site.webmanifest">
@@ -22,14 +22,17 @@
         <![endif]-->
 
         <!-- Add your site or application content here -->
-<div id='myboard'>
+<div id='displayBoard'>
 
-</div> <!-- id=myboard -->
+</div> <!-- id=displayBoard -->
 <div id='boardLayout'>
+ <span id='action'>
  move <span id='from'></span> / <span id='to'></span>
+</span>
 <!--
     <a href="#" onclick="setboard('nackgammon');">Nackgammon</a>    
 -->
+<div id="startboards">
 <select onchange='myBoard = boards[this.value]; setboard(myBoard);console.log("this value=" + this.value)'>
   <option value="backgammon">Select</option>
   <option value="backgammon">Backgammon</option>
@@ -38,18 +41,21 @@
   <option value="longgammon">LongGammon</option>
   <option value="dutchgammon">Dutch Backgammon</option>
 </select>
+</div>
 <!-- 
     <a href="#" onclick="setboard('backgammon');">Backgammon</a>    
     <a href="#" onclick="setboard('nackgammon');">Nackgammon</a>    
     <a href="#" onclick="setboard('hypergammon');">HyperGammon</a>    
-    <a href="#" onclick="setboard('longgammon');">LongGammon</a>    
+zz    <a href="#" onclick="setboard('longgammon');">LongGammon</a>    
     <a href="#" onclick="setboard('dutchgammon');">DutchGammon</a><br />    
 -->
     <a href="#" onclick="layboard('board1');">W1</a>    
     <a href="#" onclick="layboard('board2');">W2</a>    
     <a href="#" onclick="layboard('board3');">B1</a>    
     <a href="#" onclick="layboard('board4');">B2</a>    
-    <span id='game'></span>
+    <span id='game' style='display: none;'></span>
+</div>
+<div id="log" style='float: right;''>
 </div>
 
 
