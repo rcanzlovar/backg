@@ -23,17 +23,23 @@
 
         <!-- Add your site or application content here -->
 <div id='displayBoard'>
-
+test thing
 </div> <!-- id=displayBoard -->
 <div id='boardLayout'>
  <span id='action'>
  move <span id='from'></span> / <span id='to'></span>
 </span>
 <!--
-    <a href="#" onclick="setboard('nackgammon');">Nackgammon</a>    
+    <a href="#" onclick="setboard('nackgammon');">Nackgammon</a>
 -->
 <div id="startboards">
-<select onchange='myBoard = boards[this.value]; setboard(myBoard);console.log("this value=" + this.value)'>
+<select
+onchange='getElementById("displayBoard").innerHTML = setupGame(this.value);
+setboard(myBoard);
+setevents();
+console.log("myBoard after");
+console.log(myBoard);
+console.log("Setup Board with this value=" + this.value)'>
   <option value="backgammon">Select</option>
   <option value="backgammon">Backgammon</option>
   <option value="nackgammon">Nackgammon</option>
@@ -42,20 +48,24 @@
   <option value="dutchgammon">Dutch Backgammon</option>
 </select>
 </div>
-<!-- 
-    <a href="#" onclick="setboard('backgammon');">Backgammon</a>    
-    <a href="#" onclick="setboard('nackgammon');">Nackgammon</a>    
-    <a href="#" onclick="setboard('hypergammon');">HyperGammon</a>    
-zz    <a href="#" onclick="setboard('longgammon');">LongGammon</a>    
-    <a href="#" onclick="setboard('dutchgammon');">DutchGammon</a><br />    
+<!--
+    <a href="#" onclick="setboard('backgammon');">Backgammon</a>
+    <a href="#" onclick="setboard('nackgammon');">Nackgammon</a>
+    <a href="#" onclick="setboard('hypergammon');">HyperGammon</a>
+zz    <a href="#" onclick="setboard('longgammon');">LongGammon</a>
+    <a href="#" onclick="setboard('dutchgammon');">DutchGammon</a><br />
 -->
-    <a href="#" onclick="layboard('board1');">W1</a>    
-    <a href="#" onclick="layboard('board2');">W2</a>    
-    <a href="#" onclick="layboard('board3');">B1</a>    
-    <a href="#" onclick="layboard('board4');">B2</a>    
+<select onchange='layboard(this.value);'>
+  <option value="whiteleft">WhiteLeft</option>
+  <option value="whiteright">WhiteRight</option>
+  <option value="blackleft">BlackLeft</option>
+  <option value="blackright">BlackRight</option>
+</select>
     <span id='game' style='display: none;'></span>
 </div>
-<div id="log" style='float: right;''>
+<div id="startposition"></div>
+<div id="boardposition"></div>
+<div id="log" style='float: right;'>
 </div>
 
 
@@ -63,10 +73,22 @@ zz    <a href="#" onclick="setboard('longgammon');">LongGammon</a>
         <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
         <script>window.jQuery || document.write('<script src="js/vendor/jquery-3.2.1.min.js"><\/script>')</script>
         <script src="js/blox.js"></script>
-        <script src="js/backgammon_main.js"></script>
+        <script src="js/backg_static.js"></script>
+        <script src="js/backg_main.js"></script>
 
         <!-- Google Analytics: for www.rcanzlovar.com -->
         <script>
+window.onload = function () { 
+
+    var runningBoard = {};
+
+    console.log('### setup a default board');
+    document.getElementById('displayBoard').innerHTML = rotateBoard('whiteleft');
+
+
+    setupGame({'board':runningBoard,'layout':'backgammon'});
+}
+
             window.ga=function(){ga.q.push(arguments)};ga.q=[];ga.l=+new Date;
             ga('create','UA-12556299-2','auto');ga('send','pageview')
         </script>

@@ -113,7 +113,6 @@ function makestack  (e) {
 	
 	return out;
 }
-DEBUG=1
 
 if (DEBUG) {
 	for (var i = 15; i >= 0; i--) {
