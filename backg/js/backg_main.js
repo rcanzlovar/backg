@@ -107,23 +107,24 @@ function    setupGame (argument) {
 //##########
 function layboard(arrayin) {
     // get the  HTML for the board
-        console.log('layboard: srrayin = ');
+        console.log('layboard: arrayin = ');
         console.log(arrayin);
 
 
+        console.log(rotateBoard(arrayin));
     document.getElementById("displayBoard").innerHTML =  rotateBoard(arrayin);
 
 
-    console.log('myBoard');
-    console.log(myBoard);
+    console.log('runningBoard');
+    console.log(runningBoard);
 //    document.getElementById('displayBoard').innerHTML = getBoardLayout('nackgammon');
-        setevents({'board':myBoard});
+        setevents({'board':runningBoard});
 //    console.log('html = ' + foo);
 //    console.log('previously: ' + document.getElementById("displayBoard").innerHTML);
 
 //    console.log('after: ' + document.getElementById("displayBoard").innerHTML);
-    if (myBoard != {} && myBoard != '') {
-        setboard({'board':myBoard});
+    if (RunningBoard != {} && runningBoard != '') {
+        setBoard({'board':myBoard});
     }
 }
 
@@ -331,8 +332,8 @@ function setevents(arrayin) {
 
     console.log('inside setevents, what is arrayin?',typeof arrayin);
     console.log(arrayin);
-    if (typeof  arrayin == 'object' && arrayin['10'] != null) {
-        myBoard  = arrayin;
+    if (typeof  arrayin == 'object' && arrayin['board'] != null) {
+        myBoard  = arrayin.board;
     }
     console.log('setevents: myboard = ');
     console.log(myBoard );
@@ -416,6 +417,7 @@ function rotateBoard(argument) {
     if (typeof argument == "string" ) {
 //        && boardlayout[argument] != '' 
  //       && boardlayout[argument] != null) 
+ console.log(boardlayout);
        return boardlayout[argument];
     } else { 
        console.log("ERR: no valid argument passed in, default to backgammon");

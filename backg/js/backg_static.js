@@ -60,7 +60,7 @@ var br = "<br />";
 //##########################################################################
     boards['dutchgammon'] =   { 'long':'Dutch Backgammon',
         'short':'dutchgammon',
-        'b1':0,'b2':0,'k1':15,'k2':15,
+        'b1':0,'b2':0,'k1':-15,'k2':15,
         'url':'http://www.bkgm.com/variants/DutchBackgammon.html',
         "01":0, "02":0, "03":0, "04":0, "05":0, "06":0, 
         "07":0, "08":0, "09":0, "10":0, "11":0, "12":0,
@@ -181,7 +181,7 @@ var br = "<br />";
     </tr>\
     </table>";
     //#### BOARD2
-    boardlayout['wihteright'] = 
+    boardlayout['whiteright'] = 
     "<table>\
         <tr>\
             <th rowspan=6 id='sidepanel' style='background-color: #728;'></th>\
@@ -255,7 +255,7 @@ var br = "<br />";
     </tr>\
     </table>";
     //####
-    boardlayout['blaackleft'] = 
+    boardlayout['blackleft'] = 
     "<table>\
         <tr>\
             <th rowspan=6 id='sidepanel'></th>\
