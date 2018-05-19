@@ -4,37 +4,48 @@
 //
 // p1 = black = positive numbers
 // p2 = white = negative numbers
+// backg_main.js:var setBoard = function (e) {
+// backg_main.js:function    setupGame (argument) {
+// backg_main.js:function layboard(arrayin) {
+// backg_main.js:function bullshit() {
+// backg_main.js:function pieceValue(e) {
+// backg_main.js:function move(e) {
+// backg_main.js:function logMove(message) {
+// backg_main.js:// call the move function and
+// backg_main.js:var moveprocessor = function(arrayin) {
+// backg_main.js:function setevents(arrayin) {
+// backg_main.js:function rotateBoard(argument) {
+// backg_main.js:function makeBoardSelect () {
+// backg_main.js:function getBoardLayout(argument) {
+// blox.js:function makestack  (e) {
 
-var myBoard = {};
+//var myBoard = {};
 
 //###################################################
-var setboard = function (e) {
+var setBoard = function (e) {
+    // we should gt a board and a layout. 
+
     console.log('setboard: typeof e ' + typeof e);
     console.log('setboard: e:');
     console.log(e);
 
     // our working board.. should it be kept somewhere more global?
-	  var backgammonBoard;
+	var backgammonBoard;
 
-	  if (( typeof e == 'array' || typeof e == 'object')
+	if (( typeof e == 'array' || typeof e == 'object')
         && typeof e['10'] == 'number') {
 
         console.log('set backgammonboard from passed board')
         console.log(e);
         backgammonBoard = e;
-	  } else if (typeof e == 'string') {
+	} else if (typeof e == 'string') {
         console.log('setboard: create new  backgammonboard ' + e)
         console.log(getBoardLayout(e));
 
         backgammonBoard = getBoardLayout(e);
         console.log(e);
-	  }
-
-
-
+	}
     for (var key  in backgammonBoard) {
-//    	console.log('value = '+ backgammonBoard[key]);
-//    	console.log('key=' + key);
 
         if (key == null ) {
     		console.log('ERROR null key? does this even happen?');
@@ -58,7 +69,7 @@ var setboard = function (e) {
     console.log(backgammonBoard);
 
 
-    setevents({'board':backgammonBoard});
+    setevents(backgammonBoard);
 
     try {
         document.getElementById("p1status").innerHTML = backgammonBoard["long"];
@@ -66,18 +77,30 @@ var setboard = function (e) {
     }
     catch(err) { console.log("p1status: " + err.message); }
 
-    return(backgammonboard);
+//    return(backgammonboard);
 
 
 }
 // # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # 
 function    setupGame (argument) {
-    document.getElementById("boardLayout").innerHTML = getBoardLayout(this.value);
-    myBoard = setboard({'board':myBoard});
-    console.log("myBoard after");
-    console.log(myBodard);
-    console.log("Setup Board with this value=" + this.value)
-    return(myBoard);
+//                setupGame({'board':runningBoard,'layout':'backgammon'});
+    var thisBoard = argument.board;
+
+    var layout =  argument['layout'];
+    console.log("Setup Board with this initial layout=" + layout)
+
+    console.log('setupGame: thisBoard: ')
+    console.log(thisBoard);
+    console.log(argument.board);
+    argument.board  = getBoardLayout(layout);
+    window.runningBoard   = getBoardLayout(layout);
+    console.log("runningBoard after");
+    console.log(window.runningBoard );
+    console.log(argument.board);
+
+    // this board is a structure already
+    setBoard(argument.board);
+//    return(thisBoard);
 }
 
 // # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # 
@@ -93,7 +116,7 @@ function layboard(arrayin) {
 
     console.log('myBoard');
     console.log(myBoard);
-    document.getElementById('displayBoard').innerHTML = getBoardLayout('nackgammon');
+//    document.getElementById('displayBoard').innerHTML = getBoardLayout('nackgammon');
         setevents({'board':myBoard});
 //    console.log('html = ' + foo);
 //    console.log('previously: ' + document.getElementById("displayBoard").innerHTML);
@@ -245,25 +268,27 @@ function logMove(message) {
 // empty from and to
 // check if there are stil dice, end turn if there arent
 
-var moveprocessor = function(arrayind) {
-    var mvpBoard;
-
-
-
-
-
-    if (typeof  arrayin == 'array' && arrayin('board') != null) {
-        myboard = arrayin['board'];
-    }
+var moveprocessor = function(arrayin) {
+    var thisBoard;
     console.log("moveprocessor: this = ");
     console.log(this);
+    console.log("moveprocessor: arrayin  = ");
+    console.log(arrayin);
+    console.log('runningBoard   ');
+    console.log(runningBoard);
+    console.log(runningBoard);
+    if (typeof  arrayin == 'array' && arrayin('board') != null) {
+        thisBoard = arrayin['board'];
+    }
+
     console.log("moveprocessor: myboard (should be array of numbers) = ");
-    console.log(this.mvpBoard );
+    console.log(runningBoard );
     var from = document.getElementById("from").innerText;
     var to = document.getElementById("to").innerText;
+    if (from == '') { return;}
     console.log('to/from: '+ to + ' / ' + from);
     console.log('moveprocessor: myBoard');
-    console.log(mvpBoard);
+    console.log(thisBoard);
     console.log(document.getElementById("to").innerHTML);
 
     var id = this.id;
@@ -276,14 +301,13 @@ var moveprocessor = function(arrayind) {
     // first.. if we haven't picked a piece, then the from should be
     // blank. If the place we're grabbing is ==0, then drop out with an err.
     if (document.getElementById("from").innerHTML == "") {
-        if (myBoard[id] != 0) {
-            document.getElementById("from").textContent = this.id;
-        } else {
+        if (thisBoard[from] == 0) {
             document.getElementById("from").innerHTML = '';
             document.getElementById("to").innerHTML = '';
-            alert('nothing to movei ',id);
+            alert('nothing to move from ',id);
             return;
         }
+        document.getElementById("from").textContent = this.id;
     } else if (document.getElementById("to").innerHTML == "") {
         document.getElementById("to").textContent = this.id;
     }
@@ -304,44 +328,45 @@ var moveprocessor = function(arrayind) {
 // appl the move triggers on all the places that pieces could be
 function setevents(arrayin) {
     var myBoard;
+
     console.log('inside setevents, what is arrayin?',typeof arrayin);
     console.log(arrayin);
-    if (typeof  arrayin == 'object' && arrayin['board'] != null) {
-        myBoard  = arrayin ['board'] ;
+    if (typeof  arrayin == 'object' && arrayin['10'] != null) {
+        myBoard  = arrayin;
     }
     console.log('setevents: myboard = ');
     console.log(myBoard );
   // set bar
-  document.getElementById('b1').onclick =moveprocessor;
-  document.getElementById('b2').onclick =moveprocessor;
+  document.getElementById('b1').onclick =moveprocessor(myBoard);
+  document.getElementById('b2').onclick =moveprocessor(myBoard);
   // set kitties
-  document.getElementById('k1').onclick =moveprocessor;
-  document.getElementById('k2').onclick =moveprocessor;
+  document.getElementById('k1').onclick =moveprocessor(myBoard);
+  document.getElementById('k2').onclick =moveprocessor(myBoard);
   // gotta be a better way...
-  document.getElementById('01').onclick =moveprocessor({'board':myBoard});
-  document.getElementById('02').onclick =moveprocessor;
-  document.getElementById('03').onclick =moveprocessor;
-  document.getElementById('04').onclick =moveprocessor;
-  document.getElementById('05').onclick =moveprocessor;
-  document.getElementById('06').onclick =moveprocessor;
-  document.getElementById('07').onclick =moveprocessor;
-  document.getElementById('08').onclick =moveprocessor;
-  document.getElementById('09').onclick =moveprocessor;
-  document.getElementById('10').onclick =moveprocessor;
-  document.getElementById('11').onclick =moveprocessor;
-  document.getElementById('12').onclick =moveprocessor;
-  document.getElementById('13').onclick =moveprocessor;
-  document.getElementById('14').onclick =moveprocessor;
-  document.getElementById('15').onclick =moveprocessor;
-  document.getElementById('16').onclick =moveprocessor;
-  document.getElementById('17').onclick =moveprocessor;
-  document.getElementById('18').onclick =moveprocessor;
-  document.getElementById('19').onclick =moveprocessor;
-  document.getElementById('20').onclick =moveprocessor;
-  document.getElementById('21').onclick =moveprocessor;
-  document.getElementById('22').onclick =moveprocessor;
-  document.getElementById('23').onclick =moveprocessor;
-  document.getElementById('24').onclick =moveprocessor;
+  document.getElementById('01').onclick =moveprocessor(myBoard);
+  document.getElementById('02').onclick =moveprocessor(myBoard);
+  document.getElementById('03').onclick =moveprocessor(myBoard);
+  document.getElementById('04').onclick =moveprocessor(myBoard);
+  document.getElementById('05').onclick =moveprocessor(myBoard);
+  document.getElementById('06').onclick =moveprocessor(myBoard);
+  document.getElementById('07').onclick =moveprocessor(myBoard);
+  document.getElementById('08').onclick =moveprocessor(myBoard);
+  document.getElementById('09').onclick =moveprocessor(myBoard);
+  document.getElementById('10').onclick =moveprocessor(myBoard);
+  document.getElementById('11').onclick =moveprocessor(myBoard);
+  document.getElementById('12').onclick =moveprocessor(myBoard);
+  document.getElementById('13').onclick =moveprocessor(myBoard);
+  document.getElementById('14').onclick =moveprocessor(myBoard);
+  document.getElementById('15').onclick =moveprocessor(myBoard);
+  document.getElementById('16').onclick =moveprocessor(myBoard);
+  document.getElementById('17').onclick =moveprocessor(myBoard);
+  document.getElementById('18').onclick =moveprocessor(myBoard);
+  document.getElementById('19').onclick =moveprocessor(myBoard);
+  document.getElementById('20').onclick =moveprocessor(myBoard);
+  document.getElementById('21').onclick =moveprocessor(myBoard);
+  document.getElementById('22').onclick =moveprocessor(myBoard);
+  document.getElementById('23').onclick =moveprocessor(myBoard);
+  document.getElementById('24').onclick =moveprocessor(myBoard);
 }
 
 
@@ -380,3 +405,30 @@ var foo  =   document.getElementById('24');
 
 makeBoardSelect();
 */
+
+
+// set up the board here. We can rotate the board and flip it by using a different one. 
+function rotateBoard(argument) {
+    console.log('rotateboard:');
+    console.log(argument);
+
+
+    if (typeof argument == "string" ) {
+//        && boardlayout[argument] != '' 
+ //       && boardlayout[argument] != null) 
+       return boardlayout[argument];
+    } else { 
+       console.log("ERR: no valid argument passed in, default to backgammon");
+       return boardlayout['backgammon'];
+    }
+}
+
+function makeBoardSelect () {
+    for (var i = boards.length - 1; i >= 0; i--) {
+        console.log(boards[i].long);
+    }
+}
+
+function getBoardLayout(argument) {
+    return(boards[argument]);
+}

@@ -29,17 +29,19 @@ test thing
  <span id='action'>
  move <span id='from'></span> / <span id='to'></span>
 </span>
+
+
 <!--
     <a href="#" onclick="setboard('nackgammon');">Nackgammon</a>
 -->
 <div id="startboards">
 <select
-onchange='getElementById("displayBoard").innerHTML = setupGame(this.value);
-setboard(myBoard);
-setevents();
-console.log("myBoard after");
-console.log(myBoard);
-console.log("Setup Board with this value=" + this.value)'>
+onchange="
+console.log('Setup Board with this value=' + this.value);
+//getElementById('displayBoard').innerHTML = 
+setupGame({'board':runningBoard,'layout':this.value});
+console.log(runningBoard);
+">
   <option value="backgammon">Select</option>
   <option value="backgammon">Backgammon</option>
   <option value="nackgammon">Nackgammon</option>
@@ -48,13 +50,6 @@ console.log("Setup Board with this value=" + this.value)'>
   <option value="dutchgammon">Dutch Backgammon</option>
 </select>
 </div>
-<!--
-    <a href="#" onclick="setboard('backgammon');">Backgammon</a>
-    <a href="#" onclick="setboard('nackgammon');">Nackgammon</a>
-    <a href="#" onclick="setboard('hypergammon');">HyperGammon</a>
-zz    <a href="#" onclick="setboard('longgammon');">LongGammon</a>
-    <a href="#" onclick="setboard('dutchgammon');">DutchGammon</a><br />
--->
 <select onchange='layboard(this.value);'>
   <option value="whiteleft">WhiteLeft</option>
   <option value="whiteright">WhiteRight</option>
@@ -67,7 +62,9 @@ zz    <a href="#" onclick="setboard('longgammon');">LongGammon</a>
 <div id="boardposition"></div>
 <div id="log" style='float: right;'>
 </div>
-
+<a href='#' onclick="console.log('runningboard');console.log(runningBoard);"><img src='img/info.png' width="30px" alt='info'></a>
+<a href='#' onclick="setBoard( window.runningBoard);"><img src='img/info_red.png' width="30px" alt='info'></a>
+<a href='#' onclick="move({'from':'19','to':'21','board':runningBoard});"><img src='img/info_orange.png' width="30px" alt='move 19-21'></a>
 
         <script src="js/vendor/modernizr-3.5.0.min.js"></script>
         <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
@@ -78,16 +75,16 @@ zz    <a href="#" onclick="setboard('longgammon');">LongGammon</a>
 
         <!-- Google Analytics: for www.rcanzlovar.com -->
         <script>
-window.onload = function () { 
+            window.onload = function () { 
+                makeBoardSelect();
+                window.runningBoard = {};
+                console.log('### setup a default board');
+                document.getElementById('displayBoard').innerHTML = rotateBoard('whiteleft');
 
-    var runningBoard = {};
-
-    console.log('### setup a default board');
-    document.getElementById('displayBoard').innerHTML = rotateBoard('whiteleft');
-
-
-    setupGame({'board':runningBoard,'layout':'backgammon'});
-}
+                console.log('### setup a backgammon game');
+                setupGame({'board':window.runningBoard,'layout':'backgammon'});
+                setevents(window.runningBoard);
+            }
 
             window.ga=function(){ga.q.push(arguments)};ga.q=[];ga.l=+new Date;
             ga('create','UA-12556299-2','auto');ga('send','pageview')

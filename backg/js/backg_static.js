@@ -11,7 +11,6 @@ var black_piece = "<img src='img/bp.gif' alt='X'>";
 var white_piece = "<img src='img/wp.gif' alt='X'>";
 var br = "<br />";
 
-function getBoardLayout(argument) {
 
     // this gets a string argument line the short names below
     // * backgammon
@@ -106,20 +105,8 @@ function getBoardLayout(argument) {
         // -4  0  0  0 +3  0 +4  0  0  0 -2 -2
         // 12 11 10 09 08 07 06 05 04 03 02 01 
 
-    return(boards[argument]);
-}
-
 //###################################********
-// set up the board here. We can rotate the board and flip it by using a different one. 
-function rotateBoard(argument) {
-    console.log('rotateboard:');
-    console.log(argument);
-
-    var game_variant = "backgammon";
-
     var boardlayout = [];
-
-
 
     boardlayout['whiteleft'] = 
     "<table>\
@@ -413,21 +400,4 @@ function rotateBoard(argument) {
             <th id='p2status' colspan='13' style='background-color: #FA0;'>&nbsp;</th>\
         </tr>\
     </table>";
-    if (typeof argument == "string" ) {
-        console.log('inside rotateBoard with argument = '+ argument);
-//        && boardlayout[argument] != '' 
- //       && boardlayout[argument] != null) 
-       return boardlayout[argument];
-    } else { 
-       console.log("ERR: no valid argument passed in");
-       return boardlayout['backgammon'];
-    }
-//       return (boardlayout[argument]);
-
-}
-
-function makeBoardSelect () {
-    for (var i = boards.length - 1; i >= 0; i--) {
-        console.log(boards[i].long);
-    }
-}
+    
