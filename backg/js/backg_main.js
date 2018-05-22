@@ -25,6 +25,8 @@
 var setBoard = function (e) {
     // we should gt a board and a layout. 
 
+    validateBoard(e);
+
     console.log('setboard: typeof e ' + typeof e);
     console.log('setboard: e:');
     console.log(e);
@@ -45,8 +47,8 @@ var setBoard = function (e) {
         backgammonBoard = getBoardLayout(e);
         console.log(e);
 	}
-    for (var key  in backgammonBoard) {
 
+    for (var key  in backgammonBoard) {
         if (key == null ) {
     		console.log('ERROR null key? does this even happen?');
     	} else {
@@ -82,27 +84,64 @@ var setBoard = function (e) {
 
 }
 // # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # 
+//this is called like this: 
+//    setupGame({'board':window.runningBoard,'layout':'backgammon'});
 function    setupGame (argument) {
 //                setupGame({'board':runningBoard,'layout':'backgammon'});
     var thisBoard = argument.board;
 
     var layout =  argument['layout'];
+
     console.log("Setup Board with this initial layout=" + layout)
 
     console.log('setupGame: thisBoard: ')
-    console.log(thisBoard);
-    console.log(argument.board);
-    argument.board  = getBoardLayout(layout);
-    window.runningBoard   = getBoardLayout(layout);
+//    console.log(thisBoard);
+//    console.log(argument.board);
+//`    argument.board  = getBoardLayout(layout);
+    thisBoard   = getBoardLayout(layout);
+
     console.log("runningBoard after");
-    console.log(window.runningBoard );
     console.log(argument.board);
+    console.log(thisBoard);
 
     // this board is a structure already
-    setBoard(argument.board);
-//    return(thisBoard);
+    setBoard(thisBoard);
+    return(thisBoard);
 }
 
+function validateBoard (inboard) {
+    var totalpieces = 0;
+    var balance = 0;
+
+    console.log('type of ',typeof inboard);
+    console.log('contents of ',inboard);
+    if (typeof inboard =='string') { return 0; }
+    for (var key  in inboard) {
+        if (key == null ) {
+            console.log('######## validateBoard: null key - bailing');
+            return 0;
+        }
+//        console.log('thing ',key,' :::');
+//        console.log( inboard[key] );
+        if (typeof inboard[key] == 'number') {
+            balance += inboard[key];
+            // if piecevalue is -1, it cancels it out
+//            console.log(inboard[key]);
+//            console.log(pieceValue(inboard[key]));
+            totalpieces += pieceValue(inboard[key]) * inboard[key];
+//            console.log('balance  ',balance,' totalpieces ',totalpieces);
+        }
+    }
+    if (balance != 0 ) {
+        console.log('######## inboard balance (should be 0) ',balance);
+        return 0;
+    }
+    if (!(totalpieces == 30  || (totalpieces == 6 && inboard.short == 'hypergammon'))) {
+        console.log('######## incorrect number of pieces ',totalpieces);
+    }
+
+    return 1;
+}
 // # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # 
 //##########
 function layboard(arrayin) {
@@ -123,8 +162,8 @@ function layboard(arrayin) {
 //    console.log('previously: ' + document.getElementById("displayBoard").innerHTML);
 
 //    console.log('after: ' + document.getElementById("displayBoard").innerHTML);
-    if (RunningBoard != {} && runningBoard != '') {
-        setBoard({'board':myBoard});
+    if (runningBoard != {} && runningBoard != '') {
+        setBoard({'board':runningBoard});
     }
 }
 
@@ -184,11 +223,13 @@ function bullshit() {
 
 //#############################################
 // return +1 or -1 based on whether this is a positive or negative number
+//return 0 if it isn't a string or if the value is 0
 function pieceValue(e) {
     if ( typeof e == 'number') {
         if (e > 0) { return 1; }
         if (e < 0) { return -1; }
-    }
+        if (e == 0) { return 0; }
+    } else { return 0; }
 }
 
 //#############################################
@@ -270,23 +311,24 @@ function logMove(message) {
 // check if there are stil dice, end turn if there arent
 
 var moveprocessor = function(arrayin) {
-    var thisBoard;
+    var thisBoard = {};
+
     console.log("moveprocessor: this = ");
     console.log(this);
     console.log("moveprocessor: arrayin  = ");
     console.log(arrayin);
     console.log('runningBoard   ');
     console.log(runningBoard);
-    console.log(runningBoard);
+
     if (typeof  arrayin == 'array' && arrayin('board') != null) {
         thisBoard = arrayin['board'];
     }
 
     console.log("moveprocessor: myboard (should be array of numbers) = ");
-    console.log(runningBoard );
+    console.log(thisBoard );
     var from = document.getElementById("from").innerText;
     var to = document.getElementById("to").innerText;
-    if (from == '') { return;}
+    if (from == '') { return;} // bail 
     console.log('to/from: '+ to + ' / ' + from);
     console.log('moveprocessor: myBoard');
     console.log(thisBoard);
@@ -305,11 +347,12 @@ var moveprocessor = function(arrayin) {
         if (thisBoard[from] == 0) {
             document.getElementById("from").innerHTML = '';
             document.getElementById("to").innerHTML = '';
-            alert('nothing to move from ',id);
+            alert('no pieces on ',id,' to move');
             return;
         }
         document.getElementById("from").textContent = this.id;
     } else if (document.getElementById("to").innerHTML == "") {
+        // from wasnt blank and we d
         document.getElementById("to").textContent = this.id;
     }
     if ( document.getElementById("from").innerHTML != ''
@@ -332,14 +375,22 @@ function setevents(arrayin) {
 
     console.log('inside setevents, what is arrayin?',typeof arrayin);
     console.log(arrayin);
-    if (typeof  arrayin == 'object' && arrayin['board'] != null) {
-        myBoard  = arrayin.board;
-    }
+    if (typeof  arrayin == 'object') {
+        if (arrayin['board'] != null) {
+            myBoard  = arrayin.board;
+        } else {
+            myBoard  = arrayin;
+        }
+    } 
     console.log('setevents: myboard = ');
     console.log(myBoard );
+    console.log(window.runningBoard );
   // set bar
   document.getElementById('b1').onclick =moveprocessor(myBoard);
+
   document.getElementById('b2').onclick =moveprocessor(myBoard);
+  //#######
+  document.getElementById('showHideRoute').onclick = 
   // set kitties
   document.getElementById('k1').onclick =moveprocessor(myBoard);
   document.getElementById('k2').onclick =moveprocessor(myBoard);
@@ -381,43 +432,17 @@ Getting stuff out of an element summary
 - innerText Takes styles into consideration. It won't get hidden text for instance.
 
 innerText didn't exist in firefox until FireFox 45 according to caniuse but is now supported in all major browsers.
-*/
-//################################o#################################
-//setboard(myBoard);
-//layboard('board1');
-//myBoard = setboard('nackgammon');
-//console.log('### after initial setup of board myBoard = ',myBoard);
-//move({'from':'06','to':'04','board':myBoard});
-//var backgammonBowwddard = boards['hypergammon'];
-//document.getElementById("game").innerHTML = "backgammon";
-
-/*
-//myBoard = boards['backgammon'];
-var myBoard = setboard('backgammon');
-console.log(myBoard);
 
 //myBoard = move({'from':'08','to':'05','board':myBoard});
 //myBoard = move({'from':'06','to':'05','board':myBoard});
-//var newboard = move({'from':'06','to':'11','board':myBoard});
 //alert('after=' + myBoard['06']);
-
-var foo  =   document.getElementById('24');
-//alert('foo.firstelemet ' + foo.td#9.firstElement);
-
 makeBoardSelect();
 */
 
 
 // set up the board here. We can rotate the board and flip it by using a different one. 
 function rotateBoard(argument) {
-    console.log('rotateboard:');
-    console.log(argument);
-
-
     if (typeof argument == "string" ) {
-//        && boardlayout[argument] != '' 
- //       && boardlayout[argument] != null) 
- console.log(boardlayout);
        return boardlayout[argument];
     } else { 
        console.log("ERR: no valid argument passed in, default to backgammon");

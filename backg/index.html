@@ -83,7 +83,8 @@ move({'from':'19','to':'21','board':runningBoard});
                 document.getElementById('displayBoard').innerHTML = rotateBoard('whiteleft');
 
                 console.log('### setup a backgammon game');
-                setupGame({'board':window.runningBoard,'layout':'backgammon'});
+                console.log(window.runningBoard);
+                window.runningboard = setupGame({'board':window.runningBoard,'layout':'backgammon'});
                 setevents(window.runningBoard);
             }
 
