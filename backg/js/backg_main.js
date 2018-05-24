@@ -89,6 +89,7 @@ var setBoard = function (e) {
 function    setupGame (argument) {
 //                setupGame({'board':runningBoard,'layout':'backgammon'});
     var thisBoard = argument.board;
+    var thisBoard = argument['board'];
 
     var layout =  argument['layout'];
 
@@ -98,10 +99,16 @@ function    setupGame (argument) {
 //    console.log(thisBoard);
 //    console.log(argument.board);
 //`    argument.board  = getBoardLayout(layout);
-    thisBoard   = getBoardLayout(layout);
+
+        thisBoard   = getBoardLayout(layout);
+    for (var key  in thisBoard) {
+        runningBoard[key] = thisBoard[key];
+    }
+
+    console.log(getBoardLayout(layout));
 
     console.log("runningBoard after");
-    console.log(argument.board);
+    console.log(runningBoard);
     console.log(thisBoard);
 
     // this board is a structure already
@@ -303,7 +310,7 @@ function logMove(message) {
     document.getElementById("log").innerText += message + "\n";
 }
 //#############################################
-// make sure we have a from and a to,
+// make sure we have a from and a to
 //chechk against dice rolls
 // call the move function and
 //chalk the dice as taken
@@ -311,31 +318,45 @@ function logMove(message) {
 // check if there are stil dice, end turn if there arent
 
 var moveprocessor = function(arrayin) {
-    var thisBoard = {};
+
+    var id = this.id;
+    console.log('id = ' + id);
 
     console.log("moveprocessor: this = ");
     console.log(this);
+    console.log("moveprocessor: this.id = ",this.id);
     console.log("moveprocessor: arrayin  = ");
     console.log(arrayin);
     console.log('runningBoard   ');
     console.log(runningBoard);
 
+    var thisBoard = {};
     if (typeof  arrayin == 'array' && arrayin('board') != null) {
         thisBoard = arrayin['board'];
     }
 
     console.log("moveprocessor: myboard (should be array of numbers) = ");
     console.log(thisBoard );
+
+/*
     var from = document.getElementById("from").innerText;
     var to = document.getElementById("to").innerText;
-    if (from == '') { return;} // bail 
+    console.log('from,to,id',from,to,id);
+//    if (from == '') { return;} // bail 
+    if (from == '') { 
+        document.getElementById('from').innerText = id;
+    } else {
+        document.getElementById('to').innerText = id;
+    } // bail 
+
+    from = document.getElementById("from").innerText;
+    to = document.getElementById("to").innerText;
+
     console.log('to/from: '+ to + ' / ' + from);
     console.log('moveprocessor: myBoard');
     console.log(thisBoard);
     console.log(document.getElementById("to").innerHTML);
-
-    var id = this.id;
-    console.log('id = ' + id);
+*/
     //console.log(this.innerHTML);
 
 // still need to figure out this
@@ -343,25 +364,29 @@ var moveprocessor = function(arrayin) {
 //
     // first.. if we haven't picked a piece, then the from should be
     // blank. If the place we're grabbing is ==0, then drop out with an err.
-    if (document.getElementById("from").innerHTML == "") {
+    var from = document.getElementById("from").innerText;
+    var to = document.getElementById("to").innerText;
+    if (document.getElementById("from").innerText == "") {
         if (thisBoard[from] == 0) {
-            document.getElementById("from").innerHTML = '';
-            document.getElementById("to").innerHTML = '';
+            document.getElementById("from").innerText = '';
+            document.getElementById("to").innerText = '';
             alert('no pieces on ',id,' to move');
             return;
         }
         document.getElementById("from").textContent = this.id;
-    } else if (document.getElementById("to").innerHTML == "") {
+    } else if (document.getElementById("to").innerText == "") {
         // from wasnt blank and we d
         document.getElementById("to").textContent = this.id;
     }
-    if ( document.getElementById("from").innerHTML != ''
-        && document.getElementById("to").innerHTML != '' ) {
+    from = document.getElementById("from").innerText;
+    to = document.getElementById("to").innerText;
+    if ( from != ''
+        && to != '' ) {
 
-        setboard( move({
-            'from':document.getElementById("from").innerHTML,
-            'to':document.getElementById("to").innerHTML,
-            'board':myBoard
+        setBoard( move({
+            'from':from,
+            'to':to,
+            'board':runningBoard
         }));
 
         document.getElementById("from").innerHTML = '';
@@ -370,7 +395,7 @@ var moveprocessor = function(arrayin) {
 }
 
 // appl the move triggers on all the places that pieces could be
-function setevents(arrayin) {
+function xxxsetevents(arrayin) {
     var myBoard;
 
     console.log('inside setevents, what is arrayin?',typeof arrayin);
@@ -385,40 +410,42 @@ function setevents(arrayin) {
     console.log('setevents: myboard = ');
     console.log(myBoard );
     console.log(window.runningBoard );
+}
+function setevents(arrayin) {
+    var myBoard;
   // set bar
-  document.getElementById('b1').onclick =moveprocessor(myBoard);
+  document.getElementById('b1').onclick = moveprocessor;
 
-  document.getElementById('b2').onclick =moveprocessor(myBoard);
+  document.getElementById('b2').onclick = moveprocessor;
   //#######
-  document.getElementById('showHideRoute').onclick = 
   // set kitties
-  document.getElementById('k1').onclick =moveprocessor(myBoard);
-  document.getElementById('k2').onclick =moveprocessor(myBoard);
+  document.getElementById('k1').onclick = moveprocessor;
+  document.getElementById('k2').onclick = moveprocessor;
   // gotta be a better way...
-  document.getElementById('01').onclick =moveprocessor(myBoard);
-  document.getElementById('02').onclick =moveprocessor(myBoard);
-  document.getElementById('03').onclick =moveprocessor(myBoard);
-  document.getElementById('04').onclick =moveprocessor(myBoard);
-  document.getElementById('05').onclick =moveprocessor(myBoard);
-  document.getElementById('06').onclick =moveprocessor(myBoard);
-  document.getElementById('07').onclick =moveprocessor(myBoard);
-  document.getElementById('08').onclick =moveprocessor(myBoard);
-  document.getElementById('09').onclick =moveprocessor(myBoard);
-  document.getElementById('10').onclick =moveprocessor(myBoard);
-  document.getElementById('11').onclick =moveprocessor(myBoard);
-  document.getElementById('12').onclick =moveprocessor(myBoard);
-  document.getElementById('13').onclick =moveprocessor(myBoard);
-  document.getElementById('14').onclick =moveprocessor(myBoard);
-  document.getElementById('15').onclick =moveprocessor(myBoard);
-  document.getElementById('16').onclick =moveprocessor(myBoard);
-  document.getElementById('17').onclick =moveprocessor(myBoard);
-  document.getElementById('18').onclick =moveprocessor(myBoard);
-  document.getElementById('19').onclick =moveprocessor(myBoard);
-  document.getElementById('20').onclick =moveprocessor(myBoard);
-  document.getElementById('21').onclick =moveprocessor(myBoard);
-  document.getElementById('22').onclick =moveprocessor(myBoard);
-  document.getElementById('23').onclick =moveprocessor(myBoard);
-  document.getElementById('24').onclick =moveprocessor(myBoard);
+  document.getElementById('01').onclick = moveprocessor;
+  document.getElementById('02').onclick = moveprocessor;
+  document.getElementById('03').onclick = moveprocessor;
+  document.getElementById('04').onclick = moveprocessor;
+  document.getElementById('05').onclick = moveprocessor;
+  document.getElementById('06').onclick = moveprocessor;
+  document.getElementById('07').onclick = moveprocessor;
+  document.getElementById('08').onclick = moveprocessor;
+  document.getElementById('09').onclick = moveprocessor;
+  document.getElementById('10').onclick = moveprocessor;
+  document.getElementById('11').onclick = moveprocessor;
+  document.getElementById('12').onclick = moveprocessor;
+  document.getElementById('13').onclick = moveprocessor;
+  document.getElementById('14').onclick = moveprocessor;
+  document.getElementById('15').onclick = moveprocessor;
+  document.getElementById('16').onclick = moveprocessor;
+  document.getElementById('17').onclick = moveprocessor;
+  document.getElementById('18').onclick = moveprocessor;
+  document.getElementById('19').onclick = moveprocessor;
+  document.getElementById('20').onclick = moveprocessor;
+  document.getElementById('21').onclick = moveprocessor;
+  document.getElementById('22').onclick = moveprocessor;
+  document.getElementById('23').onclick = moveprocessor;
+  document.getElementById('24').onclick = moveprocessor;
 }
 
 
