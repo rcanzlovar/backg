@@ -51,22 +51,23 @@ console.log(runningBoard);
 </select>
 </div>
 <select onchange='layboard(this.value);'>
-  <option value="whiteleft">WhiteLeft</option>
-  <option value="whiteright">WhiteRight</option>
-  <option value="blackleft">BlackLeft</option>
-  <option value="blackright">BlackRight</option>
+  <option value="whiteleft">White Left</option>
+  <option value="whiteright">White Right</option>
+  <option value="blackleft">Black Left</option>
+  <option value="blackright">Black Right</option>
 </select>
     <span id='game' style='display: none;'></span>
 </div>
 <div id="startposition"></div>
 <div id="boardposition"></div>
 <div id="log" style='float: right;'>
-    move({'from':'19','to':'21','board':runningBoard});
 </div>
-<a href='#' onclick="console.log('runningboard');console.log(runningBoard);"><img src='img/info.png' width="30px" alt='info'></a>
-<a href='#' onclick="setBoard( window.runningBoard);"><img src='img/info_red.png' width="30px" alt='info'></a>
+<a href='#' onclick="console.log('runningboard');console.log(runningBoard);"><img src='img/info.png' width="30px" alt='contents of runningBoard'></a>
+<a href='#' onclick="setBoard( window.runningBoard);"><img src='img/info_red.png' width="30px" alt='setBoard'></a>
 <a href='#' onclick="move({'from':'19','to':'21','board':runningBoard});"><img src='img/info_orange.png' width="30px" alt='move 19-21'></a>
-move({'from':'19','to':'21','board':runningBoard});
+move({'from':'19',
+'to':'21',
+'board':runningBoard});
         <script src="js/vendor/modernizr-3.5.0.min.js"></script>
         <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
         <script>window.jQuery || document.write('<script src="js/vendor/jquery-3.2.1.min.js"><\/script>')</script>
