@@ -116,27 +116,22 @@ function    setupGame (argument) {
     return(thisBoard);
 }
 
+
+// # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # 
+// make sure we have the right number of pieces and that we have the same number of each
 function validateBoard (inboard) {
     var totalpieces = 0;
     var balance = 0;
 
-    console.log('type of ',typeof inboard);
-    console.log('contents of ',inboard);
     if (typeof inboard =='string') { return 0; }
     for (var key  in inboard) {
         if (key == null ) {
             console.log('######## validateBoard: null key - bailing');
             return 0;
         }
-//        console.log('thing ',key,' :::');
-//        console.log( inboard[key] );
         if (typeof inboard[key] == 'number') {
             balance += inboard[key];
-            // if piecevalue is -1, it cancels it out
-//            console.log(inboard[key]);
-//            console.log(pieceValue(inboard[key]));
             totalpieces += pieceValue(inboard[key]) * inboard[key];
-//            console.log('balance  ',balance,' totalpieces ',totalpieces);
         }
     }
     if (balance != 0 ) {
@@ -145,8 +140,8 @@ function validateBoard (inboard) {
     }
     if (!(totalpieces == 30  || (totalpieces == 6 && inboard.short == 'hypergammon'))) {
         console.log('######## incorrect number of pieces ',totalpieces);
+//        return 0; // dont make this fatel yet
     }
-
     return 1;
 }
 // # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # 
@@ -243,9 +238,9 @@ function pieceValue(e) {
 function move(e) {
 
     console.log(e);
-    console.log('typeof e=' + typeof e);
-    console.log('typeof e.from=' + typeof e['from']);
-    console.log('typeof e.to=' + typeof e['to']);
+    console.log('move: typeof e=' + typeof e);
+    console.log('tmove: ypeof e.from=' + typeof e['from']);
+    console.log('tmove: ypeof e.to=' + typeof e['to']);
 
     var from,to,board;
 
@@ -270,7 +265,6 @@ function move(e) {
     console.log('board.from=' + from
         + ' board.to=' + to + 'thispiece' + thisPiece);
     console.log('e.board.from=' + e.board[from]);
-    console.log('board.from=' + board[from]);
     console.log(' board ');
     console.log( board);
 
@@ -284,9 +278,9 @@ function move(e) {
         } else if (Math.abs(pieceValue(to) == 1 )) {
             console.log('destination has a blot')
             if (thispiece > 0) {
-                move(from,'b1',board);
+                move(from,'b1',e.board);
             } else {
-                move(from,'b2',board);
+                move(from,'b2',e.board);
             }
         }
     }
@@ -329,10 +323,13 @@ var moveprocessor = function(arrayin) {
     console.log(arrayin);
     console.log('runningBoard   ');
     console.log(runningBoard);
+    console.log(runningBoard[id]);
 
     var thisBoard = {};
     if (typeof  arrayin == 'array' && arrayin('board') != null) {
         thisBoard = arrayin['board'];
+    } else {
+        thisBoard = window.runningBoard;
     }
 
     console.log("moveprocessor: myboard (should be array of numbers) = ");
@@ -366,7 +363,12 @@ var moveprocessor = function(arrayin) {
     // blank. If the place we're grabbing is ==0, then drop out with an err.
     var from = document.getElementById("from").innerText;
     var to = document.getElementById("to").innerText;
-    if (document.getElementById("from").innerText == "") {
+    console.log('from',from)
+//    if (document.getElementById("from").innerText == "") {
+    console.log ('thisboard[id]',thisBoard[id]);
+    console.log (thisBoard);
+//    if (thisBoard[id] == 0  && from == ''){
+    if (document.getElementById("from").innerText == ""){
         if (thisBoard[from] == 0) {
             document.getElementById("from").innerText = '';
             document.getElementById("to").innerText = '';
@@ -382,7 +384,22 @@ var moveprocessor = function(arrayin) {
     to = document.getElementById("to").innerText;
     if ( from != ''
         && to != '' ) {
+        if (pieceValue(runningboard[from]) != pieceValue(runningBoard[to])) {
 
+            if (Math.abs(runningBoard[to]) > 1 ) {
+                // can't land there 
+                alert('cant land on  ',id,' because other side there');
+                return;
+            } else {
+                // blot 
+                setBoard( move({
+                    'from':to,
+                    'to':'b1',
+                    'board':runningBoard
+                }));
+            }
+    
+        }
         setBoard( move({
             'from':from,
             'to':to,
