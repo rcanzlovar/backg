@@ -27,20 +27,21 @@ var setBoard = function (e) {
 
     validateBoard(e);
 
-    console.log('setboard: typeof e ' + typeof e);
     console.log('setboard: e:');
     console.log(e);
 
     // our working board.. should it be kept somewhere more global?
 	var backgammonBoard;
 
-	if (( typeof e == 'array' || typeof e == 'object')
-        && typeof e['10'] == 'number') {
-
-        console.log('set backgammonboard from passed board')
-        console.log(e);
-        backgammonBoard = e;
-	} else if (typeof e == 'string') {
+	if (typeof e == 'array' 
+        || typeof e == 'object') {
+        if (typeof e['10'] == 'number') {
+            backgammonBoard = e; 
+        } else if (typeof e['board'] == 'object' 
+            || typeof e['board'] == 'array') { 
+            backgammonBoard = e['board']; 
+        } 
+	} else if (typeof e == 'string') { 
         console.log('setboard: create new  backgammonboard ' + e)
         console.log(getBoardLayout(e));
 
@@ -148,22 +149,20 @@ function validateBoard (inboard) {
 //##########
 function layboard(arrayin) {
     // get the  HTML for the board
-        console.log('layboard: arrayin = ');
-        console.log(arrayin);
+    console.log('layboard: arrayin = ');
+    console.log(arrayin);
 
-
-        console.log(rotateBoard(arrayin));
     document.getElementById("displayBoard").innerHTML =  rotateBoard(arrayin);
-
+    setevents({'board':runningBoard});
 
     console.log('runningBoard');
     console.log(runningBoard);
 //    document.getElementById('displayBoard').innerHTML = getBoardLayout('nackgammon');
-        setevents({'board':runningBoard});
 //    console.log('html = ' + foo);
 //    console.log('previously: ' + document.getElementById("displayBoard").innerHTML);
 
 //    console.log('after: ' + document.getElementById("displayBoard").innerHTML);
+    console.log('layboard wt the end runningboard',runningBoard);
     if (runningBoard != {} && runningBoard != '') {
         setBoard({'board':runningBoard});
     }
@@ -265,10 +264,6 @@ function move(e) {
     console.log('board.from=' + from
         + ' board.to=' + to + 'thispiece' + thisPiece);
     console.log('e.board.from=' + e.board[from]);
-    console.log(' board ');
-    console.log( board);
-
-//    alert('piecevalue = ' + piecevalue + ' to=' + e.board[to]);
 
     if (pieceValue(e.board[to]) != pieceValue(e.board[from])) {
         // not one of us.. if it's too many, just bail
@@ -389,6 +384,8 @@ var moveprocessor = function(arrayin) {
             if (Math.abs(runningBoard[to]) > 1 ) {
                 // can't land there 
                 alert('cant land on  ',id,' because other side there');
+                document.getElementById("to").innerText = '';
+                document.getElementById("from").innerText = '';
                 return;
             } else {
                 // blot 
