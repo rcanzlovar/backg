@@ -231,7 +231,7 @@ function move(e) {
     catch(err) {console.log(e); }
     var shift = from - to;
 
-    logMove((thisPiece < 0 ? 'white' : 'black') + ' move ' + shift + from + ' / ' + to);
+    logMove((thisPiece < 0 ? 'white' : 'black') + ' move '+ shift + ' ' + from + ' / ' + to);
     // here  we process what is there and can we even do this..
     // should clear the from and to before calling this so i don't have to
     if (e.board[from] == 0) {
@@ -342,7 +342,7 @@ var moveprocessor = function(arrayin) {
     var from = document.getElementById("from").innerText;
     var to = document.getElementById("to").innerText;
     console.log('from',from)
-    console.log('fromi value ',document.getElementById['from'])
+    console.log('from value ',document.getElementById['from'])
 //    if (document.getElementById("from").innerText == "") {
     console.log ('thisboard[id]',thisBoard[id]);
     console.log (thisBoard);
@@ -379,10 +379,10 @@ var moveprocessor = function(arrayin) {
 //                }));
                 setBoard( 
                     pieceValue(runningBoard[from]) > 0 
-                    ? move({'from':from,
+                    ? move({'from':to,
                         'to':'b1',
                         'board':runningBoard})
-                    : move({'from':from,
+                    : move({'from':to,
                         'to':'b2',
                         'board':runningBoard}));
             }

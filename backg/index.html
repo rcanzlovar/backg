@@ -26,9 +26,6 @@
 test thing
 </div> <!-- id=displayBoard -->
 <div id='boardLayout'>
- <span id='action'>
- move <span id='from'></span> / <span id='to'></span>
-</span>
 
 
 <!--
@@ -70,6 +67,9 @@ console.log(runningBoard);
 <a href='#' onclick="console.log('runningboard');console.log(runningBoard);"><img src='img/info.png' width="30px" alt='contents of runningBoard'></a>
 <a href='#' onclick="setBoard( window.runningBoard);"><img src='img/info_red.png' width="30px" alt='setBoard'></a>
 <a href='#' onclick="move({'from':'19','to':'21','board':runningBoard});"><img src='img/info_orange.png' width="30px" alt='move 19-21'></a>
+ <span id='action'>
+ move <span id='from'></span> / <span id='to'></span>
+</span>
 <!--move({'from':'19',
 'to':'21',
 'board':runningBoard});
