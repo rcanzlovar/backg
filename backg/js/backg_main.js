@@ -26,10 +26,6 @@ var setBoard = function (e) {
     // we should gt a board and a layout. 
 
     validateBoard(e);
-
-    console.log('setboard: e:');
-    console.log(e);
-
     // our working board.. should it be kept somewhere more global?
 	var backgammonBoard;
 
@@ -42,11 +38,11 @@ var setBoard = function (e) {
             backgammonBoard = e['board']; 
         } 
 	} else if (typeof e == 'string') { 
-        console.log('setboard: create new  backgammonboard ' + e)
-        console.log(getBoardLayout(e));
+        console.log('setboard: create new game ' + e)
+        //should save this sometimes
+        document.getElementById('log').innerText = '';  
 
         backgammonBoard = getBoardLayout(e);
-        console.log(e);
 	}
 
     for (var key  in backgammonBoard) {
@@ -62,27 +58,15 @@ var setBoard = function (e) {
                     'pieces':backgammonBoard[key]});
             }
             catch(err) { }
-                //nothing. i dont care.
-                // i just don't want this to stop the loop
-//                console.log("WARN: " + key + " " + err.message);
         }
-
     }
-    console.log('just before calling setevents from setboard')
-    console.log(backgammonBoard);
-
-
     setevents(backgammonBoard);
-
     try {
         document.getElementById("p1status").innerHTML = backgammonBoard["long"];
         document.getElementById("p1status").innerHTML += "<a href='" + backgammonBoard["url"] + "' target='_blank'>About</a>";
     }
     catch(err) { console.log("p1status: " + err.message); }
-
 //    return(backgammonboard);
-
-
 }
 // # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # 
 //this is called like this: 
@@ -95,24 +79,14 @@ function    setupGame (argument) {
     var layout =  argument['layout'];
 
     console.log("Setup Board with this initial layout=" + layout)
+    thisBoard   = getBoardLayout(layout);
 
-    console.log('setupGame: thisBoard: ')
-//    console.log(thisBoard);
-//    console.log(argument.board);
-//`    argument.board  = getBoardLayout(layout);
-
-        thisBoard   = getBoardLayout(layout);
     for (var key  in thisBoard) {
         runningBoard[key] = thisBoard[key];
     }
 
-    console.log(getBoardLayout(layout));
-
-    console.log("runningBoard after");
-    console.log(runningBoard);
-    console.log(thisBoard);
-
     // this board is a structure already
+    document.getElementById('log').innerText = 'new ' + layout + ' game\n'
     setBoard(thisBoard);
     return(thisBoard);
 }
@@ -237,9 +211,9 @@ function pieceValue(e) {
 function move(e) {
 
     console.log(e);
-    console.log('move: typeof e=' + typeof e);
-    console.log('tmove: ypeof e.from=' + typeof e['from']);
-    console.log('tmove: ypeof e.to=' + typeof e['to']);
+//    console.log('move: typeof e=' + typeof e);
+//    console.log('tmove: ypeof e.from=' + typeof e['from']);
+//    console.log('tmove: ypeof e.to=' + typeof e['to']);
 
     var from,to,board;
 
@@ -250,10 +224,14 @@ function move(e) {
         from = e['from'];
         to = e['to'];
     }
-
+//TRYTRY
+    try {
     var thisPiece = pieceValue(e.board[from]);
+            }
+    catch(err) {console.log(e); }
+    var shift = from - to;
 
-    logMove((thisPiece < 0 ? 'white' : 'black') + ' move ' + from + ' / ' + to);
+    logMove((thisPiece < 0 ? 'white' : 'black') + ' move ' + shift + from + ' / ' + to);
     // here  we process what is there and can we even do this..
     // should clear the from and to before calling this so i don't have to
     if (e.board[from] == 0) {
@@ -304,20 +282,25 @@ function logMove(message) {
 // call the move function and
 //chalk the dice as taken
 // empty from and to
-// check if there are stil dice, end turn if there arent
+// check if there are stil dice, end turn if there aren
+var rolldice = function() {
+    return;
+}
+var foo = function() {
+
+//    var diceroll = [{'roll',5},{'roll':2}];
+//   for (var i = diceroll.length - 1; i >= 0; i--) {
+//        console.log('DICE ARE ROLLING',diceroll[i]);
+ //       return diceroll;
+//    }
+    return diceroll;
+}
 
 var moveprocessor = function(arrayin) {
 
     var id = this.id;
     console.log('id = ' + id);
 
-    console.log("moveprocessor: this = ");
-    console.log(this);
-    console.log("moveprocessor: this.id = ",this.id);
-    console.log("moveprocessor: arrayin  = ");
-    console.log(arrayin);
-    console.log('runningBoard   ');
-    console.log(runningBoard);
     console.log(runningBoard[id]);
 
     var thisBoard = {};
@@ -359,12 +342,13 @@ var moveprocessor = function(arrayin) {
     var from = document.getElementById("from").innerText;
     var to = document.getElementById("to").innerText;
     console.log('from',from)
+    console.log('fromi value ',document.getElementById['from'])
 //    if (document.getElementById("from").innerText == "") {
     console.log ('thisboard[id]',thisBoard[id]);
     console.log (thisBoard);
 //    if (thisBoard[id] == 0  && from == ''){
     if (document.getElementById("from").innerText == ""){
-        if (thisBoard[from] == 0) {
+        if (thisBoard[id] == 0) {
             document.getElementById("from").innerText = '';
             document.getElementById("to").innerText = '';
             alert('no pieces on ',id,' to move');
@@ -380,20 +364,27 @@ var moveprocessor = function(arrayin) {
     if ( from != ''
         && to != '' ) {
         if (pieceValue(runningboard[from]) != pieceValue(runningBoard[to])) {
-
             if (Math.abs(runningBoard[to]) > 1 ) {
                 // can't land there 
-                alert('cant land on  ',id,' because other side there');
+                alert('cant land on  ',to,' because other side there');
                 document.getElementById("to").innerText = '';
                 document.getElementById("from").innerText = '';
                 return;
-            } else {
+            } else if (Math.abs(runningBoard[to]) == 1 ) {
                 // blot 
-                setBoard( move({
-                    'from':to,
-                    'to':'b1',
-                    'board':runningBoard
-                }));
+//                setBoard( move({
+//                    'from':to,
+//                    'to':'b1',
+//                    'board':runningBoard
+//                }));
+                setBoard( 
+                    pieceValue(runningBoard[from]) > 0 
+                    ? move({'from':from,
+                        'to':'b1',
+                        'board':runningBoard})
+                    : move({'from':from,
+                        'to':'b2',
+                        'board':runningBoard}));
             }
     
         }
