@@ -193,7 +193,7 @@ function move(e) {
     }
 
     console.log('board.from=' + from
-        + ' board.to=' + to + 'thispiece' + thisPiece);
+        + ' board.to=' + to + ' thispiece=' + thisPiece);
     console.log('e.board.from=' + e.board[from]);
 
     if (pieceValue(e.board[to]) != pieceValue(e.board[from])) {
@@ -246,7 +246,7 @@ var foo = function() {
 
 var moveprocessor = function(arrayin) {
 
-            setStatus(" ");
+            setStatus("...");
     var id = this.id;
     console.log('id = ' + id);
 
@@ -298,6 +298,13 @@ var moveprocessor = function(arrayin) {
 
     if (from == 'k1' || from == 'k2') {
         if (runningBoard['short'] != 'dutchgammon') {
+            if (from =='k1') {
+                    moveCalc = 25;
+            }
+            if (from =='k2') {
+                    moveCalc = 0;
+            }
+        } else {
             // dutch gammon starts with pieces in the kitty
             setStatus("you can't move a piece there");
             clearMove();
@@ -306,7 +313,7 @@ var moveprocessor = function(arrayin) {
     }
 
     var moveCalc = from;
-    // handle picking ujp a piece from the bar 
+    // handle picking up a piece from the bar 
     if (from =='b1') {
             moveCalc = 0;
     }
@@ -326,6 +333,13 @@ var moveprocessor = function(arrayin) {
         setStatus("can't do that");
         return 0;
     }
+    // this doesnt prevent us from putting someone on the 
+    // bar, it's just further down
+    if (to == 'b1' || to == 'b2') {
+        setStatus("you can't just drop it on the bar");
+        return 0;
+    }
+
     if (pieceValue(shift) == pieceValue(runningBoard[from])) {
         console.log('shift same - is good?'); 
     } else {
