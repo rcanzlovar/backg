@@ -102,7 +102,7 @@ function validateBoard (inboard) {
     for (var key  in inboard) {
         if (key == null ) {
             console.log('######## validateBoard: null key - bailing');
-            setStatus('######## validateBoard: null key - bailing');
+            setStatus('ERROR validateBoard: null key - bailing');
             return 0;
         }
         if (typeof inboard[key] == 'number') {
@@ -112,12 +112,12 @@ function validateBoard (inboard) {
     }
     if (balance != 0 ) {
         console.log('######## inboard balance (should be 0) ',balance);
-        setStatus('######## inboard balance (should be 0) ',balance);
+        setStatus('ERROR piece imbalance (should be 0) ',balance);
         return 0;
     }
     if (!(totalpieces == 30  || (totalpieces == 6 && inboard.short == 'hypergammon'))) {
         console.log('######## incorrect number of pieces ',totalpieces);
-        setStatus('######## incorrect number of pieces ',totalpieces);
+        setStatus('ERROR incorrect number of pieces ',totalpieces);
 //        return 0; // dont make this fatel yet
     }
     return 1;
@@ -246,7 +246,7 @@ var foo = function() {
 
 var moveprocessor = function(arrayin) {
 
-            setStatus('');
+            setStatus(" ");
     var id = this.id;
     console.log('id = ' + id);
 
@@ -259,8 +259,8 @@ var moveprocessor = function(arrayin) {
         thisBoard = window.runningBoard;
     }
 
-    console.log("moveprocessor: myboard (should be array of numbers) = ");
-    console.log(thisBoard );
+//    console.log("moveprocessor: myboard (should be array of numbers) = ");
+//    console.log(thisBoard );
 
 /*
     var from = document.getElementById("from").innerText;
@@ -301,21 +301,18 @@ var moveprocessor = function(arrayin) {
             // dutch gammon starts with pieces in the kitty
             setStatus("you can't move a piece there");
             clearMove();
-            return;
+            return 0;
         }
     }
 
     var moveCalc = from;
     // handle picking ujp a piece from the bar 
-    if (from =='b1' || from == 'b2') {
-        if (pieceValue <0 ) {
+    if (from =='b1') {
             moveCalc = 0;
-        } else {
-            moveCalc = 25;
-        }
     }
-
-
+    if (from =='b2') {
+            moveCalc = 25;
+    }
 
     var shift = moveCalc - to; 
 //    var shift = to - moveCalc; 
@@ -325,19 +322,24 @@ var moveprocessor = function(arrayin) {
     console.log('from',from);
     console.log('movecalc',moveCalc);
     console.log('shift',shift);
+    if ( Math.abs(shift) > 6) {
+        setStatus("can't do that");
+        return 0;
+    }
     if (pieceValue(shift) == pieceValue(runningBoard[from])) {
-        console.log('shift same as value - good?'); 
+        console.log('shift same - is good?'); 
     } else {
         console.log('shift not the same, bad');
         setStatus('wrong direction buddy');
         clearMove();
-        return;
+        return 0;
     }
 
     console.log('from',from)
     console.log('from value ',document.getElementById['from'])
     console.log ('thisboard[' + id + ']',thisBoard[id]);
-    console.log (thisBoard);
+//    console.log ('runningboard[' + id + ']',runningBoard[id]);
+//    console.log (thisBoard);
 
     // if there is nothing in from yet.. 
     if (document.getElementById("from").innerText == ""){
@@ -350,7 +352,7 @@ var moveprocessor = function(arrayin) {
             clearMove()
 //            alert('no pieces on ' + this.id + ' to move');
             setStatus('no pieces on ' + this.id + ' to move');
-            return;
+            return 0;
         }
         // otherwise put this value  i
         document.getElementById('action').style.display = 'block';
@@ -369,7 +371,7 @@ var moveprocessor = function(arrayin) {
 //                alert('cant land on  ',to,' because other side there');
                 setStatus ("can't land on  " + to + " because other pieces there");
                 clearMove();
-                return;
+                return 0;
             } else if (Math.abs(runningBoard[to]) == 1 ) {
                 // blot 
 //                setBoard( move({
@@ -404,7 +406,7 @@ function setStatus(message) {
 function clearMove() {
     document.getElementById("from").innerText = '';
     document.getElementById("to").innerText = '';
-        document.getElementById('action').style.display = 'none';
+    document.getElementById('action').style.display = 'none';
 }
 
 // appl the move triggers on all the places that pieces could be
