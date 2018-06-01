@@ -181,6 +181,7 @@ function move(e) {
         console.log(e); 
     }
     // don't enforce but throw an error if it's 
+    //SHIFT HAPPENS
     var shift = to -  from;
 
 
@@ -195,15 +196,18 @@ function move(e) {
     console.log('board.from=' + from
         + ' board.to=' + to + ' thispiece=' + thisPiece);
     console.log('e.board.from=' + e.board[from]);
+    console.log('e.board.to=' + e.board[to]);
 
     if (pieceValue(e.board[to]) != pieceValue(e.board[from])) {
+     logMove(pieceValue(e.board[to]), pieceValue(e.board[from]));
         // not one of us.. if it's too many, just bail
         if (Math.abs(pieceValue(to)) > 1 ) {
             // too many, can't land there, return
             return myBoard;
-        } else if (Math.abs(pieceValue(to) == 1 )) {
+        } else if (pieceValue(to) == thisPiece ) {
+            //THE BUG IS HERE
             console.log('destination has a blot')
-            if (thispiece > 0) {
+            if (thisPiece > 0) {
                 move(from,'b1',e.board);
             } else {
                 move(from,'b2',e.board);
@@ -290,8 +294,7 @@ var moveprocessor = function(arrayin) {
     // blank. If the place we're grabbing is ==0, then drop out with an err.
     var from = document.getElementById("from").innerText;
     var to = document.getElementById("to").innerText;
-    console.log(typeof to);
-    console.log(to);
+
     if (to == '' && from != '') {
         to = id;
     } 
@@ -311,6 +314,7 @@ var moveprocessor = function(arrayin) {
             return 0;
         }
     }
+
 
     var moveCalc = from;
     // handle picking up a piece from the bar 
@@ -369,7 +373,7 @@ var moveprocessor = function(arrayin) {
             return 0;
         }
         // otherwise put this value  i
-        document.getElementById('action').style.display = 'block';
+        document.getElementById('action').style.display = 'inline';
         document.getElementById("from").textContent = this.id;
     } else if (document.getElementById("to").innerText == "") {
         // from wasnt blank and we d
@@ -386,9 +390,10 @@ var moveprocessor = function(arrayin) {
                 setStatus ("can't land on  " + to + " because other pieces there");
                 clearMove();
                 return 0;
-            } else if (Math.abs(runningBoard[to]) == 1 ) {
+            } else if (runningBoard[to] == - pieceValue(runningBoard[from])) {
                 // blot 
 //                setBoard( move({
+    console.log('boaty boaty boaty');
 //                    'from':to,
 //                    'to':'b1',
 //                    'board':runningBoard
