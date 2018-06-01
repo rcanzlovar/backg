@@ -102,6 +102,7 @@ function validateBoard (inboard) {
     for (var key  in inboard) {
         if (key == null ) {
             console.log('######## validateBoard: null key - bailing');
+            setStatus('######## validateBoard: null key - bailing');
             return 0;
         }
         if (typeof inboard[key] == 'number') {
@@ -111,10 +112,12 @@ function validateBoard (inboard) {
     }
     if (balance != 0 ) {
         console.log('######## inboard balance (should be 0) ',balance);
+        setStatus('######## inboard balance (should be 0) ',balance);
         return 0;
     }
     if (!(totalpieces == 30  || (totalpieces == 6 && inboard.short == 'hypergammon'))) {
         console.log('######## incorrect number of pieces ',totalpieces);
+        setStatus('######## incorrect number of pieces ',totalpieces);
 //        return 0; // dont make this fatel yet
     }
     return 1;
@@ -142,59 +145,6 @@ function layboard(arrayin) {
     }
 }
 
-//    var game = document.getElementById("game").innerHTML;
-//        console.log('savegame='+game);
-
-function bullshit() {
-
-    var thisBoard;
-
-    if ((typeof arrayin  == 'string') ) {
-        console.log('layboard: loading board ' + arrayin);
-        getBoardLayout(arrayin);
-        setboard(arrayin);
-
-        // set up an initial board
-        setboard(this.value);
-        console.log("Setup Board with this value=")
-        console.log(this.value);
-    } else {
-
-        setevents({'board':thisBoard});
-
-        //    if ((typeof  arrayin == 'object') || (typeof arrayin  == 'array')) { }
-    	if (arrayin == "board1") {
-    		document.getElementById("displayBoard").innerHTML = board1;
-    		console.log('loading board1');
-    	} else if (arrayin == "board2") {
-    		document.getElementById("displayBoard").innerHTML = board2;
-    		console.log('loading board2');
-    	} else if (arrayin == "board3") {
-    		document.getElementById("displayBoard").innerHTML = board3;
-    		console.log('loading board3');
-    	} else if (arrayin == "board4") {
-    		document.getElementById("displayBoard").innerHTML = board4;
-    		console.log('loading board4');
-    	} else {
-    		document.getElementById("displayBoard").innerHTML = "Board Not Found... You Shouldn't See This";
-    		console.log("Board Not Found... You Shouldn't See This");
-    	}
-
-    }
-    // tjis s where the board was getting set up.
-    if ((typeof arrayin  == 'object') || (typeof arrayin  == 'array')) {
-        console.log('layboard: arrayin.board ' + typeof arrayin['board']);
-        if (typeof  arrayin['board'] == 'array') {
-            var thisBoard = arrayin['board'];
-        }
-
-        if (typeof  thisBoard == 'array' || typeof thisBoard == 'object') {
-            setboard(thisBoard);
-        } else {
-            setboard(game ? game : 'backgammon');
-        }
-    }
-}
 
 //#############################################
 // return +1 or -1 based on whether this is a positive or negative number
@@ -219,17 +169,20 @@ function move(e) {
 
     if ( typeof e == 'object' && typeof e['from'] == 'string') {
         board = e['board'];
-    }
-    if ( typeof e == 'object' && typeof e['from'] == 'string') {
         from = e['from'];
         to = e['to'];
     }
 //TRYTRY
     try {
-    var thisPiece = pieceValue(e.board[from]);
-            }
-    catch(err) {console.log(e); }
-    var shift = from - to;
+        var thisPiece = pieceValue(e.board[from]);
+    }
+    catch(err) {
+        console.log(err); 
+        console.log(e); 
+    }
+    // don't enforce but throw an error if it's 
+    var shift = to -  from;
+
 
     logMove((thisPiece < 0 ? 'white' : 'black') + ' move '+ shift + ' ' + from + ' / ' + to);
     // here  we process what is there and can we even do this..
@@ -257,23 +210,18 @@ function move(e) {
             }
         }
     }
+    // after all is said and done, here is where it is done. 
     e.board[from] -= thisPiece;
     e.board[to] += thisPiece;
-
-//     else if ( pieceValue(to) == 0 || pieceValue(e.board[to]) == pieceValue(e.board[from] ))
-    //either empty or full of friendlies...
-        // if we are here, then this wasn't a 0 ir a
-
-
-    console.log('board.from=' + board[from]
-        + ' board.to=' + board[to]);
+    console.log('board.' + from + '=' + board[from]
+        + ' board.' + to + '=' + board[to]);
+    clearMove();
 
     return e.board;
 }
 //#############################################
 function logMove(message) {
-    console.log(message)
-    ;
+    console.log(message) ;
     document.getElementById("log").innerText += message + "\n";
 }
 //#############################################
@@ -284,7 +232,7 @@ function logMove(message) {
 // empty from and to
 // check if there are stil dice, end turn if there aren
 var rolldice = function() {
-    return;
+    return [5,2];
 }
 var foo = function() {
 
@@ -298,6 +246,7 @@ var foo = function() {
 
 var moveprocessor = function(arrayin) {
 
+            setStatus('');
     var id = this.id;
     console.log('id = ' + id);
 
@@ -341,19 +290,70 @@ var moveprocessor = function(arrayin) {
     // blank. If the place we're grabbing is ==0, then drop out with an err.
     var from = document.getElementById("from").innerText;
     var to = document.getElementById("to").innerText;
-    console.log('from',from)
-    console.log('from value ',document.getElementById['from'])
-//    if (document.getElementById("from").innerText == "") {
-    console.log ('thisboard[id]',thisBoard[id]);
-    console.log (thisBoard);
-//    if (thisBoard[id] == 0  && from == ''){
-    if (document.getElementById("from").innerText == ""){
-        if (thisBoard[id] == 0) {
-            document.getElementById("from").innerText = '';
-            document.getElementById("to").innerText = '';
-            alert('no pieces on ',id,' to move');
+    console.log(typeof to);
+    console.log(to);
+    if (to == '' && from != '') {
+        to = id;
+    } 
+
+    if (from == 'k1' || from == 'k2') {
+        if (runningBoard['short'] != 'dutchgammon') {
+            // dutch gammon starts with pieces in the kitty
+            setStatus("you can't move a piece there");
+            clearMove();
             return;
         }
+    }
+
+    var moveCalc = from;
+    // handle picking ujp a piece from the bar 
+    if (from =='b1' || from == 'b2') {
+        if (pieceValue <0 ) {
+            moveCalc = 0;
+        } else {
+            moveCalc = 25;
+        }
+    }
+
+
+
+    var shift = moveCalc - to; 
+//    var shift = to - moveCalc; 
+//    var shift = moveCalc - from; 
+//    var shift = from - moveCalc; 
+    console.log('to',to);
+    console.log('from',from);
+    console.log('movecalc',moveCalc);
+    console.log('shift',shift);
+    if (pieceValue(shift) == pieceValue(runningBoard[from])) {
+        console.log('shift same as value - good?'); 
+    } else {
+        console.log('shift not the same, bad');
+        setStatus('wrong direction buddy');
+        clearMove();
+        return;
+    }
+
+    console.log('from',from)
+    console.log('from value ',document.getElementById['from'])
+    console.log ('thisboard[' + id + ']',thisBoard[id]);
+    console.log (thisBoard);
+
+    // if there is nothing in from yet.. 
+    if (document.getElementById("from").innerText == ""){
+        // if there is nothing on the place where we clicked, 
+        //  then 
+        // - give a message
+        // - clear the to and from fields
+        // - return to caller 
+        if (thisBoard[id] == 0) {
+            clearMove()
+//            alert('no pieces on ' + this.id + ' to move');
+            setStatus('no pieces on ' + this.id + ' to move');
+            return;
+        }
+        // otherwise put this value  i
+        document.getElementById('action').style.display = 'block';
         document.getElementById("from").textContent = this.id;
     } else if (document.getElementById("to").innerText == "") {
         // from wasnt blank and we d
@@ -366,9 +366,9 @@ var moveprocessor = function(arrayin) {
         if (pieceValue(runningboard[from]) != pieceValue(runningBoard[to])) {
             if (Math.abs(runningBoard[to]) > 1 ) {
                 // can't land there 
-                alert('cant land on  ',to,' because other side there');
-                document.getElementById("to").innerText = '';
-                document.getElementById("from").innerText = '';
+//                alert('cant land on  ',to,' because other side there');
+                setStatus ("can't land on  " + to + " because other pieces there");
+                clearMove();
                 return;
             } else if (Math.abs(runningBoard[to]) == 1 ) {
                 // blot 
@@ -393,10 +393,18 @@ var moveprocessor = function(arrayin) {
             'to':to,
             'board':runningBoard
         }));
-
-        document.getElementById("from").innerHTML = '';
-        document.getElementById("to").innerHTML = '';
+        clearMove();
     }
+}
+
+function setStatus(message) {
+    document.getElementById("p2status").innerText = message;
+}
+
+function clearMove() {
+    document.getElementById("from").innerText = '';
+    document.getElementById("to").innerText = '';
+        document.getElementById('action').style.display = 'none';
 }
 
 // appl the move triggers on all the places that pieces could be
