@@ -110,6 +110,39 @@ function validateBoard (inboard) {
             totalpieces += pieceValue(inboard[key]) * inboard[key];
         }
     }
+    var whitepieces = 0;
+    var slots =['24','23','22','21','20','19','k1'];
+    var i = 0;
+    while (slots[i]){
+        if ( runningBoard[slots[i]] < 0 ) {
+            whitepieces += runningBoard[slots[i]];
+        }
+        i++;
+    }
+
+    var blackpieces = 0;
+    i = 0;
+    slots = ['01','02','03','04','05','06','k2'];
+    while (slots[i]){
+        if ( runningBoard[slots[i]] > 0 ) {
+            blackpieces += runningBoard[slots[i]];
+        }
+        i++;
+    }
+
+//    for (var whitekey in ){
+//        whitepieces += runningBoard[whitekey];
+//        console.log('whitekey',whitekey);
+//    }
+
+    if (whitepieces == -15) {
+        console.log('white can bear off now');
+        setStatus('white can bear off now');
+    }
+    if (blackpieces == 15) {
+        console.log('black can bear off now');
+        setStatus('black can bear off now');
+    }
     if (balance != 0 ) {
         console.log('######## inboard balance (should be 0) ',balance);
         setStatus('ERROR piece imbalance (should be 0) ',balance);
@@ -120,6 +153,8 @@ function validateBoard (inboard) {
         setStatus('ERROR incorrect number of pieces ',totalpieces);
 //        return 0; // dont make this fatel yet
     }
+    console.log('black pieces',blackpieces);
+    console.log('white pieces',whitepieces);
     return 1;
 }
 // # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # 
@@ -199,7 +234,7 @@ function move(e) {
     console.log('e.board.to=' + e.board[to]);
 
     if (pieceValue(e.board[to]) != pieceValue(e.board[from])) {
-     logMove(pieceValue(e.board[to]), pieceValue(e.board[from]));
+//     logMove(pieceValue(e.board[to]), pieceValue(e.board[from]));
         // not one of us.. if it's too many, just bail
         if (Math.abs(pieceValue(to)) > 1 ) {
             // too many, can't land there, return
@@ -386,18 +421,11 @@ var moveprocessor = function(arrayin) {
         if (pieceValue(runningboard[from]) != pieceValue(runningBoard[to])) {
             if (Math.abs(runningBoard[to]) > 1 ) {
                 // can't land there 
-//                alert('cant land on  ',to,' because other side there');
-                setStatus ("can't land on  " + to + " because other pieces there");
+                setStatus (from + " can't land on  " + to + " because other pieces there");
                 clearMove();
                 return 0;
             } else if (runningBoard[to] == - pieceValue(runningBoard[from])) {
-                // blot 
-//                setBoard( move({
-    console.log('boaty boaty boaty');
-//                    'from':to,
-//                    'to':'b1',
-//                    'board':runningBoard
-//                }));
+                // blot handling 
                 setBoard( 
                     pieceValue(runningBoard[from]) > 0 
                     ? move({'from':to,
@@ -407,7 +435,6 @@ var moveprocessor = function(arrayin) {
                         'to':'b2',
                         'board':runningBoard}));
             }
-    
         }
         setBoard( move({
             'from':from,
@@ -418,16 +445,19 @@ var moveprocessor = function(arrayin) {
     }
 }
 
+// # # # # # # # # # # # # # # # # # # # # # # # # # # # # # 
 function setStatus(message) {
     document.getElementById("p2status").innerText = message;
 }
 
+// # # # # # # # # # # # # # # # # # # # # # # # # # # # # # 
 function clearMove() {
     document.getElementById("from").innerText = '';
     document.getElementById("to").innerText = '';
     document.getElementById('action').style.display = 'none';
 }
 
+// # # # # # # # # # # # # # # # # # # # # # # # # # # # # # 
 // appl the move triggers on all the places that pieces could be
 function xxxsetevents(arrayin) {
     var myBoard;
@@ -445,6 +475,7 @@ function xxxsetevents(arrayin) {
     console.log(myBoard );
     console.log(window.runningBoard );
 }
+// # # # # # # # # # # # # # # # # # # # # # # # # # # # # # 
 function setevents(arrayin) {
     var myBoard;
   // set bar
