@@ -85,6 +85,10 @@ console.log(runningBoard);
             window.onload = function () { 
                 makeBoardSelect();
                 window.runningBoard = {};
+
+                // player is whose turn it is right now
+                window.player = -1;
+
                 document.getElementById('displayBoard').innerHTML = rotateBoard('whiteleft');
                 console.log('### setup a backgammon game');
                 window.runningboard = setupGame({'board':window.runningBoard,'layout':'backgammon'});

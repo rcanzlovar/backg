@@ -110,6 +110,21 @@ function validateBoard (inboard) {
             totalpieces += pieceValue(inboard[key]) * inboard[key];
         }
     }
+
+    if (balance != 0 ) {
+        console.log('######## inboard balance (should be 0) ',balance);
+        setStatus('ERROR piece imbalance (should be 0) ',balance);
+        return 0;
+    }
+    
+    if (!(totalpieces == 30  || (totalpieces == 6 && inboard.short == 'hypergammon'))) {
+        console.log('######## incorrect number of pieces ',totalpieces);
+        setStatus('ERROR incorrect number of pieces ',totalpieces);
+//        return 0; // dont make this fatel yet
+    }
+
+// next check for whether either site can be bearing off
+// count white pieces in their home board
     var whitepieces = 0;
     var slots =['24','23','22','21','20','19','k1'];
     var i = 0;
@@ -120,6 +135,12 @@ function validateBoard (inboard) {
         i++;
     }
 
+    if (whitepieces == -15) {
+        console.log('white can bear off now');
+        setStatus('white can bear off now');
+    }
+
+// count black pieces in their home board
     var blackpieces = 0;
     i = 0;
     slots = ['01','02','03','04','05','06','k2'];
@@ -130,29 +151,12 @@ function validateBoard (inboard) {
         i++;
     }
 
-//    for (var whitekey in ){
-//        whitepieces += runningBoard[whitekey];
-//        console.log('whitekey',whitekey);
-//    }
-
-    if (whitepieces == -15) {
-        console.log('white can bear off now');
-        setStatus('white can bear off now');
-    }
     if (blackpieces == 15) {
         console.log('black can bear off now');
         setStatus('black can bear off now');
     }
-    if (balance != 0 ) {
-        console.log('######## inboard balance (should be 0) ',balance);
-        setStatus('ERROR piece imbalance (should be 0) ',balance);
-        return 0;
-    }
-    if (!(totalpieces == 30  || (totalpieces == 6 && inboard.short == 'hypergammon'))) {
-        console.log('######## incorrect number of pieces ',totalpieces);
-        setStatus('ERROR incorrect number of pieces ',totalpieces);
-//        return 0; // dont make this fatel yet
-    }
+
+
     console.log('black pieces',blackpieces);
     console.log('white pieces',whitepieces);
     return 1;
@@ -285,54 +289,59 @@ var foo = function() {
 
 var moveprocessor = function(arrayin) {
 
-            setStatus("...");
+    setStatus("...");
+
     var id = this.id;
     console.log('id = ' + id);
 
-    console.log(runningBoard[id]);
 
     var thisBoard = {};
     if (typeof  arrayin == 'array' && arrayin('board') != null) {
         thisBoard = arrayin['board'];
     } else {
         thisBoard = window.runningBoard;
+//        console.log('runningBoard[',id,']='runningBoard[id]);
     }
 
-//    console.log("moveprocessor: myboard (should be array of numbers) = ");
-//    console.log(thisBoard );
-
-/*
-    var from = document.getElementById("from").innerText;
-    var to = document.getElementById("to").innerText;
-    console.log('from,to,id',from,to,id);
-//    if (from == '') { return;} // bail 
-    if (from == '') { 
-        document.getElementById('from').innerText = id;
-    } else {
-        document.getElementById('to').innerText = id;
-    } // bail 
-
-    from = document.getElementById("from").innerText;
-    to = document.getElementById("to").innerText;
-
-    console.log('to/from: '+ to + ' / ' + from);
-    console.log('moveprocessor: myBoard');
-    console.log(thisBoard);
-    console.log(document.getElementById("to").innerHTML);
-*/
-    //console.log(this.innerHTML);
-
-// still need to figure out this
-//    console.log("background = " + this.background);
-//
     // first.. if we haven't picked a piece, then the from should be
     // blank. If the place we're grabbing is ==0, then drop out with an err.
-    var from = document.getElementById("from").innerText;
-    var to = document.getElementById("to").innerText;
+    var to = '';
+    var from = '';
 
-    if (to == '' && from != '') {
-        to = id;
-    } 
+    // from should be something bu the end of this
+    if (document.getElementById("from").innerText == '') {
+        document.getElementById('from').innerText = id;
+        console.log('moveprocessor: from = ',from);
+        document.getElementById('action').style.display = 'inline';
+        return 1;
+    }
+    from = document.getElementById('from').innerText;
+
+
+//        to = document.getElementById("to").innerText;
+    if (from != '' && from != id) {
+//        if (document.getElementById['to'] == '') {
+            document.getElementById('to').innerText = id;
+            to = document.getElementById('to').innerText = id;
+//        } 
+    }
+    console.log('move to=',to,' from=',from);
+
+
+   // white or black
+    if ((runningBoard['b1']  != 0 
+        && from != 'b1' 
+        && document.getElementById['player'] == 'white' ) 
+        ||
+        (runningBoard['b2']  != 0 
+        && from != 'b2' 
+        && document.getElementById['player'] == 'black' )) {
+
+            console.log('you must move your piece off the bar first');
+            setStatus('you must move your piece off the bar first');
+            clearMove();
+            return 0;
+    }
 
     if (from == 'k1' || from == 'k2') {
         if (runningBoard['short'] != 'dutchgammon') {
@@ -344,7 +353,7 @@ var moveprocessor = function(arrayin) {
             }
         } else {
             // dutch gammon starts with pieces in the kitty
-            setStatus("you can't move a piece there");
+            setStatus("you can't move a piece from there");
             clearMove();
             return 0;
         }
@@ -360,7 +369,11 @@ var moveprocessor = function(arrayin) {
             moveCalc = 25;
     }
 
-    var shift = moveCalc - to; 
+    var shift = 0; 
+    if (moveCalc != 0  && to != 0 ) {
+        shift = moveCalc - to; 
+
+    }
 //    var shift = to - moveCalc; 
 //    var shift = moveCalc - from; 
 //    var shift = from - moveCalc; 
@@ -369,7 +382,7 @@ var moveprocessor = function(arrayin) {
     console.log('movecalc',moveCalc);
     console.log('shift',shift);
     if ( Math.abs(shift) > 6) {
-        setStatus("can't do that");
+        setStatus("can't move more than 6");
         return 0;
     }
     // this doesnt prevent us from putting someone on the 
@@ -379,7 +392,7 @@ var moveprocessor = function(arrayin) {
         return 0;
     }
 
-    if (pieceValue(shift) == pieceValue(runningBoard[from])) {
+    if (shift != 0 && pieceValue(shift) == pieceValue(runningBoard[from])) {
         console.log('shift same - is good?'); 
     } else {
         console.log('shift not the same, bad');
@@ -389,7 +402,7 @@ var moveprocessor = function(arrayin) {
     }
 
     console.log('from',from)
-    console.log('from value ',document.getElementById['from'])
+//    console.log('from value ',document.getElementById['from'].innerText)
     console.log ('thisboard[' + id + ']',thisBoard[id]);
 //    console.log ('runningboard[' + id + ']',runningBoard[id]);
 //    console.log (thisBoard);
@@ -455,6 +468,7 @@ function clearMove() {
     document.getElementById("from").innerText = '';
     document.getElementById("to").innerText = '';
     document.getElementById('action').style.display = 'none';
+    document.getElementById('action').style.display = 'block';
 }
 
 // # # # # # # # # # # # # # # # # # # # # # # # # # # # # # 
