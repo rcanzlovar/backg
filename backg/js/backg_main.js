@@ -19,6 +19,7 @@
 // backg_main.js:function getBoardLayout(argument) {
 // blox.js:function makestack  (e) {
 currentVersion = "";
+//$Id$
 //var myBoard = {};
 
 //###################################################
