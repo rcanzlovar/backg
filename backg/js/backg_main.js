@@ -18,7 +18,7 @@
 // backg_main.js:function makeBoardSelect () {
 // backg_main.js:function getBoardLayout(argument) {
 // blox.js:function makestack  (e) {
-
+currentVersion = "";
 //var myBoard = {};
 
 //###################################################
@@ -293,14 +293,36 @@ var moveprocessor = function(arrayin) {
 
     var id = this.id;
     console.log('id = ' + id);
+    logMove('id = ' + id);
+
+    player = window.player;
+    logMove("player = " + player);
+    logMove("b1 = " + runningBoard['b1']);
+    logMove("b2 = " + runningBoard['b2']);
+    logMove ("player is " + (player == -1 ? 'white' : (player == 1 ? 'black' : 'unkown') ));
 
 
+// very first thing to check - are we on the bar? if so, and we're trying something 
+// else than moving off the bar, then piss off and don't mark a move in progress
+    if (runningBoard['b1'] != 0 
+        && player == -1) {
+        setStatus('White must move off the bar first');
+        clearMove();
+        return 0;
+    }
+    if (runningBoard['b2'] != 0 
+        && player == 1) {
+        setStatus('Black must move off the bar first');
+        clearMove();
+        return 0;
+    }
+
+    // is this still important? 
     var thisBoard = {};
     if (typeof  arrayin == 'array' && arrayin('board') != null) {
         thisBoard = arrayin['board'];
     } else {
         thisBoard = window.runningBoard;
-//        console.log('runningBoard[',id,']='runningBoard[id]);
     }
 
     // first.. if we haven't picked a piece, then the from should be
@@ -317,32 +339,19 @@ var moveprocessor = function(arrayin) {
     }
     from = document.getElementById('from').innerText;
 
+    logMove('***id=',id);
+    logMove('***b1=',runningBoard['b1']);
+    logMove('***b2=',runningBoard['b2']);
+    logMove('***player=',window.player );
+    logMove('***from=',document.getElementById['from'] );
+    
+    console.log('***b1=',runningBoard['b1']);
+    console.log('***b2=',runningBoard['b2']);
+    console.log('***player=',document.getElementById['player'] );
+    console.log('***from=',document.getElementById['from'] );
 
-//        to = document.getElementById("to").innerText;
-    if (from != '' && from != id) {
-//        if (document.getElementById['to'] == '') {
-            document.getElementById('to').innerText = id;
-            to = document.getElementById('to').innerText = id;
-//        } 
-    }
-    console.log('move to=',to,' from=',from);
 
-
-   // white or black
-    if ((runningBoard['b1']  != 0 
-        && from != 'b1' 
-        && document.getElementById['player'] == 'white' ) 
-        ||
-        (runningBoard['b2']  != 0 
-        && from != 'b2' 
-        && document.getElementById['player'] == 'black' )) {
-
-            console.log('you must move your piece off the bar first');
-            setStatus('you must move your piece off the bar first');
-            clearMove();
-            return 0;
-    }
-
+    var moveCalc = from;
     if (from == 'k1' || from == 'k2') {
         if (runningBoard['short'] != 'dutchgammon') {
             if (from =='k1') {
@@ -360,14 +369,27 @@ var moveprocessor = function(arrayin) {
     }
 
 
-    var moveCalc = from;
     // handle picking up a piece from the bar 
     if (from =='b1') {
+        console.log('moving a white piece make movecalc 0');
             moveCalc = 0;
     }
     if (from =='b2') {
+        console.log('moving a black piece make movecalc 25');
             moveCalc = 25;
     }
+
+// all of the special froms are handled, now look into the to's 
+
+//        to = document.getElementById("to").innerText;
+    if (from != '' && from != id) {
+//        if (document.getElementById['to'] == '') {
+            document.getElementById('to').innerText = id;
+            to = document.getElementById('to').innerText = id;
+//        } 
+    }
+    console.log('move to=',to,' from=',from);
+
 
     var shift = 0; 
     if (moveCalc != 0  && to != 0 ) {
