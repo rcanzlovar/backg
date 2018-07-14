@@ -296,6 +296,8 @@ var moveprocessor = function(arrayin) {
     console.log('id = ' + id);
     logMove('id = ' + id);
 
+    var moveCalc = undefined;
+
     player = window.player;
     logMove("player = " + player);
     logMove("b1 = " + runningBoard['b1']);
@@ -305,35 +307,44 @@ var moveprocessor = function(arrayin) {
 
 // very first thing to check - are we on the bar? if so, and we're trying something 
 // else than moving off the bar, then piss off and don't mark a move in progress
-    if (runningBoard['b1'] != 0 
+    // white playing and a negative value on b1
+    if ( runningBoard['b1'] < 0 
         && player == -1) {
-        setStatus('White must move off the bar first');
-        clearMove();
-        return 0;
-    }
-    if (runningBoard['b2'] != 0 
-        && player == 1) {
-        setStatus('Black must move off the bar first');
-        clearMove();
-        return 0;
-    }
+        console.log('moving a white piece make movecalc 0');
+            moveCalc = 0;
+        if (id != 'b1') {
+            setStatus('White must move off the bar first');
+            clearMove();
+            return 0;
+        } 
+    } // else fall through to do the move below... 
 
-    // is this still important? 
-    var thisBoard = {};
-    if (typeof  arrayin == 'array' && arrayin('board') != null) {
-        thisBoard = arrayin['board'];
-    } else {
-        thisBoard = window.runningBoard;
-    }
+
+    // black playing and a positive value on b2
+    if ( runningBoard['b2'] > 0 
+        && player == 1) {
+        console.log('moving a black piece make movecalc 25');
+        moveCalc = 25;
+        if (id != 'b2') {
+            setStatus('Black must move off the bar first');
+            clearMove();
+            return 0;
+        } 
+    } // else fall through to do the move below... 
+
+
+
 
     // first.. if we haven't picked a piece, then the from should be
     // blank. If the place we're grabbing is ==0, then drop out with an err.
     var to = '';
     var from = '';
 
+    moveCalc = moveCalc == undefined ? from : moveCalc;
     // from should be something bu the end of this
     if (document.getElementById("from").innerText == '') {
-        document.getElementById('from').innerText = id;
+//        document.getElementById('from').innerText = id;
+        document.getElementById('from').innerText = from = id;
         console.log('moveprocessor: from = ',from);
         document.getElementById('action').style.display = 'inline';
         return 1;
@@ -352,7 +363,6 @@ var moveprocessor = function(arrayin) {
     console.log('***from=',document.getElementById['from'] );
 
 
-    var moveCalc = from;
     if (from == 'k1' || from == 'k2') {
         if (runningBoard['short'] != 'dutchgammon') {
             if (from =='k1') {
@@ -365,20 +375,12 @@ var moveprocessor = function(arrayin) {
             // dutch gammon starts with pieces in the kitty
             setStatus("you can't move a piece from there");
             clearMove();
+        document.getElementById('action').style.display = 'inline';
             return 0;
         }
     }
 
 
-    // handle picking up a piece from the bar 
-    if (from =='b1') {
-        console.log('moving a white piece make movecalc 0');
-            moveCalc = 0;
-    }
-    if (from =='b2') {
-        console.log('moving a black piece make movecalc 25');
-            moveCalc = 25;
-    }
 
 // all of the special froms are handled, now look into the to's 
 
@@ -390,12 +392,12 @@ var moveprocessor = function(arrayin) {
 //        } 
     }
     console.log('move to=',to,' from=',from);
+    console.log('moveCalc=',moveCalc);
 
 
-    var shift = 0; 
-    if (moveCalc != 0  && to != 0 ) {
-        shift = moveCalc - to; 
-
+    if (moveCalc && to != 0 ) {
+        var shift = moveCalc - to; 
+        console.log('shift happens to be ',shift);
     }
 //    var shift = to - moveCalc; 
 //    var shift = moveCalc - from; 

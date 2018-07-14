@@ -1,3 +1,4 @@
+//blox.js - things related to stacking the pieces
 
 var DEBUG = 0; // verbose while i'm writing 
 

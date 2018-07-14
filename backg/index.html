@@ -64,8 +64,11 @@ console.log(runningBoard);
 <div id="boardposition"></div>
 <div id="log" style='float: right;'>
 </div>
+<div id="controls">
+<button onclick="thingShow(document.getElementById('log'))">Log</button>    
 <a href='#' onclick="console.log('runningboard:');console.log(runningBoard);"><img src='img/info.png' width="30px" alt='contents of runningBoard'></a>
 <a href='#' onclick="clearMove();"><img src='img/info_orange.png' width="30px" alt='clear move'></a>
+</div>
 <span id='action' style="display: none;">
  move <span id='from'></span> / <span id='to'></span>
 </span>
@@ -80,8 +83,16 @@ console.log(runningBoard);
         <script src="js/backg_static.js"></script>
         <script src="js/backg_main.js"></script>
 
-        <!-- Google Analytics: for www.rcanzlovar.com -->
         <script>
+
+function thingShow(thing) {
+//thingShow(document.getElementById('log'))
+    if (thing.style.display === 'none') {
+        thing.style.display = 'inline';
+    } else {
+        thing.style.display = 'none';
+    }
+}
             window.onload = function () { 
                 makeBoardSelect();
                 window.runningBoard = {};
@@ -94,7 +105,9 @@ console.log(runningBoard);
                 window.runningboard = setupGame({'board':window.runningBoard,'layout':'backgammon'});
                 setevents(window.runningBoard);
             }
-
+        </script>
+        <script>
+        <!-- Google Analytics: for www.rcanzlovar.com -->
             window.ga=function(){ga.q.push(arguments)};ga.q=[];ga.l=+new Date;
             ga('create','UA-12556299-2','auto');ga('send','pageview')
         </script>

@@ -7,9 +7,9 @@
 // p2 = k2, b2, p2status = white = negative numbers
 
 
-var black_piece = "<img src='img/bp.gif' alt='X'>";
-var white_piece = "<img src='img/wp.gif' alt='X'>";
-var br = "<br />";
+const black_piece = "<img src='img/bp.gif' alt='X'>";
+const white_piece = "<img src='img/wp.gif' alt='X'>";
+const br = "<br />";
 
 
     // this gets a string argument line the short names below
