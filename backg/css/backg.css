@@ -21,6 +21,9 @@ th {
     border: 0px ;
 }
 
+.right {
+  float: right;
+}
 .top {
   background-image: url(img/tri.png);
  /* background-size: 300px; */
@@ -31,6 +34,26 @@ th {
   font-size: 16px;
 
 }
+/* fancy select thing */ 
+.styled-select select {
+   background: transparent;
+   width: 168px;
+   padding: 5px;
+   font-size: 16px;
+   line-height: 1;
+   border: 0;
+   border-radius: 0;
+   height: 34px;
+   -webkit-appearance: none;
+   }
+   .styled-select {
+   width: 140px;
+   height: 34px;
+   overflow: hidden;
+   background: url(img/down_arrow_select.jpg) no-repeat right #ddd;
+   border: 1px solid #ccc;
+   }
+
 /* http://meyerweb.com/eric/tools/css/reset/ 
    v2.0 | 20110126
    License: none (public domain)

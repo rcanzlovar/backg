@@ -354,7 +354,7 @@ var moveprocessor = function(arrayin) {
     logMove('***id=',id);
     logMove('***b1=',runningBoard['b1']);
     logMove('***b2=',runningBoard['b2']);
-    logMove('***player=',window.player );
+    logMove('***iwindow.player=',window.player );
     logMove('***from=',document.getElementById['from'] );
     
     console.log('***b1=',runningBoard['b1']);
@@ -590,3 +590,22 @@ function makeBoardSelect () {
 function getBoardLayout(argument) {
     return(boards[argument]);
 }
+
+
+function thingShow(thing) {
+//thingShow(document.getElementById('log'))
+    if (thing.style.display === 'none') {
+        thing.style.display = 'inline';
+    } else {
+        thing.style.display = 'none';
+    }
+}
+function togglePlayer(thing) {
+    console.log(thing);
+    logMove(thing);
+    console.log(thing.value);
+    // make the status toggle reflect the select. 
+    document.player = document.getElementById('player_select').value;
+}
+
+// document.player = document.getElementById('player_select').value 
