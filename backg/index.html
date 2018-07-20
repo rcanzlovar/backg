@@ -1,182 +1,117 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>badb0b backgammmon</title>
+        <meta content="backgammon game designed for mobild with multiple starting positions" name="description">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<!DOCTYPE html>
+        <link rel="manifest" href="site.webmanifest">
+        <link rel="apple-touch-icon" href="icon.png">
+        <!-- Place favicon.ico in the root directory -->
 
-
-<html class="no-js"
-    lang>
-
-
-<head>
-    <meta charset="utf-8">
-
-    <meta http-equiv="x-ua-compatible"
-        content="ie=edge">
-
-    <title>badb0b backgammmon</title>
-    <meta content="backgammon game designed for mobild with multiple starting positions"
-        name="description">
-
-    <meta name="viewport"
-        content="width=device-width, initial-scale=1">
-
-    <link rel="manifest"
-        href="site.webmanifest">
-
-    <link rel="apple-touch-icon"
-        href="icon.png">
-
-    <!-- Place favicon.ico in the root directory -->
-    <link rel="stylesheet"
-        href="css/normalize.css">
-
-    <link rel="stylesheet"
-        href="css/backg.css">
-
-</head>
-
-<body>
-    <!-- [if lte IE 9]>
+        <link rel="stylesheet" href="css/normalize.css">
+        <link rel="stylesheet" href="css/backg.css">
+    </head>
+    <body>
+        <!--[if lte IE 9]>
             <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience and security.</p>
 
     <select onclick='alert(this.value);setboard(this.valiue);'>
-        <![endif] -->
-    <!-- Add your site or application content here -->
+        <![endif]-->
 
-    <div id="displayBoard">test thing
-    </div>
-    <!-- id=displayBoard -->
+        <!-- Add your site or application content here -->
+<div id='displayBoard'>
+test thing
+</div> <!-- id=displayBoard -->
+<div id='boardLayout' class="right">
 
-    <div id="boardLayout"
-        class="right">
-        <!-- <a href="#" onclick="setboard('nackgammon');">Nackgammon</a> -->
 
-        <select onchange="layboard(this.value);">
-            <option value="whiteleft">White Left</option>
-            <option value="whiteright">White Right</option>
-            <option value="blackleft">Black Left</option>
-            <option value="blackright">Black Right</option>
-        </select>
-    </div>
+<!--
+    <a href="#" onclick="setboard('nackgammon');">Nackgammon</a>
+-->
+<select onchange='layboard(this.value);'>
+  <option value="whiteleft">White Left</option>
+  <option value="whiteright">White Right</option>
+  <option value="blackleft">Black Left</option>
+  <option value="blackright">Black Right</option>
+</select>
+</div>
 
-    <div id="startboards"
-        class="right">
-
-        <select onchange="
+<div id="startboards" class="right">
+<select
+onchange="
 console.log('Setup Board with this value=' + this.value);
 //getElementById('displayBoard').innerHTML = 
 setupGame({'board':runningBoard,'layout':this.value});
 console.log(runningBoard);
 ">
-            <option value="backgammon">Select game</option>
-            <option value="backgammon">Backgammon</option>
-            <option value="nackgammon">Nackgammon</option>
-            <option value="hypergammon">HyperGammon</option>
-            <option value="longgammon">LongGammon</option>
-            <option value="dutchgammon">Dutch 'gammon</option>
-        </select>
-    </div>
-
-    <div class="right"
-        id="player_display">
-
-        <select onclick="togglePlayer(this);"
-            class="right"
-            id="player_select">
-            <option value="1">Black plays</option>
-            <option value="-1">White plays</option>
-        </select>
-    </div>
-    <div id="startposition" />
-
-    <div id="boardposition" />
+  <option value="backgammon">Select game</option>
+  <option value="backgammon">Backgammon</option>
+  <option value="nackgammon">Nackgammon</option>
+  <option value="hypergammon">HyperGammon</option>
+  <option value="longgammon">LongGammon</option>
+  <option value="dutchgammon">Dutch 'gammon</option>
+</select>
+</div>
+<div class="right" id="player_display" >
+   <select onclick="togglePlayer(this);" class="right" id="player_select">
+      <option value="1">Black plays</option>
+      <option value="-1">White plays</option>
+   </select>
+</div>
 
 
-    <div id="log"
-        style="float: right;">
-    </div>
-
-    <div id="controls">
-        <button onclick="rolldice();">Dice</button>
-        <button onclick="thingShow(document.getElementById('log'))">Log</button>
-        <button onclick="document.getElementById('log').innerText ='';">Clear
-        </button>
-        <a href="#"
-            onclick="console.log('runningboard:');console.log(runningBoard);">
-            <img src="img/info.png"
-                width="30px"
-                alt="contents of runningBoard">
-
-        </a>
-        <a href="#"
-            onclick="clearMove();">
-            <img src="img/info_orange.png"
-                width="30px"
-                alt="clear move">
-
-        </a>
-        <span id="game"
-            style="display: none;" />
-
-    </div>
-
-    <div id="rotations"
-        style="float: right;">
-    </div>
-
-    <span id="action"
-        style="display: none;">move
-        <span id="from" />
-        /
-        <span id="to" />
-
-    </span>
-    <!-- move({'from':'19',
+<div id="startposition"></div>
+<div id="boardposition"></div>
+<div id="log" style='float: right;'>
+</div>
+<div id="controls">
+    <button onclick="rolldice();">Dice</button>
+<button onclick="thingShow(document.getElementById('log'))">Log</button>    
+<button onclick="document.getElementById('log').innerText ='';">Clear</button>    
+<button onclick="document.getElementById('from').innerText ='';">Clear move</button>    
+<a href='#' onclick="console.log('runningboard:');console.log(runningBoard);"><img src='img/info.png' width="30px" alt='contents of runningBoard'></a>
+<a href='#' onclick="clearMove();"><img src='img/info_orange.png' width="30px" alt='clear move'></a>
+    <span id='game' style='display: none;'></span>
+</div>
+<div id="rotations" style="float: right;">
+</div>
+<span id='action' style="display: none;">
+ move <span id='from'></span> / <span id='to'></span>
+</span>
+<!--move({'from':'19',
 'to':'21',
-'board':runningBoard}); -->
-    <script src="https://code.jquery.com/jquery-3.2.1.min.js"
-        integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
-        crossorigin="anonymous" />
+'board':runningBoard});
+-->
+        <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
 
-    <script>
-        window.jQuery ||
-            document.write(
-                '<script src="js/vendor/jquery-3.2.1.min.js"></script>'
-            );
+        <script>window.jQuery || document.write('<script src="js/vendor/jquery-3.2.1.min.js"><\/script>')</script>
+        <script src="js/blox.js"></script>
+        <script src="js/backg_static.js"></script>
+        <script src="js/backg_main.js"></script>
 
-    </script>
-    <script src="js/blox.js" />
+        <script>
 
-    <script src="js/backg_static.js" />
+         window.onload = function () { 
+                makeBoardSelect();
+                window.runningBoard = {};
 
-    <script src="js/backg_main.js" />
+                // player is whose turn it is right now
+                window.player = -1;
 
-
-    <script>
-        window.onload = function() {
-            makeBoardSelect();
-            window.runningBoard = {};
-
-            // player is whose turn it is right now
-            document.getElementById('player_select').value =
-                window.player =  
-                -1;
-
-            document.getElementById("displayBoard").innerHTML = rotateBoard( "whiteleft" );
-            console.log("### setup a backgammon game");
-            window.runningboard = setupGame({
-                board: window.runningBoard,
-                layout: "backgammon"
-            });
-            setevents(window.runningBoard);
-        };
-
-    </script>
-
-    <script><!-- Google Analytics: for www.rcanzlovar.com --> window.ga=function(){ga.q.push(arguments)};ga.q=[];ga.l=+new Date; ga('create','UA-12556299-2','auto');ga('send','pageview')
-    </script>
-    <script src="https://www.google-analytics.com/analytics.js"
-        async
-        defer />
-
-</body>
+                document.getElementById('displayBoard').innerHTML = rotateBoard('whiteleft');
+                console.log('### setup a backgammon game');
+                window.runningboard = setupGame({'board':window.runningBoard,'layout':'backgammon'});
+                setevents(window.runningBoard);
+            }
+        </script>
+        <script>
+        <!-- Google Analytics: for www.rcanzlovar.com -->
+            window.ga=function(){ga.q.push(arguments)};ga.q=[];ga.l=+new Date;
+            ga('create','UA-12556299-2','auto');ga('send','pageview')
+        </script>
+        <script src="https://www.google-analytics.com/analytics.js" async defer></script>
+    </body>
 </html>

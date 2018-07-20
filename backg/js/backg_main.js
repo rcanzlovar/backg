@@ -197,6 +197,15 @@ function pieceValue(e) {
     } else { return 0; }
 }
 
+var playerColor = function (e) {
+    if ( typeof e == 'number') {
+        if (e > 0) { return 'black'; }
+        if (e < 0) { return 'white'; }
+    }
+    return 0;
+}
+
+
 //#############################################
 function move(e) {
 
@@ -287,7 +296,106 @@ var foo = function() {
 //    }
     return diceroll;
 }
+//# # # # # # # # # # # # # # # # # # # # # 
+// starting over, maybe simpler
+function processMove(arrayin) {
+    console.log(arrayin);
+    console.log(this);
+    console.log(this.id);
 
+    var to, from;
+
+    var id = this.id;
+    window.toCalc = -1;
+    window.fromCalc = -1;
+
+console.log('>',document.getElementById('from').innerText,'<');
+
+    if (document.getElementById('from').innerText === '') {
+        fromCalc = getValue(id);
+        from = id;
+        console.log('set from to ',id);
+        document.getElementById('from').innerText = id;
+        document.getElementById('to').innerText = '';
+        document.getElementById('action').style.display = 'inline';
+        return;
+    } else {
+        toCalc = getValue(id);
+        to = id;
+        document.getElementById('to').innerText = id;
+    }
+    from = document.getElementById('from').innerText;
+    console.log('from,to',from,to);
+
+}
+function getValue (id) {
+    var retval = Number(id);
+    if (!isNaN(retval)) {
+        return retval;
+
+    } else  {
+       switch(id) {
+        case 'b1':
+            retval = 0;
+            break;
+        case 'b2':
+            retval = 25;
+            break;
+        case 'k1':
+            retval = 25;
+            break;
+        case 'k2':
+            retval = 0;
+            break;
+        default:
+    
+    }
+    }
+    return retval;
+
+
+
+}
+var bogus = function() {
+console.log(document.getElementById('from'))
+console.log(document.getElementById('to'))
+
+    if (document.getElementById('from') === '') {
+        document.getElementById('from').innerText = from = id;
+        console.log('processMove: from = ',from);
+        document.getElementById('action').style.display = 'inline';
+        return 1; // nothing else to do
+    } else {
+        document.getElementById('to').innerText = to = id;
+        console.log('processMove: to = ',to);
+    }
+    console.log('from - to', from, to);
+
+
+}
+///## # # # # # # # 
+function getCellValue(id) {
+    var calcValue; 
+
+
+    switch(id) {
+        case 'b1':
+            calcValue = 0;
+            break;
+        case 'b2':
+            calcValue = 25;
+            break;
+        case 'k1':
+            calcValue = 25;
+            break;
+        case 'k2':
+            calcValue = 0;
+            break;
+        default:
+    }
+    return calcValue;
+ }       
+ /// # # # # # # # # # # # # # # # # # # #
 var moveprocessor = function(arrayin) {
 
     setStatus("...");
@@ -296,7 +404,7 @@ var moveprocessor = function(arrayin) {
     console.log('id = ' + id);
     logMove('id = ' + id);
 
-    var moveCalc = undefined;
+    var fromCalc = undefined;
 
     player = window.player;
     logMove("player = " + player);
@@ -304,14 +412,13 @@ var moveprocessor = function(arrayin) {
     logMove("b2 = " + runningBoard['b2']);
     logMove ("player is " + (player == -1 ? 'white' : (player == 1 ? 'black' : 'unkown') ));
 
-
 // very first thing to check - are we on the bar? if so, and we're trying something 
 // else than moving off the bar, then piss off and don't mark a move in progress
     // white playing and a negative value on b1
     if ( runningBoard['b1'] < 0 
         && player == -1) {
-        console.log('moving a white piece make movecalc 0');
-            moveCalc = 0;
+        console.log('moving a white piece make fromCalc 0');
+            fromCalc = 0;
         if (id != 'b1') {
             setStatus('White must move off the bar first');
             clearMove();
@@ -323,8 +430,8 @@ var moveprocessor = function(arrayin) {
     // black playing and a positive value on b2
     if ( runningBoard['b2'] > 0 
         && player == 1) {
-        console.log('moving a black piece make movecalc 25');
-        moveCalc = 25;
+        console.log('moving a black piece make fromCalc 25');
+        fromCalc = 25;
         if (id != 'b2') {
             setStatus('Black must move off the bar first');
             clearMove();
@@ -340,7 +447,7 @@ var moveprocessor = function(arrayin) {
     var to = '';
     var from = '';
 
-    moveCalc = moveCalc == undefined ? from : moveCalc;
+    fromCalc = from;
     // from should be something bu the end of this
     if (document.getElementById("from").innerText == '') {
 //        document.getElementById('from').innerText = id;
@@ -363,13 +470,14 @@ var moveprocessor = function(arrayin) {
     console.log('***from=',document.getElementById['from'] );
 
 
+     
     if (from == 'k1' || from == 'k2') {
         if (runningBoard['short'] != 'dutchgammon') {
             if (from =='k1') {
-                    moveCalc = 25;
+                    fromCalc = 25;
             }
             if (from =='k2') {
-                    moveCalc = 0;
+                    fromCalc = 0;
             }
         } else {
             // dutch gammon starts with pieces in the kitty
@@ -392,19 +500,19 @@ var moveprocessor = function(arrayin) {
 //        } 
     }
     console.log('move to=',to,' from=',from);
-    console.log('moveCalc=',moveCalc);
+    console.log('fromCalc=',fromCalc);
 
 
-    if (moveCalc && to != 0 ) {
-        var shift = moveCalc - to; 
+    if (fromCalc && to != 0 ) {
+        var shift = fromCalc - to; 
         console.log('shift happens to be ',shift);
     }
-//    var shift = to - moveCalc; 
-//    var shift = moveCalc - from; 
-//    var shift = from - moveCalc; 
+//    var shift = to - fromCalc; 
+//    var shift = fromCalc - from; 
+//    var shift = from - fromCalc; 
     console.log('to',to);
     console.log('from',from);
-    console.log('movecalc',moveCalc);
+    console.log('fromCalc',fromCalc);
     console.log('shift',shift);
     if ( Math.abs(shift) > 6) {
         setStatus("can't move more than 6");
@@ -429,7 +537,7 @@ var moveprocessor = function(arrayin) {
     console.log('from',from)
 //    console.log('from value ',document.getElementById['from'].innerText)
     console.log ('thisboard[' + id + ']',thisBoard[id]);
-//    console.log ('runningboard[' + id + ']',runningBoard[id]);
+//    console.log ('runningBoard[' + id + ']',runningBoard[id]);
 //    console.log (thisBoard);
 
     // if there is nothing in from yet.. 
@@ -456,7 +564,7 @@ var moveprocessor = function(arrayin) {
     to = document.getElementById("to").innerText;
     if ( from != ''
         && to != '' ) {
-        if (pieceValue(runningboard[from]) != pieceValue(runningBoard[to])) {
+        if (pieceValue(runningBoard[from]) != pieceValue(runningBoard[to])) {
             if (Math.abs(runningBoard[to]) > 1 ) {
                 // can't land there 
                 setStatus (from + " can't land on  " + to + " because other pieces there");
@@ -517,39 +625,17 @@ function xxxsetevents(arrayin) {
 // # # # # # # # # # # # # # # # # # # # # # # # # # # # # # 
 function setevents(arrayin) {
     var myBoard;
-  // set bar
-  document.getElementById('b1').onclick = moveprocessor;
+    var cells = [
+        '01','02','03','04','05','06','07','08',
+        '09','10','11','12','13','14','15','16',
+        '17','18','19','20','21','22','23','24',
+        'b1','b2','k1','k2'];
+    cells.forEach(myFunction);
 
-  document.getElementById('b2').onclick = moveprocessor;
-  //#######
-  // set kitties
-  document.getElementById('k1').onclick = moveprocessor;
-  document.getElementById('k2').onclick = moveprocessor;
-  // gotta be a better way...
-  document.getElementById('01').onclick = moveprocessor;
-  document.getElementById('02').onclick = moveprocessor;
-  document.getElementById('03').onclick = moveprocessor;
-  document.getElementById('04').onclick = moveprocessor;
-  document.getElementById('05').onclick = moveprocessor;
-  document.getElementById('06').onclick = moveprocessor;
-  document.getElementById('07').onclick = moveprocessor;
-  document.getElementById('08').onclick = moveprocessor;
-  document.getElementById('09').onclick = moveprocessor;
-  document.getElementById('10').onclick = moveprocessor;
-  document.getElementById('11').onclick = moveprocessor;
-  document.getElementById('12').onclick = moveprocessor;
-  document.getElementById('13').onclick = moveprocessor;
-  document.getElementById('14').onclick = moveprocessor;
-  document.getElementById('15').onclick = moveprocessor;
-  document.getElementById('16').onclick = moveprocessor;
-  document.getElementById('17').onclick = moveprocessor;
-  document.getElementById('18').onclick = moveprocessor;
-  document.getElementById('19').onclick = moveprocessor;
-  document.getElementById('20').onclick = moveprocessor;
-  document.getElementById('21').onclick = moveprocessor;
-  document.getElementById('22').onclick = moveprocessor;
-  document.getElementById('23').onclick = moveprocessor;
-  document.getElementById('24').onclick = moveprocessor;
+            function myFunction(item, index) {
+                document.getElementById(item).onclick = processMove;
+            }
+
 }
 
 
