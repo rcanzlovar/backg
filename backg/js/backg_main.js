@@ -248,20 +248,11 @@ function move(e) {
     console.log('e.board.to=' + e.board[to]);
 
     if (pieceValue(e.board[to]) != pieceValue(e.board[from])) {
-//     logMove(pieceValue(e.board[to]), pieceValue(e.board[from]));
-        // not one of us.. if it's too many, just bail
-        if (Math.abs(pieceValue(to)) > 1 ) {
-            // too many, can't land there, return
-            return myBoard;
-        } else if (pieceValue(to) == thisPiece ) {
-            //THE BUG IS HERE
-            console.log('destination has a blot')
-            if (thisPiece > 0) {
-                move(from,'b1',e.board);
-            } else {
-                move(from,'b2',e.board);
-            }
-        }
+        checkBlot({
+            'from':from,
+            'to':to,
+            'board':board
+        });
     }
     // after all is said and done, here is where it is done. 
     e.board[from] -= thisPiece;
@@ -272,6 +263,67 @@ function move(e) {
 
     return e.board;
 }
+//# # # # # # # # # # # # # # # 
+function checkBlot(e) {
+    if (typeof e == 'array' 
+        || typeof e == 'object') {
+        if (typeof e.to ==  'string') {
+            to = e.to;
+        }
+        
+        if (typeof e.from ==  'string') {
+            from = e.from;
+        }
+
+        if (typeof e['board'] == 'object' 
+            || typeof e['board'] == 'array') { 
+            myBoard = e['board']; 
+        } 
+    } else if (typeof e == 'string') { 
+        //crickets
+    }
+
+//                move(from,'b2',e.board);
+    // you got here because it looks like there're other fells over 
+    // where you want to land. if there are 2+ we'll deliver the bad
+    // news and return a false. If there's only one, we'll move the 
+    // guy to the bar (minor bit of two step recursion) and 
+    // return a true to our caller, which is probably the routine 
+    // that's making the <<<move>>> 21 jul 18 
+// THIS PART IS ALL ABOUT WHAT IF THERE IS ONE OF THE OTHER FELLAS 
+// WHERE YOU'RE WANTING TO LAND
+// an alternate way of handling some of this is to just
+// sub in an alternate or null onclick= for any cells that 
+// have 2+ of the other guy. food for thought 7/20/18 rca
+//     logMove(pieceValue(e.board[to]), pieceValue(e.board[from]));
+    // not one of us.. if it's too many, just bail
+    if (Math.abs(pieceValue(to)) > 1 ) {
+        // too many, can't land there, return
+        return myBoard;
+    } else if (pieceValue(to) == thisPiece ) {
+        //THE BUG IS HERE
+        console.log('destination has a blot')
+        // here's what we're doing: 
+        // there's a blot of the other color. if I just 
+        // drop this on here, the negative and positive will 
+        // cancel out and will just disappear one piece from 
+        // each side like in Dark Crystal. 
+        // we have to move the piece on the "to" place to the 
+        // bar first:
+        if (thisPiece > 0) {
+//                move(from,'b1',e.board);
+                    move({'from':to,
+                        'to':'b1',
+                        'board':e.board});
+        } else {
+                    move({'from':to,
+                        'to':'b2',
+                        'board':e.board});
+        }
+    }
+}
+    // END OF BLOT PROCESSING
+    //
 //#############################################
 function logMove(message) {
     console.log(message) ;
@@ -306,13 +358,14 @@ function processMove(arrayin) {
     var to, from;
 
     var id = this.id;
-    window.toCalc = -1;
-    window.fromCalc = -1;
+//    window.toCalc = -1;
+//    window.fromCalc = -1;
 
 console.log('>',document.getElementById('from').innerText,'<');
 
     if (document.getElementById('from').innerText === '') {
         fromCalc = getValue(id);
+        console.log('fromCalc-y',fromCalc);
         from = id;
         console.log('set from to ',id);
         document.getElementById('from').innerText = id;
@@ -326,6 +379,18 @@ console.log('>',document.getElementById('from').innerText,'<');
     }
     from = document.getElementById('from').innerText;
     console.log('from,to',from,to);
+    console.log('fromCalc,toCalc',fromCalc, toCalc);
+    console.log(toCalc - fromCalc)
+    var pieceJump = (toCalc - fromCalc);
+    console.log('move is ',pieceJump);
+//    move(from,to);`
+   setBoard(
+    move({'from':from,
+      'to':to,
+      'board':runningBoard}));
+
+    //logMove(from+'/'+to);
+    clearMove();
 
 }
 function getValue (id) {
@@ -601,7 +666,7 @@ function clearMove() {
     document.getElementById("from").innerText = '';
     document.getElementById("to").innerText = '';
     document.getElementById('action').style.display = 'none';
-    document.getElementById('action').style.display = 'block';
+//    document.getElementById('action').style.display = 'block';
 }
 
 // # # # # # # # # # # # # # # # # # # # # # # # # # # # # # 
