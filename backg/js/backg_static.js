@@ -7,8 +7,8 @@
 // p2 = k2, b2, p2status = white = negative numbers
 
 
-const black_piece = "<img src='img/bp.gif' alt='X'>";
-const white_piece = "<img src='img/wp.gif' alt='X'>";
+const p1Piece = "<img src='img/bp.gif' alt='X'>";
+const p2Piece = "<img src='img/wp.gif' alt='O'>";
 const br = "<br />";
 
 
@@ -25,9 +25,29 @@ const br = "<br />";
 
 //##########################################################################
     // traditional backgammon
+    // difference between these is just that numbers are negative. The
+    // first one makes it nice because the white pieces are negative in t
+    // the array and they're depcted as their moves being negatibe (24/22)
+    // rather than postive (4/6)
+
     boards['backgammon']  =   { 
         'long':'Trad. Backgammon',
         'short':'backgammon',
+        'b1':0,'b2':0,'k1':0,'k2':0,
+        'url':'http://www.bkgm.com/rules.html',
+        "01":2, "02":0, "03":0, "04":0, "05":0, "06":-5, 
+        "07":0, "08":-3, "09":0, "10":0, "11":0, "12":5,
+        "13":-5, "14":0, "15":0,"16":0, "17":3, "18":0,
+        "19":5, "20":0, "21":0, "22":0, "23":0,"24":-2};
+        // 13 14 15 16 17 18 19 20 21 22 23 24
+        // -5  0  0  0 +3  0 +5  0  0  0  0 -2
+        //  V  V  V  V  V  V  V  V  V  V  V  V 
+        //  ^  ^  ^  ^  ^  ^  ^  ^  ^  ^  ^  ^ 
+        // +5  0  0  0 -3  0 -5  0  0  0  0 +2
+        // 12 11 10 09 08 07 06 05 04 03 02 01 
+    boards['backgammon2']  =   { 
+        'long':'Trad. Backgammon backwards',
+        'short':'backgammonb',
         'b1':0,'b2':0,'k1':0,'k2':0,
         'url':'http://www.bkgm.com/rules.html',
         "01":-2, "02":0, "03":0, "04":0, "05":0, "06":5, 
