@@ -48,7 +48,7 @@ var setBoard = function (e) {
 
     for (var key  in backgammonBoard) {
         if (key == null ) {
-    		console.log('ERROR null key? does this even happen?');
+    		console.log('ERROR : null key? does this even happen?');
     	} else {
             // try to set the board pieces, and if there isn't a matching HTML element, print a warning
             try {
@@ -119,8 +119,8 @@ function validateBoard (inboard) {
     }
     
     if (!(totalpieces == 30  || (totalpieces == 6 && inboard.short == 'hypergammon'))) {
-        console.log('######## incorrect number of pieces ',totalpieces);
-        setStatus('ERROR incorrect number of pieces ',totalpieces);
+        console.log('######## Incorrect number of pieces ',totalpieces);
+        setStatus('WARNING: Incorrect number of pieces ',totalpieces);
 //        return 0; // dont make this fatel yet
     }
 
@@ -221,6 +221,7 @@ function move(e) {
         from = e['from'];
         to = e['to'];
     }
+    document.getElementById(to).style.backgroundColor='#ofa';
 //TRYTRY
     try {
         var thisPiece = pieceValue(e.board[from]);
@@ -231,10 +232,29 @@ function move(e) {
     }
     // don't enforce but throw an error if it's 
     //SHIFT HAPPENS
-    var shift = to -  from;
+//    var shift = to -  from;
+    var shift = toCalc -  fromCalc;
+    // this would be as good a place as any to check against the dice 
+    // roll
+    if (checkDice({'shift':shift,
+    'dice':window.dice })) {
+        setStatus('nice it matches a die');
+    }
 
 
-    logMove((thisPiece < 0 ? 'white' : 'black') + ' move '+ shift + ' ' + from + ' / ' + to);
+
+
+
+
+
+    var verb = ' move => ' + shift;
+
+    if (to == 'b1' || to == 'b2') {
+        verb = ' bumped to bar ';
+    }
+    logMove( from + ' / ' + to + ' # ' + 
+        (thisPiece < 0 ? 'White' : 'Black') + verb);
+
     // here  we process what is there and can we even do this..
     // should clear the from and to before calling this so i don't have to
     if (e.board[from] == 0) {
@@ -247,7 +267,9 @@ function move(e) {
     console.log('e.board.from=' + e.board[from]);
     console.log('e.board.to=' + e.board[to]);
 
-    if (pieceValue(e.board[to]) != pieceValue(e.board[from])) {
+    if (pieceValue(e.board[to]) != 0 
+        && pieceValue(e.board[to]) != pieceValue(e.board[from])) {
+        console.log('theres another fella there');
         checkBlot({
             'from':from,
             'to':to,
@@ -259,9 +281,24 @@ function move(e) {
     e.board[to] += thisPiece;
     console.log('board.' + from + '=' + board[from]
         + ' board.' + to + '=' + board[to]);
-    clearMove();
+    document.getElementById(to).style.backgroundColor='';
+//    clearMove();
+
+    setTimeout(clearMove, 3000);
+    document.getElementById(from).style.backgroundColor='';
 
     return e.board;
+}
+//# # # # # # # # # # # # # # # 
+
+function checkDice(e) {
+    if (typeof(e)  == 'array' && e.shift == 'number' 
+        && e.dice == 'array') { 
+        for (var i = dice.length - 1; i >= 0; i--) {
+            if (e.shift == dice[i]) { return 1;}
+        }
+        return -1
+    }
 }
 //# # # # # # # # # # # # # # # 
 function checkBlot(e) {
@@ -270,7 +307,7 @@ function checkBlot(e) {
         if (typeof e.to ==  'string') {
             to = e.to;
         }
-        
+
         if (typeof e.from ==  'string') {
             from = e.from;
         }
@@ -282,6 +319,8 @@ function checkBlot(e) {
     } else if (typeof e == 'string') { 
         //crickets
     }
+    var thisPiece = pieceValue(e.board[to]);
+    console.log(thisPiece,'thispiece');
 
 //                move(from,'b2',e.board);
     // you got here because it looks like there're other fells over 
@@ -297,10 +336,11 @@ function checkBlot(e) {
 // have 2+ of the other guy. food for thought 7/20/18 rca
 //     logMove(pieceValue(e.board[to]), pieceValue(e.board[from]));
     // not one of us.. if it's too many, just bail
+    console.log ('just for the record, piecevalue(to) is',pieceValue(to));
     if (Math.abs(pieceValue(to)) > 1 ) {
         // too many, can't land there, return
         return myBoard;
-    } else if (pieceValue(to) == thisPiece ) {
+    } else {
         //THE BUG IS HERE
         console.log('destination has a blot')
         // here's what we're doing: 
@@ -326,8 +366,10 @@ function checkBlot(e) {
     //
 //#############################################
 function logMove(message) {
+    if (typeof message == 'string') {
+        document.getElementById("log").innerText += message + "\n";
+    }
     console.log(message) ;
-    document.getElementById("log").innerText += message + "\n";
 }
 //#############################################
 // make sure we have a from and a to
@@ -348,11 +390,17 @@ var foo = function() {
 //    }
     return diceroll;
 }
+function highlight_cell(a) {
+    if (typeof(a) == 'string'){
+        document.getElementById(a).style.backgroundColor='#4a0'
+    }
+
+}
 //# # # # # # # # # # # # # # # # # # # # # 
 // starting over, maybe simpler
 function processMove(arrayin) {
-    console.log(arrayin);
-    console.log(this);
+//    console.log(arrayin);
+////    console.log(this);
     console.log(this.id);
 
     var to, from;
@@ -370,7 +418,9 @@ console.log('>',document.getElementById('from').innerText,'<');
         console.log('set from to ',id);
         document.getElementById('from').innerText = id;
         document.getElementById('to').innerText = '';
+        document.getElementById(id).style.backgroundColor='#FA0'
         document.getElementById('action').style.display = 'inline';
+        setevents(runningBoard);
         return;
     } else {
         toCalc = getValue(id);
@@ -391,6 +441,7 @@ console.log('>',document.getElementById('from').innerText,'<');
 
     //logMove(from+'/'+to);
     clearMove();
+    //reset the events so we can click on the zeros
 
 }
 function getValue (id) {
@@ -475,7 +526,7 @@ var moveprocessor = function(arrayin) {
     logMove("player = " + player);
     logMove("b1 = " + runningBoard['b1']);
     logMove("b2 = " + runningBoard['b2']);
-    logMove ("player is " + (player == -1 ? 'white' : (player == 1 ? 'black' : 'unkown') ));
+    logMove ("player is " + (player == -1 ? 'p2name' : (player == 1 ? 'p1name' : 'unknow-n') ));
 
 // very first thing to check - are we on the bar? if so, and we're trying something 
 // else than moving off the bar, then piss off and don't mark a move in progress
@@ -666,43 +717,53 @@ function clearMove() {
     document.getElementById("from").innerText = '';
     document.getElementById("to").innerText = '';
     document.getElementById('action').style.display = 'none';
-//    document.getElementById('action').style.display = 'block';
+   // clear the bgcolors on all the cells 
+//    document.getElementById(id).style.backgroundColor='#FA0'
 }
 
 // # # # # # # # # # # # # # # # # # # # # # # # # # # # # # 
 // appl the move triggers on all the places that pieces could be
-function xxxsetevents(arrayin) {
-    var myBoard;
-
-    console.log('inside setevents, what is arrayin?',typeof arrayin);
-    console.log(arrayin);
-    if (typeof  arrayin == 'object') {
-        if (arrayin['board'] != null) {
-            myBoard  = arrayin.board;
-        } else {
-            myBoard  = arrayin;
-        }
-    } 
-    console.log('setevents: myboard = ');
-    console.log(myBoard );
-    console.log(window.runningBoard );
-}
 // # # # # # # # # # # # # # # # # # # # # # # # # # # # # # 
 function setevents(arrayin) {
-    var myBoard;
-    var cells = [
-        '01','02','03','04','05','06','07','08',
+
+    [   '01','02','03','04','05','06','07','08',
         '09','10','11','12','13','14','15','16',
         '17','18','19','20','21','22','23','24',
-        'b1','b2','k1','k2'];
-    cells.forEach(myFunction);
+        'b1','b2','k1','k2'].forEach(seteventsFunction);
 
-            function myFunction(item, index) {
-                document.getElementById(item).onclick = processMove;
-            }
+ 
+//    console.log(document.getElementById('from').innerText )
+    // document.player has the currently selected 
+    // player. Positive is black, negative is white 
+    // 
+
+    console.log('player :',window.player,' from:',
+    document.getElementById('from').innerText) ;
 
 }
 
+//#################################################################
+function seteventsFunction(item, index) {
+    // set it bydefault
+    document.getElementById(item).onclick = processMove;
+
+    var gotFrom = document.getElementById('from').innerText;
+    if ( runningBoard[item] == 0) { 
+        if (gotFrom == '') {
+            document.getElementById(item).onclick = undefined;
+        } 
+    } 
+
+    return; // VVV this doesnt work yet 
+   if (gotFrom == '') {
+       document.getElementById(item).onclick = processMove;
+        console.log('listen ',runningBoard[item],document.getElementById('from').innerText);
+    } else  if ( runningBoard[item] != 0) {
+       document.getElementById(item).onclick = processMove;
+        console.log('listen ',runningBoard[item],document.getElementById('from').innerText);
+       } else { }
+
+}
 
 //#################################################################
 /*
@@ -753,7 +814,6 @@ function thingShow(thing) {
 }
 function togglePlayer(thing) {
     console.log(thing);
-    logMove(thing);
     console.log(thing.value);
     // make the status toggle reflect the select. 
     document.player = document.getElementById('player_select').value;

@@ -18,7 +18,7 @@
         <!--[if lte IE 9]>
             <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience and security.</p>
 
-    <select onclick='alert(this.value);setboard(this.valiue);'>
+    <select onclick='alert(this.value);setboard(this.value);'>
         <![endif]-->
 
         <!-- Add your site or application content here -->
@@ -99,11 +99,17 @@ console.log(runningBoard);
                 window.runningBoard = {};
 
                 // player is whose turn it is right now
-                window.player = -1;
+                window.player = document.getElementById('player_select').value;
+                window.p1dice = [3,4];
+                window.p2dice = [3,4];
+                window.p1Piece = '';
+                window.p2Piece = '';
 
                 document.getElementById('displayBoard').innerHTML = rotateBoard('whiteleft');
                 console.log('### setup a backgammon game');
-                window.runningboard = setupGame({'board':window.runningBoard,'layout':'backgammon'});
+                window.runningboard = 
+                    setupGame({'board':window.runningBoard,
+                            'layout':'backgammon'});
                 setevents(window.runningBoard);
             }
         </script>
