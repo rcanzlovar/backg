@@ -129,7 +129,7 @@ const br = "<br />";
     var boardlayout = [];
 
     boardlayout['whiteleft'] = 
-    "<table>\
+    "<table class='backBlue'>\
         <tr>\
             <th rowspan=6 id='sidepanel' style='background-color: #fa0;'></th>\
             <td rowspan=3 id='k1' style='background-color: #FA0;'></td>\
@@ -137,7 +137,7 @@ const br = "<br />";
             <td rowspan=6 id='rightpanel' style='background-color: #FA0;'></td>\
             <th rowspan=6 id='sidepanel' style='background-color: #FA0;'></th>\
         </tr>\
-        <tr style='background-color: #FA0;'>\
+        <tr id='row1' style='background-color: #FA0;'>\
         <th>01</th>\
         <th>02</th>\
         <th>03</th>\
@@ -152,35 +152,35 @@ const br = "<br />";
         <th>11</th>\
         <th>12</th>\
         </tr>\
-        <tr>\
-        <td id='01' valign='top' align='center' background='img/t1.png'></td>\
-        <td id='02' valign='top' align='center' background='img/t2.png'></td>\
-        <td id='03' valign='top' align='center' background='img/t1.png'></td>\
-        <td id='04' valign='top' align='center' background='img/t2.png'></td>\
-        <td id='05' valign='top' align='center' background='img/t1.png'></td>\
-        <td id='06' valign='top' align='center' background='img/t2.png'></td>\
-        <td id='07' valign='top' align='center' background='img/t1.png'></td>\
-        <td id='08' valign='top' align='center' background='img/t2.png'></td>\
-        <td id='09' valign='top' align='center' background='img/t1.png'></td>\
-        <td id='10' valign='top' align='center' background='img/t2.png'></td>\
-        <td id='11' valign='top' align='center' background='img/t1.png'></td>\
-        <td id='12' valign='top' align='center' background='img/t2.png'></td>\
+        <tr id='row1' style='background-color: #0aF;'>\
+        <td id='01' valign='top' align='center' background='img/tt1.png'></td>\
+        <td id='02' valign='top' align='center' background='img/tt2.png'></td>\
+        <td id='03' valign='top' align='center' background='img/tt1.png'></td>\
+        <td id='04' valign='top' align='center' background='img/tt2.png'></td>\
+        <td id='05' valign='top' align='center' background='img/tt1.png'></td>\
+        <td id='06' valign='top' align='center' background='img/tt2.png'></td>\
+        <td id='07' valign='top' align='center' background='img/tt1.png'></td>\
+        <td id='08' valign='top' align='center' background='img/tt2.png'></td>\
+        <td id='09' valign='top' align='center' background='img/tt1.png'></td>\
+        <td id='10' valign='top' align='center' background='img/tt2.png'></td>\
+        <td id='11' valign='top' align='center' background='img/tt1.png'></td>\
+        <td id='12' valign='top' align='center' background='img/tt2.png'></td>\
     </tr>\
-    <tr>\
+    <tr id='row2' style='background-color: #0aF;'>\
         <td rowspan=3 id='k2' style='background-color: #FA0;'></td>\
-        <td id='24' valign='bottom' align='center' background='img/m2.png'></td>\
-        <td id='23' valign='bottom' align='center' background='img/m1.png'></td>\
-        <td id='22' valign='bottom' align='center' background='img/m2.png'></td>\
-        <td id='21' valign='bottom' align='center' background='img/m1.png'></td>\
-        <td id='20' valign='bottom' align='center' background='img/m2.png'></td>\
-        <td id='19' valign='bottom' align='center' background='img/m1.png'></td>\
+        <td id='24' valign='bottom' align='center' background='img/mt2.png'></td>\
+        <td id='23' valign='bottom' align='center' background='img/mt1.png'></td>\
+        <td id='22' valign='bottom' align='center' background='img/mt2.png'></td>\
+        <td id='21' valign='bottom' align='center' background='img/mt1.png'></td>\
+        <td id='20' valign='bottom' align='center' background='img/mt2.png'></td>\
+        <td id='19' valign='bottom' align='center' background='img/mt1.png'></td>\
                     <th id='b2' rowspan=2 width='30' style='background-color: #FA0;'>e<br>m<br>p<br>t<br>y</th>\
-        <td id='18' valign='bottom' align='center' background='img/m2.png'></td>\
-        <td id='17' valign='bottom' align='center' background='img/m1.png'></td>\
-        <td id='16' valign='bottom' align='center' background='img/m2.png'></td>\
-        <td id='15' valign='bottom' align='center' background='img/m1.png'></td>\
-        <td id='14' valign='bottom' align='center' background='img/m2.png'></td>\
-        <td id='13' valign='bottom' align='center' background='img/m1.png'></td>\
+        <td id='18' valign='bottom' align='center' background='img/mt2.png'></td>\
+        <td id='17' valign='bottom' align='center' background='img/mt1.png'></td>\
+        <td id='16' valign='bottom' align='center' background='img/mt2.png'></td>\
+        <td id='15' valign='bottom' align='center' background='img/mt1.png'></td>\
+        <td id='14' valign='bottom' align='center' background='img/mt2.png'></td>\
+        <td id='13' valign='bottom' align='center' background='img/mt1.png'></td>\
     </tr>\
     <tr style='background-color: #FA0;'>\
         <th>24</th>\
@@ -202,7 +202,7 @@ const br = "<br />";
     </table>";
     //#### BOARD2
     boardlayout['whiteright'] = 
-    "<table>\
+    "<table class='backBlue'>\
         <tr>\
             <th rowspan=6 id='sidepanel' style='background-color: #728;'></th>\
             <td rowspan=3 id='k1' style='background-color: #FA0;'></td>\
@@ -225,35 +225,35 @@ const br = "<br />";
         <th>02</th>\
         <th>01</th>\
         </tr>\
-        <tr>\
-        <td id='12' valign='top' align='center' background='img/t1.png' ></td>\
-        <td id='11' valign='top' align='center' background='img/t2.png' ></td>\
-        <td id='10' valign='top' align='center' background='img/t1.png' ></td>\
-        <td id='09' valign='top' align='center' background='img/t2.png' ></td>\
-        <td id='08' valign='top' align='center' background='img/t1.png' ></td>\
-        <td id='07' valign='top' align='center' background='img/t2.png' ></td>\
-        <td id='06' valign='top' align='center' background='img/t1.png' ></td>\
-        <td id='05' valign='top' align='center' background='img/t2.png' ></td>\
-        <td id='04' valign='top' align='center' background='img/t1.png' ></td>\
-        <td id='03' valign='top' align='center' background='img/t2.png' ></td>\
-        <td id='02' valign='top' align='center' background='img/t1.png' ></td>\
-        <td id='01' valign='top' align='center' background='img/t2.png' ></td>\
+        <tr id='row1' style='background-color: #0aF;'>\
+        <td id='12' valign='top' align='center' background='img/tt1.png' ></td>\
+        <td id='11' valign='top' align='center' background='img/tt2.png' ></td>\
+        <td id='10' valign='top' align='center' background='img/tt1.png' ></td>\
+        <td id='09' valign='top' align='center' background='img/tt2.png' ></td>\
+        <td id='08' valign='top' align='center' background='img/tt1.png' ></td>\
+        <td id='07' valign='top' align='center' background='img/tt2.png' ></td>\
+        <td id='06' valign='top' align='center' background='img/tt1.png' ></td>\
+        <td id='05' valign='top' align='center' background='img/tt2.png' ></td>\
+        <td id='04' valign='top' align='center' background='img/tt1.png' ></td>\
+        <td id='03' valign='top' align='center' background='img/tt2.png' ></td>\
+        <td id='02' valign='top' align='center' background='img/tt1.png' ></td>\
+        <td id='01' valign='top' align='center' background='img/tt2.png' ></td>\
     </tr>\
-    <tr>\
+    <tr id='row2' style='background-color: #0aF;'>\
         <td rowspan=3 id='k2' style='background-color: #FA0;'></td>\
-        <td id='13' valign='bottom' align='center' background='img/m2.png' ></td>\
-        <td id='14' valign='bottom' align='center' background='img/m1.png' ></td>\
-        <td id='15' valign='bottom' align='center' background='img/m2.png' ></td>\
-        <td id='16' valign='bottom' align='center' background='img/m1.png' ></td>\
-        <td id='17' valign='bottom' align='center' background='img/m2.png' ></td>\
-        <td id='18' valign='bottom' align='center' background='img/m1.png' ></td>\
+        <td id='13' valign='bottom' align='center' background='img/mt2.png' ></td>\
+        <td id='14' valign='bottom' align='center' background='img/mt1.png' ></td>\
+        <td id='15' valign='bottom' align='center' background='img/mt2.png' ></td>\
+        <td id='16' valign='bottom' align='center' background='img/mt1.png' ></td>\
+        <td id='17' valign='bottom' align='center' background='img/mt2.png' ></td>\
+        <td id='18' valign='bottom' align='center' background='img/mt1.png' ></td>\
                     <th id='b2' rowspan=2 width='30' style='background-color: #FA0;'>e<br>m<br>p<br>t<br>y</th>\
-        <td id='19' valign='bottom' align='center' background='img/m2.png' ></td>\
-        <td id='20' valign='bottom' align='center' background='img/m1.png' ></td>\
-        <td id='21' valign='bottom' align='center' background='img/m2.png' ></td>\
-        <td id='22' valign='bottom' align='center' background='img/m1.png' ></td>\
-        <td id='23' valign='bottom' align='center' background='img/m2.png' ></td>\
-        <td id='24' valign='bottom' align='center' background='img/m1.png' ></td>\
+        <td id='19' valign='bottom' align='center' background='img/mt2.png' ></td>\
+        <td id='20' valign='bottom' align='center' background='img/mt1.png' ></td>\
+        <td id='21' valign='bottom' align='center' background='img/mt2.png' ></td>\
+        <td id='22' valign='bottom' align='center' background='img/mt1.png' ></td>\
+        <td id='23' valign='bottom' align='center' background='img/mt2.png' ></td>\
+        <td id='24' valign='bottom' align='center' background='img/mt1.png' ></td>\
         </td>\
     </tr>\
     <tr style='background-color: #FA0;'>\
@@ -276,7 +276,7 @@ const br = "<br />";
     </table>";
     //####
     boardlayout['blackleft'] = 
-    "<table>\
+    "<table class='backBlue'>\
         <tr>\
             <th rowspan=6 id='sidepanel'></th>\
             <td rowspan=3 id='k2' style='background-color: #FA0;'></td>\
@@ -299,35 +299,35 @@ const br = "<br />";
         <th>14</th>\
         <th>13</th>\
     </tr>\
-        <tr>\
-        <td id='24' valign='top' align='center' background='img/t2.png'></td>\
-        <td id='23' valign='top' align='center' background='img/t1.png'></td>\
-        <td id='22' valign='top' align='center' background='img/t2.png'></td>\
-        <td id='21' valign='top' align='center' background='img/t1.png'></td>\
-        <td id='20' valign='top' align='center' background='img/t2.png'></td>\
-        <td id='19' valign='top' align='center' background='img/t1.png'></td>\
-        <td id='18' valign='top' align='center' background='img/t2.png'></td>\
-        <td id='17' valign='top' align='center' background='img/t1.png'></td>\
-        <td id='16' valign='top' align='center' background='img/t2.png'></td>\
-        <td id='15' valign='top' align='center' background='img/t1.png'></td>\
-        <td id='14' valign='top' align='center' background='img/t2.png'></td>\
-        <td id='13' valign='top' align='center' background='img/t1.png'></td>\
+        <tr style='background-color: #0aF;' id='row1'>\
+        <td id='24' valign='top' align='center' background='img/tt2.png'></td>\
+        <td id='23' valign='top' align='center' background='img/tt1.png'></td>\
+        <td id='22' valign='top' align='center' background='img/tt2.png'></td>\
+        <td id='21' valign='top' align='center' background='img/tt1.png'></td>\
+        <td id='20' valign='top' align='center' background='img/tt2.png'></td>\
+        <td id='19' valign='top' align='center' background='img/tt1.png'></td>\
+        <td id='18' valign='top' align='center' background='img/tt2.png'></td>\
+        <td id='17' valign='top' align='center' background='img/tt1.png'></td>\
+        <td id='16' valign='top' align='center' background='img/tt2.png'></td>\
+        <td id='15' valign='top' align='center' background='img/tt1.png'></td>\
+        <td id='14' valign='top' align='center' background='img/tt2.png'></td>\
+        <td id='13' valign='top' align='center' background='img/tt1.png'></td>\
     </tr>\
-    <tr>\
+    <tr style='background-color: #0aF;' id='row2'>\
         <td rowspan=3 id='k1' style='background-color: #FA0;' ></td>\
-        <td id='01' valign='bottom' align='center' background='img/m1.png'></td>\
-        <td id='02' valign='bottom' align='center' background='img/m2.png'></td>\
-        <td id='03' valign='bottom' align='center' background='img/m1.png'></td>\
-        <td id='04' valign='bottom' align='center' background='img/m2.png'></td>\
-        <td id='05' valign='bottom' align='center' background='img/m1.png'></td>\
-        <td id='06' valign='bottom' align='center' background='img/m2.png'></td>\
+        <td id='01' valign='bottom' align='center' background='img/mt1.png'></td>\
+        <td id='02' valign='bottom' align='center' background='img/mt2.png'></td>\
+        <td id='03' valign='bottom' align='center' background='img/mt1.png'></td>\
+        <td id='04' valign='bottom' align='center' background='img/mt2.png'></td>\
+        <td id='05' valign='bottom' align='center' background='img/mt1.png'></td>\
+        <td id='06' valign='bottom' align='center' background='img/mt2.png'></td>\
                     <th id='b1' rowspan=2 width='30' style='background-color: #FA0;'>e<br>m<br>p<br>t<br>y</th>\
-        <td id='07' valign='bottom' align='center' background='img/m1.png'></td>\
-        <td id='08' valign='bottom' align='center' background='img/m2.png'></td>\
-        <td id='09' valign='bottom' align='center' background='img/m1.png'></td>\
-        <td id='10' valign='bottom' align='center' background='img/m2.png'></td>\
-        <td id='11' valign='bottom' align='center' background='img/m1.png'></td>\
-        <td id='12' valign='bottom' align='center' background='img/m2.png'></td>\
+        <td id='07' valign='bottom' align='center' background='img/mt1.png'></td>\
+        <td id='08' valign='bottom' align='center' background='img/mt2.png'></td>\
+        <td id='09' valign='bottom' align='center' background='img/mt1.png'></td>\
+        <td id='10' valign='bottom' align='center' background='img/mt2.png'></td>\
+        <td id='11' valign='bottom' align='center' background='img/mt1.png'></td>\
+        <td id='12' valign='bottom' align='center' background='img/mt2.png'></td>\
     </tr>\
     <tr style='background-color: #FA0;'>\
         <th>01</th>\
@@ -349,7 +349,7 @@ const br = "<br />";
     </table>";
     //########################################################################
     boardlayout['blackright'] = 
-    "<table border=2>\
+    "<table class='backBlue' border=2>\
         <tr>\
             <th rowspan=6 id='sidepanel' style='background-color: #728;'></th>\
             <td rowspan=3 id='k2' style='background-color: #FA0;'></td>\
@@ -372,37 +372,37 @@ const br = "<br />";
             <th>23</td>\
             <th>24</td>\
         </tr>\
-        <tr>\
-            <td id='13' valign='top' align='center' background='img/t2.png' ></td>\
-            <td id='14' valign='top' align='center' background='img/t1.png' ></td>\
-            <td id='15' valign='top' align='center' background='img/t2.png' ></td>\
-            <td id='16' valign='top' align='center' background='img/t1.png' ></td>\
-            <td id='17' valign='top' align='center' background='img/t2.png' ></td>\
-            <td id='18' valign='top' align='center' background='img/t1.png' ></td>\
-            <td id='19' valign='top' align='center' background='img/t2.png' ></td>\
-            <td id='20' valign='top' align='center' background='img/t1.png' ></td>\
-            <td id='21' valign='top' align='center' background='img/t2.png' ></td>\
-            <td id='22' valign='top' align='center' background='img/t1.png' ></td>\
-            <td id='23' valign='top' align='center' background='img/t2.png' ></td>\
-            <td id='24' valign='top' align='center' background='img/t1.png' ></td>\
+        <tr id='row1' style='background-color: #0aF;'>\
+            <td id='13' valign='top' align='center' background='img/tt2.png' ></td>\
+            <td id='14' valign='top' align='center' background='img/tt1.png' ></td>\
+            <td id='15' valign='top' align='center' background='img/tt2.png' ></td>\
+            <td id='16' valign='top' align='center' background='img/tt1.png' ></td>\
+            <td id='17' valign='top' align='center' background='img/tt2.png' ></td>\
+            <td id='18' valign='top' align='center' background='img/tt1.png' ></td>\
+            <td id='19' valign='top' align='center' background='img/tt2.png' ></td>\
+            <td id='20' valign='top' align='center' background='img/tt1.png' ></td>\
+            <td id='21' valign='top' align='center' background='img/tt2.png' ></td>\
+            <td id='22' valign='top' align='center' background='img/tt1.png' ></td>\
+            <td id='23' valign='top' align='center' background='img/tt2.png' ></td>\
+            <td id='24' valign='top' align='center' background='img/tt1.png' ></td>\
         </tr>\
-        <tr>\
+        <tr id='row2' style='background-color: #0aF;'>\
             <td rowspan=3 id='k1' style='background-color: #FA0;'></td>\
-            <td id='12' valign='bottom' align='center' background='img/m1.png' ></td>\
-            <td id='11' valign='bottom' align='center' background='img/m2.png' ></td>\
-            <td id='10' valign='bottom' align='center' background='img/m1.png' ></td>\
-            <td id='09' valign='bottom' align='center' background='img/m2.png' ></td>\
-            <td id='08' valign='bottom' align='center' background='img/m1.png' ></td>\
-            <td id='07' valign='bottom' align='center' background='img/m2.png' ></td>\
+            <td id='12' valign='bottom' align='center' background='img/mt1.png' ></td>\
+            <td id='11' valign='bottom' align='center' background='img/mt2.png' ></td>\
+            <td id='10' valign='bottom' align='center' background='img/mt1.png' ></td>\
+            <td id='09' valign='bottom' align='center' background='img/mt2.png' ></td>\
+            <td id='08' valign='bottom' align='center' background='img/mt1.png' ></td>\
+            <td id='07' valign='bottom' align='center' background='img/mt2.png' ></td>\
                     <th id='b1' rowspan=2 width='30' style='background-color: #FA0;'>e<br>m<br>p<br>t<br>y</th>\
-            <td id='06' valign='bottom' align='center' background='img/m1.png' ></td>\
-            <td id='05' valign='bottom' align='center' background='img/m2.png' ></td>\
-            <td id='04' valign='bottom' align='center' background='img/m1.png' ></td>\
-            <td id='03' valign='bottom' align='center' background='img/m2.png' ></td>\
-            <td id='02' valign='bottom' align='center' background='img/m1.png' ></td>\
-            <td id='01' valign='bottom' align='center' background='img/m2.png' ></td>\
+            <td id='06' valign='bottom' align='center' background='img/mt1.png' ></td>\
+            <td id='05' valign='bottom' align='center' background='img/mt2.png' ></td>\
+            <td id='04' valign='bottom' align='center' background='img/mt1.png' ></td>\
+            <td id='03' valign='bottom' align='center' background='img/mt2.png' ></td>\
+            <td id='02' valign='bottom' align='center' background='img/mt1.png' ></td>\
+            <td id='01' valign='bottom' align='center' background='img/mt2.png' ></td>\
         </tr>\
-        <tr style='background-color: #FA0;'>\
+        <tr id='row1' style='background-color: #FA0;'>\
             <th>12</td>\
             <th>11</td>\
             <th>10</td>\
