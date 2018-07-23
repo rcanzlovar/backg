@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="x-ua-compatible" content="ie=edge">
-        <title>badb0b backgammmon</title>
+        <title>badb0b backgammon</title>
         <meta content="backgammon game designed for mobild with multiple starting positions" name="description">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -56,11 +56,12 @@ console.log(runningBoard);
 </select>
 </div>
 <div class="right" id="player_display" >
-   <select onclick="togglePlayer(this);" class="right" id="player_select">
+   <select class="right" id="player_select">
       <option value="1">Black plays</option>
       <option value="-1">White plays</option>
    </select>
 </div>
+<button onclick="togglePlayer(document.getElementById('player_select'));">switch users</button>
 
 
 <div id="startposition"></div>
@@ -110,7 +111,7 @@ console.log(runningBoard);
                 window.runningboard = 
                     setupGame({'board':window.runningBoard,
                             'layout':'backgammon'});
-                setevents(window.runningBoard);
+                setEvents(window.runningBoard);
             }
         </script>
         <script>

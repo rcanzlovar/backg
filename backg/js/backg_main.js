@@ -13,7 +13,7 @@
 // backg_main.js:function logMove(message) {
 // backg_main.js:// call the move function and
 // backg_main.js:var moveprocessor = function(arrayin) {
-// backg_main.js:function setevents(arrayin) {
+// backg_main.js:function setEvents(arrayin) {
 // backg_main.js:function rotateBoard(argument) {
 // backg_main.js:function makeBoardSelect () {
 // backg_main.js:function getBoardLayout(argument) {
@@ -61,7 +61,7 @@ var setBoard = function (e) {
             catch(err) { }
         }
     }
-    setevents(backgammonBoard);
+    setEvents(backgammonBoard);
     try {
         document.getElementById("p1status").innerHTML = backgammonBoard["long"];
         document.getElementById("p1status").innerHTML += "<a href='" + backgammonBoard["url"] + "' target='_blank'>About</a>";
@@ -123,7 +123,11 @@ function validateBoard (inboard) {
         setStatus('WARNING: Incorrect number of pieces ',totalpieces);
 //        return 0; // dont make this fatel yet
     }
+    return 1;
+}
 
+
+function bearoffCheck () {
 // next check for whether either site can be bearing off
 // count white pieces in their home board
     var whitepieces = 0;
@@ -170,7 +174,7 @@ function layboard(arrayin) {
     console.log(arrayin);
 
     document.getElementById("displayBoard").innerHTML =  rotateBoard(arrayin);
-    setevents({'board':runningBoard});
+    setEvents({'board':runningBoard});
 
     console.log('runningBoard');
     console.log(runningBoard);
@@ -234,12 +238,24 @@ function move(e) {
     //SHIFT HAPPENS
 //    var shift = to -  from;
     var shift = toCalc -  fromCalc;
+        setStatus('');
+        console.log('pvshift',pieceValue(shift));
+        console.log('thisPiece',thisPiece);
+        console.log('shift',shift);
+        console.log('player=',window.player);
+
+
+
+    if (pieceValue(shift) != document.player) {
+        setStatus('this is wrong sir');
+    }
     // this would be as good a place as any to check against the dice 
     // roll
     if (checkDice({'shift':shift,
     'dice':window.dice })) {
         setStatus('nice it matches a die');
     }
+//    alert('pevv value',shift,'=',document.player,'<<<');
 
 
 
@@ -259,8 +275,11 @@ function move(e) {
     // should clear the from and to before calling this so i don't have to
     if (e.board[from] == 0) {
         console.log ("nothing to move");
+        document.getElementById(from).style.backgroundColor='';
         return(e.board); // and bail..
     }
+
+
 
     console.log('board.from=' + from
         + ' board.to=' + to + ' thispiece=' + thisPiece);
@@ -420,7 +439,7 @@ console.log('>',document.getElementById('from').innerText,'<');
         document.getElementById('to').innerText = '';
         document.getElementById(id).style.backgroundColor='#FA0'
         document.getElementById('action').style.display = 'inline';
-        setevents(runningBoard);
+        setEvents(runningBoard);
         return;
     } else {
         toCalc = getValue(id);
@@ -442,8 +461,8 @@ console.log('>',document.getElementById('from').innerText,'<');
     //logMove(from+'/'+to);
     clearMove();
     //reset the events so we can click on the zeros
-
 }
+//# # # # # # # # # # # # # # #
 function getValue (id) {
     var retval = Number(id);
     if (!isNaN(retval)) {
@@ -468,26 +487,6 @@ function getValue (id) {
     }
     }
     return retval;
-
-
-
-}
-var bogus = function() {
-console.log(document.getElementById('from'))
-console.log(document.getElementById('to'))
-
-    if (document.getElementById('from') === '') {
-        document.getElementById('from').innerText = from = id;
-        console.log('processMove: from = ',from);
-        document.getElementById('action').style.display = 'inline';
-        return 1; // nothing else to do
-    } else {
-        document.getElementById('to').innerText = to = id;
-        console.log('processMove: to = ',to);
-    }
-    console.log('from - to', from, to);
-
-
 }
 ///## # # # # # # # 
 function getCellValue(id) {
@@ -599,7 +598,7 @@ var moveprocessor = function(arrayin) {
             // dutch gammon starts with pieces in the kitty
             setStatus("you can't move a piece from there");
             clearMove();
-        document.getElementById('action').style.display = 'inline';
+            document.getElementById('action').style.display = 'inline';
             return 0;
         }
     }
@@ -680,7 +679,10 @@ var moveprocessor = function(arrayin) {
     to = document.getElementById("to").innerText;
     if ( from != ''
         && to != '' ) {
-        if (pieceValue(runningBoard[from]) != pieceValue(runningBoard[to])) {
+        if (pieceValue(runningBoard[to]) != 0 
+            && pieceValue(runningBoard[from]) != pieceValue(runningBoard[to])) {
+            // they are different and not zero
+        console.log("to place is ",runningBoard[to])
             if (Math.abs(runningBoard[to]) > 1 ) {
                 // can't land there 
                 setStatus (from + " can't land on  " + to + " because other pieces there");
@@ -716,20 +718,44 @@ function setStatus(message) {
 function clearMove() {
     document.getElementById("from").innerText = '';
     document.getElementById("to").innerText = '';
+
+    // clear anything that had been done to thecell 
     document.getElementById('action').style.display = 'none';
-   // clear the bgcolors on all the cells 
-//    document.getElementById(id).style.backgroundColor='#FA0'
+        ['01','02','03','04','05','06','07','08',
+        '09','10','11','12','13','14','15','16',
+        '17','18','19','20','21','22','23',
+        '24'].forEach(clearMoveFunction1);
+
+        // reset the background colors of the side bars 
+        ['b1','b2','k1','k2'].forEach(clearMoveFunction2);
+
+        // fix the event handlers on the thing
+        setEvents();
+}
+
+function clearMoveFunction1(item,index) {
+    // remove any background color so that the underlying colors
+    // show through 
+//    document.getElementById(item).style.backgroundColor='';
+    document.getElementById(item).style.backgroundColor=undefined
+}
+
+function clearMoveFunction2(item,index) {
+    document.getElementById(item).style.backgroundColor='#FA0';
 }
 
 // # # # # # # # # # # # # # # # # # # # # # # # # # # # # # 
 // appl the move triggers on all the places that pieces could be
 // # # # # # # # # # # # # # # # # # # # # # # # # # # # # # 
-function setevents(arrayin) {
+function setEvents(arrayin) {
 
+    console.log('setEvents');
+    console.log(document.player);
+    console.log(runningBoard[from]);
     [   '01','02','03','04','05','06','07','08',
         '09','10','11','12','13','14','15','16',
         '17','18','19','20','21','22','23','24',
-        'b1','b2','k1','k2'].forEach(seteventsFunction);
+        'b1','b2','k1','k2'].forEach(setEventsFunction);
 
  
 //    console.log(document.getElementById('from').innerText )
@@ -743,18 +769,22 @@ function setevents(arrayin) {
 }
 
 //#################################################################
-function seteventsFunction(item, index) {
+function setEventsFunction(item, index) {
     // set it bydefault
     document.getElementById(item).onclick = processMove;
 
     var gotFrom = document.getElementById('from').innerText;
-    if ( runningBoard[item] == 0) { 
+    if (gotFrom == ''  && runningBoard[item] == 0) { 
         if (gotFrom == '') {
             document.getElementById(item).onclick = undefined;
         } 
     } 
 
+//    if (pieceValue(runningBoard[from])  != document.player) {
+//        document.getElementById(item).onclick = undefined;
+//    }
     return; // VVV this doesnt work yet 
+
    if (gotFrom == '') {
        document.getElementById(item).onclick = processMove;
         console.log('listen ',runningBoard[item],document.getElementById('from').innerText);
@@ -765,6 +795,24 @@ function seteventsFunction(item, index) {
 
 }
 
+function setEventsTemplate(arrayin) {
+
+    [   '01','02','03','04','05','06','07','08',
+        '09','10','11','12','13','14','15','16',
+        '17','18','19','20','21','22','23','24',
+        'b1','b2','k1','k2'].forEach(setEventsTemplateFunction);
+
+ 
+
+    console.log('player :',window.player,' from:',
+    document.getElementById('from').innerText) ;
+}
+
+//#################################################################
+function setEventsTemplateFunction(item, index) {
+     return item;
+
+}
 //#################################################################
 /*
 Getting stuff out of an element summary
@@ -812,11 +860,16 @@ function thingShow(thing) {
         thing.style.display = 'none';
     }
 }
+// tied in with the select between black and white , but its 
+// a button 
 function togglePlayer(thing) {
-    console.log(thing);
     console.log(thing.value);
+    thing.value *= -1;
+    console.log('document.player',thing.value);
     // make the status toggle reflect the select. 
     document.player = document.getElementById('player_select').value;
+    // tied in with the select between black and white , but its 
+    // a button 
 }
 
 // document.player = document.getElementById('player_select').value 
