@@ -1,0 +1,332 @@
+
+
+
+
+
+
+.rich-panel-body {
+    padding: 3px;
+}
+
+  table, a, div, span, form, body {
+    font-size: 12px;
+    font-family: Arial, Helvetica, times, Verdana, serif, sans-serif;
+  }
+  
+  table:hover, a:hover, div:hover, span:hover, form:hover, body:hover {
+    font-family: Arial, Helvetica, times, Verdana, serif, sans-serif;
+  }
+
+  .invisible {visibility: hidden;}
+  .hidden {display: none;}
+  .inline {display: inline;}
+  .nowrap {white-space: nowrap;}
+  .scrollbars {overflow: auto;}
+
+  .cursorPointer { cursor: pointer; }
+  .cursorDefault { cursor: default; }
+  .sizeSmaller   { font-size: 10px; }
+  .sizeSmall   { font-size: 11px; }
+  .sizeNormal  { font-size: 12px; }
+  .sizeLarge   { font-size: 13px; }
+  .sizeHuge   { font-size: 15px; }
+  .bold { font-weight: bold; }
+  .italic { font-style: italic; }
+  .normal {font-weight: normal;}
+  .underline {text-decoration: underline;}
+  .strikethrough {text-decoration: line-through;}
+  .noDecoration { text-decoration: none; }
+
+  .noHyperlink { cursor: default; text-decoration: none; }
+  .hyperlink { cursor: pointer; text-decoration: none; },
+  .hyperlink:link { cursor: pointer; text-decoration: none; }
+  .hyperlink:hover { cursor: pointer; text-decoration: underline; }
+
+  .alignTop {vertical-align: top;}
+  .alignMiddle {vertical-align: middle;}
+  .alignBottom {vertical-align: bottom;}
+  .alignLeft {text-align: left;}
+  .alignCenter {text-align: center;}
+  .alignRight {text-align: right;}
+
+  .skinBackground {background-color:#F3F2F2;}
+
+  .backLight {background-color: #E4E4E4;}
+  .backMed {background-color: #FFA02F;}
+  .backDark {background-color: #666666;}
+  .backWhite {background-color: WHITE;}
+  .backRed {background-color: RED;}
+
+  .colorLight {color: #E4E4E4;}
+  .colorMed {color: #FFA02F;}
+  .colorDark {color: #666666;}
+  .colorGray {color: GRAY;}
+  .colorBlack {color: BLACK;}
+  .colorRed {color: RED;}
+  .colorGreen {color: GREEN;}
+  .colorOrange {color: ORANGE;}
+  .colorWhite {color: WHITE;}
+  .colorBlue {color: BLUE;}
+
+  .noBorder {border: 0px;}
+  .border {border: 1px;}
+  .borderLeft {border-left: solid 1px;}
+  .borderRight {border-right: solid 1px;}
+  .borderTop {border-top: solid 1px;}
+  .borderBottom {border-bottom: solid 1px;}
+  .borderColorRed  {border: 1px solid RED;}
+  .borderColorMed  {border: 1px solid #FFA02F;}
+
+  .smallPadding {padding:1px}
+  .padding {padding: 3px;}
+  .largePadding {padding:7px}
+  .noPadding {padding: 0px;}
+  .narrowRowPadding {padding:1px 3px 1px 3px;}
+
+  .spacing {margin: 3px;}
+  .noSpacing {margin: 0px;}
+
+  .width100p { width: 100%; }
+  .width50p { width: 50%; }
+  .width95p { width: 100%; }
+  .width800 {width: 800px;}
+  .width730 {width: 730px;}
+  .width700 {width: 700px;}
+  .width500 {width: 500px;}
+  .width400 {width: 400px;}
+  .width325 {width: 325px;}
+  .width300 {width: 300px;}
+  .width275 {width: 275px;}
+  .width250 {width: 250px;}
+  .width210 {width: 210px;}
+  .width200 {width: 200px;}
+  .width190 {width: 190px;}
+  .width175 {width: 175px;}
+  .width150 {width: 150px;}
+  .width125 {width: 125px;}
+  .width121 {width: 121px;}
+  .width100 {width: 100px;}
+  .width85 {width: 85px;}
+  .width75 {width: 75px;}
+  .width60 {width: 60px;}
+  .width50 {width: 50px;}
+  .width40 {width: 40px;}
+  .width30 {width: 30px;}
+
+  .height100p {height: 100%;}
+  .height50p {height: 50%;}
+  .height20 {height: 20px;}
+  .height50 {height: 50px;}
+  .height100 {height: 100px;}
+  .height200 {height: 200px;}
+  .height500 {height: 500px;}
+  .height1000 {height: 1000px;}
+  
+
+  .rel {position:relative}
+  .abs {position:absolute}
+  .fill {left:0px;right:0px;}
+
+  .zNeg1 {z-index:-1}
+  .zNeg2 {z-index:-2}
+  .zNeg3 {z-index:-3}
+  .z0 {z-index:0}
+  .z1 {z-index:1}
+  .z2 {z-index:2}
+  .z3 {z-index:3}
+
+  .inputButtonWidth {width:60px;}
+  .inputButtonIcon {border:0px;padding:0px;vertical-align:middle}
+
+  .errorMessage {
+    color: red;
+    font-weight: bold;
+  }
+
+  .helpText {
+     font-style: italic;
+  }
+  
+  /* STANDARD INTERFACE STYLES */
+
+    .entryLabel {background-color: #FFA02F;  font-weight: bold; height: 30; vertical-align: middle}
+    .entryValue {background-color: #E4E4E4; vertical-align: middle }
+
+    .displayLabel {background-color: #FFA02F;  font-weight: bold; vertical-align: middle}
+    .displayValue {background-color: #E4E4E4; vertical-align: middle }
+
+    .tableHeader,
+    .tableHeader:hover {
+      font-weight: bold;
+      color: #666666;
+      background-color: #E4E4E4;
+      border: 1px solid #FFA02F;
+    }
+    .tableColumn,
+    .tableColumn:hover {
+      color: #666666;
+      border: 1px solid #FFA02F;
+      padding: 3px;
+    }
+
+    .tableHeaderText,
+    .tableHeaderText:hover {
+      font-weight: bold;
+      color: #666666;
+      background-color: #E4E4E4;
+    }
+    .tableColumnText,
+    .tableColumnText:hover {
+      color: #666666;
+    }
+
+    .tabWidth {width: 650}
+    .tabHeight {height: 475}
+
+    .errorMessage {
+      color: red;
+      font-weight: bold;
+    }
+
+    .helpText {
+       font-style: italic;
+    }
+
+/* CUSTOM APPLICATION STYLES */
+  /* engage menu */
+  
+  .menuNavigator {
+      height: 100%;
+      width: 150px;
+      vertical-align: top;
+      background-color: #E4E4E4;
+    }
+
+    .menuGroup,
+    .menuGroup:link {
+      color: #000000;
+      font-size: 13px;
+      text-decoration: none;
+    }
+    .menuGroup:hover {
+      text-decoration: underline;
+    }
+
+    .menuGroupSelected,
+    .menuGroupSelected:link {
+      color: #000000;
+      font-size: 14px;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    .menuGroupSelected:hover {
+      text-decoration: underline;
+    }
+
+    .menuItem,
+    .menuItem:link {
+      color: #000000;
+      font-size: 11px;
+      text-decoration: none;
+    }
+    .menuItem:hover {
+      text-decoration: underline;
+    }
+
+    .menuItemSelected,
+    .menuItemSelected:link {
+      color: #000000;
+      font-size: 14px;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    .menuItemSelected:hover {
+      text-decoration: underline;
+    }
+
+    .tableHighlightRow {background-color: yellow}
+
+    /* remove tab wiggle & PL tab colors */
+    .myFaces_panelTabbedPane_activeHeaderCell input{cursor: default;}
+    .myFaces_panelTabbedPane_activeHeaderCell input:hover{border-top: orange solid 0px;}
+    .myFaces_panelTabbedPane_inactiveHeaderCell input{border-top: orange solid 0px;background-color: #E4E4E4;}
+    .myFaces_panelTabbedPane_inactiveHeaderCell input:hover{border-top: orange solid 0px;background-color: #666666; color: WHITE;}
+
+
+    .deviceTabHeight {height: 400}
+    .graphColumnHeight {height: 27px}
+
+  /*  OHD */
+  .productName {color: #666666; font-weight: bold; font-size: 15px; vertical-align: middle}
+
+    /* Bottom CSS override */
+    .disabledHyperlink { cursor: default; text-decoration: none; outline: none; },
+    .disabledHyperlink:link { cursor: default; text-decoration: none; outline: none; }
+    .disabledHyperlink:hover { cursor: default; text-decoration: none; outline: none; }
+    .disabledHyperlink:focus { cursor: default; text-decoration: none; outline: none; }
+
+
+
+/* product specific classes*/ 
+
+.darkText {
+  color: #666666;
+}
+
+.large .buttonText {
+  font-size: 16px;  
+}
+
+.veryLarge .buttonText {
+  font-size: 21px;  
+}
+
+.portalButton {
+  color: #666666;
+  border-bottom: 1px dotted #CCCCCC;  
+  margin: 1px;
+  padding: 6px 10px 6px 10px;
+}
+
+.portalButton:hover {
+  color: #FFA02F;
+}
+  
+.middleBar {
+  background: #666666
+}
+
+.whiteLink {
+  font-weight: normal;
+  font-size: 11px;
+  color: white;
+}
+
+.whiteLink:hover {
+  font-weight: normal;
+  font-size: 11px;
+  color: #FFA02F;
+}
+
+html, body, #wrapper {
+  background-color: #989898;
+  height: 100%;
+  border: none;
+  text-align: center;
+}
+
+#wrapper {
+  margin: 0 auto;
+  text-align: left;
+  vertical-align: middle;
+}
+
+.conference {
+  cursor:pointer;
+}
+.conference:hover {
+  background: #CCCCCC;
+}
+
+
+
