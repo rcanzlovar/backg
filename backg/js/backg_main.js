@@ -736,7 +736,9 @@ function clearMove() {
 function clearMoveFunction1(item,index) {
     // remove any background color so that the underlying colors
     // show through 
-//    document.getElementById(item).style.backgroundColor='';
+    // philosophical consideration whether it is better to assign it 
+    // to '' or unassigned. 
+    // ##   document.getElementById(item).style.backgroundColor='';
     document.getElementById(item).style.backgroundColor=undefined
 }
 
@@ -745,13 +747,16 @@ function clearMoveFunction2(item,index) {
 }
 
 // # # # # # # # # # # # # # # # # # # # # # # # # # # # # # 
-// appl the move triggers on all the places that pieces could be
+// apply the move triggers on all the places that pieces could be
 // # # # # # # # # # # # # # # # # # # # # # # # # # # # # # 
 function setEvents(arrayin) {
 
     console.log('setEvents');
+
     console.log(document.player);
+
     console.log(runningBoard[from]);
+
     [   '01','02','03','04','05','06','07','08',
         '09','10','11','12','13','14','15','16',
         '17','18','19','20','21','22','23','24',
@@ -774,12 +779,27 @@ function setEventsFunction(item, index) {
     document.getElementById(item).onclick = processMove;
 
     var gotFrom = document.getElementById('from').innerText;
-    if (gotFrom == ''  && runningBoard[item] == 0) { 
+
+    // if the from spot is non-blank, then we can land anywhere except 
+    // places where there are two or more of the opposing pieces
+    if (gotFrom == ''  
+        && runningBoard[item] == 0) { 
         if (gotFrom == '') {
             document.getElementById(item).onclick = undefined;
         } 
     } 
+    console.log('index:',index,'item:',item,
+        'runningBoard[index]',window.runningBoard[item],
+        'player',window.player,
+        pieceValue(window.runningBoard[item])
+      );
 
+    // check into whether this has 2+ of the other team
+    if (pieceValue(window.player) != pieceValue(window.runningBoard[index])
+        && Math.abs(window.runningBoard[index]) >= 2) {
+        console.log('cant land there',item);
+            document.getElementById(item).onclick = undefined;
+    }
 //    if (pieceValue(runningBoard[from])  != document.player) {
 //        document.getElementById(item).onclick = undefined;
 //    }
