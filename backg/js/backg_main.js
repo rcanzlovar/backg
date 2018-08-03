@@ -409,26 +409,40 @@ var foo = function() {
 //    }
     return diceroll;
 }
+
 function highlight_cell(a) {
+// usage: 
+//    highlight_cell('12');
+//    highlight_cell(['color':'orange','cell':'12']);
+    var color,cell;
+    cell = '#4a0';
     if (typeof(a) == 'string'){
-        document.getElementById(a).style.backgroundColor='#4a0'
+        document.getElementById(a).style.backgroundColor=color;
+        return 1;
+    }
+
+    if (typeof(a) === 'array'
+        || typeof(a) === 'object') {
+        if (typeof(a['color']) === 'string') {
+            color = a['color'];
+        }
+        if (typeof(a['cell']) === 'string') {
+            cell = a['cell'];
+        }
+        document.getElementById(cell).style.backgroundColor=color;
+        return 1; 
     }
 
 }
 //# # # # # # # # # # # # # # # # # # # # # 
 // starting over, maybe simpler
 function processMove(arrayin) {
-//    console.log(arrayin);
-////    console.log(this);
-    console.log(this.id);
+    console.log(arrayin);
 
     var to, from;
-
     var id = this.id;
-//    window.toCalc = -1;
-//    window.fromCalc = -1;
 
-console.log('>',document.getElementById('from').innerText,'<');
+    console.log('>',document.getElementById('from').innerText,'<');
 
     if (document.getElementById('from').innerText === '') {
         fromCalc = getValue(id);
@@ -437,7 +451,11 @@ console.log('>',document.getElementById('from').innerText,'<');
         console.log('set from to ',id);
         document.getElementById('from').innerText = id;
         document.getElementById('to').innerText = '';
-        document.getElementById(id).style.backgroundColor='#FA0'
+        highlight_cell(id);
+        highlight_cell({'color':'red','cell':id});
+
+//        document.getElementById(id).style.backgroundColor='#FA0'
+
         document.getElementById('action').style.display = 'inline';
         setEvents(runningBoard);
         return;
@@ -453,6 +471,11 @@ console.log('>',document.getElementById('from').innerText,'<');
     var pieceJump = (toCalc - fromCalc);
     console.log('move is ',pieceJump);
 //    move(from,to);`
+
+//rumple 
+console.log('this should not be > 1 ',runningBoard[to]);
+
+
    setBoard(
     move({'from':from,
       'to':to,
@@ -511,7 +534,269 @@ function getCellValue(id) {
     return calcValue;
  }       
  /// # # # # # # # # # # # # # # # # # # #
-var moveprocessor = function(arrayin) {
+
+// # # # # # # # # # # # # # # # # # # # # # # # # # # # # # 
+function setStatus(message) {
+    document.getElementById("p2status").innerText = message;
+}
+
+// # # # # # # # # # # # # # # # # # # # # # # # # # # # # # 
+// wipe out the 
+function clearMove() {
+
+    // clear anything that had been done to thecell 
+    document.getElementById('action').style.display = 'none';
+    document.getElementById("from").innerText = '';
+    document.getElementById("to").innerText = '';
+
+        ['01','02','03','04','05','06','07','08',
+        '09','10','11','12','13','14','15','16',
+        '17','18','19','20','21','22','23',
+        '24'].forEach(clearMoveFunction1);
+
+        // reset the background colors of the side bars 
+        ['b1','b2','k1','k2'].forEach(clearMoveFunction2);
+
+        // fix the event handlers on the thing
+        setEvents();
+}
+
+function clearMoveFunction1(item,index) {
+    // remove any background color so that the underlying colors
+    // show through 
+    // philosophical consideration whether it is better to assign it 
+    // to '' or unassigned. 
+    // ##   document.getElementById(item).style.backgroundColor='';
+//    document.getElementById(item).style.backgroundColor=undefined
+    document.getElementById(item).style.backgroundColor='';
+        highlight_cell({'cell':item,'color':''});
+}
+
+function clearMoveFunction2(item,index) {
+//    document.getElementById(item).style.backgroundColor='#FA0';
+//        highlight_cell({'cell':item,'color':'#Ff0A0d'});
+        highlight_cell({'cell':item,'color':'#FA0'});
+}
+
+// # # # # # # # # # # # # # # # # # # # # # # # # # # # # # 
+// # # # # # # # # # # # # # # # # # # # # # # # # # # # # # 
+// apply the move triggers on all the places that pieces could be
+function setEvents(arrayin) {
+
+    console.log('setEvents');
+
+
+    window.player = document.getElementById('player_select').value;
+    console.log(window.player);
+
+    console.log(window.runningBoard[from]);
+
+    [   '01','02','03','04','05','06','07','08',
+        '09','10','11','12','13','14','15','16',
+        '17','18','19','20','21','22','23','24',
+        'b1','b2','k1','k2'].forEach(setEventsFunction);
+
+ 
+//    console.log(document.getElementById('from').innerText )
+    // document.player has the currently selected 
+    // player. Positive is black, negative is white 
+    // 
+
+    console.log('player :',window.player,' from:',
+    document.getElementById('from').innerText) ;
+
+}
+
+//#################################################################
+function setEventsFunction(item, index) {
+    // set it bydefault
+    document.getElementById(item).onclick = processMove;
+
+    var gotFrom = document.getElementById('from').innerText;
+
+    // if the from spot is non-blank, then we can land anywhere except 
+    // places where there are two or more of the opposing pieces
+
+    // *** check if we have anything saved in from. If we do not, then
+    // we can't click on anything that has l
+
+// reasons for removing the 'onclick':
+// - no from value and value of cell = 0
+// - no from value and value of player is not the value of the piece 
+
+
+
+    if (gotFrom == ''  
+        && runningBoard[item] == 0) { 
+        unclickCell({'cell':item,'color':'purple'});
+//        unclickCell(item);
+//        highlight_cell({'color':'purple','cell':item});
+        return; 
+    // i think we're done after this? 
+// check if we're done with the turn by checking the 
+// dice. if we're done, then change the player, 
+// roll the dice,
+// and display a message changing the player.
+// is break the right thing to do? 
+// *** 
+    } else if (gotFrom  == '' 
+        // don't let me pick a different color than 
+        // what is selected
+        && window.player !== pieceValue(Number(item))) {
+        console.log('gotFrom: ',gotFrom);
+        console.log('pieceValue(Number(item)): ',pieceValue(Number(item)));
+        console.log('window.player: ',window.player);
+//        unclickCell(item);
+///....../        unclickCell({'cell':item,'color':'#0fa'});
+//        highlight_cell({'color':'#OFA','cell':item}i);
+        return; 
+
+    } else if (gotFrom 
+        && Math.abs(runningBoard[item]) >= 2 
+//        &&  >= 2 
+        && pieceValue(runningBoard[item]) != pieceValue(window.player)) {
+        if (window.player == pieceValue(runningBoard[item])) {
+
+            highlight_cell({'cell':item,'color':'#0ff'});
+
+        } else {
+
+
+            unclickCell({'cell':item,'color':'white'});
+            console.log('zero out ',item);
+        }
+    }
+    console.log(
+             pieceValue(runningBoard[item]),'compared to ', pieceValue(window.player)
+        )
+
+    // can't click on the other team? 
+    if (Number(window.player) == window.runningBoard[item]) {
+    console.log( Number(window.player) ,'whiz', window.runningBoard[item] ) ;
+//            document.getElementById(item).onclick = undefined;
+//        highlight_cell({'color':'pink','cell':item});
+        unclickCell({'cell':item,'color':'pink'});
+    }
+
+    // apparently 
+    console.log('index:',index,'item:',item,
+        'runningBoard[item]',window.runningBoard[item],
+        'player',window.player,
+        pieceValue(window.runningBoard[item])
+      );
+
+    // check into whether this has 2+ of the other team
+    if (pieceValue(window.player) != pieceValue(window.runningBoard[index])
+        && Math.abs(window.runningBoard[index]) >= 2) {
+        unclickCell({'cell':item,'color':'teal'});
+//        console.log('cant land there',item);
+
+//        document.getElementById(item).onclick = undefined;
+//        highlight_cell({'color':'teal','cell':item});
+    }
+//    if (pieceValue(runningBoard[from])  != document.player) {
+//        document.getElementById(item).onclick = undefined;
+//    }
+    return; // VVV this doesnt work yet 
+
+    if (gotFrom == '') {
+       document.getElementById(item).onclick = processMove;
+       console.log('listen ',runningBoard[item],document.getElementById('from').innerText);
+     } else  if ( runningBoard[item] != 0) {
+       document.getElementById(item).onclick = processMove;
+       console.log('listen ',runningBoard[item],document.getElementById('from').innerText);
+     } else { }
+
+}
+
+function unclickCell (thing) {
+//        unclickCell({'cell':item,'color':'#0fa'});
+//        unclickCell(item);
+    if (typeof thing === 'string') {
+        document.getElementById(thing).onclick = undefined;
+        highlight_cell({'cell':thing,'color':'orange'});
+    } else if (typeof thing === 'array' 
+        || typeof thing === 'object') {
+        if (typeof thing['cell'] === 'string') 
+            document.getElementById(thing['cell']).onclick = undefined;
+        if (typeof thing['color'] === 'string') 
+            highlight_cell({'cell':thing['cell'],'color':thing['color']});
+    }
+ }
+
+//#################################################################
+function setEventsTemplate(arrayin) {
+    [   '01','02','03','04','05','06','07','08',
+        '09','10','11','12','13','14','15','16',
+        '17','18','19','20','21','22','23','24',
+        'b1','b2','k1','k2'].forEach(setEventsTemplateFunction);
+}
+function setEventsTemplateFunction(item, index) {
+     return item;
+}
+//#################################################################
+/*
+Getting stuff out of an element summary
+
+- nodeValue is a little more confusing to use, but faster than innerHTML.
+- innerHTML parses content as HTML and takes longer.
+- textContent uses straight text, does not parse HTML, and is faster.
+- innerText Takes styles into consideration. It won't get hidden text for instance.
+
+innerText didn't exist in firefox until FireFox 45 according to caniuse but is now supported in all major browsers.
+
+//myBoard = move({'from':'08','to':'05','board':myBoard});
+//myBoard = move({'from':'06','to':'05','board':myBoard});
+//alert('after=' + myBoard['06']);
+makeBoardSelect();
+*/
+
+
+// set up the board here. We can rotate the board and flip it by using a different one. 
+function rotateBoard(argument) {
+    if (typeof argument == "string" ) {
+       return boardlayout[argument];
+    } else { 
+       console.log("ERR: no valid argument passed in, default to backgammon");
+       return boardlayout['backgammon'];
+    }
+}
+
+function makeBoardSelect () {
+    for (var i = boards.length - 1; i >= 0; i--) {
+        console.log(boards[i].long);
+    }
+}
+
+function getBoardLayout(argument) {
+    return(boards[argument]);
+}
+
+
+function thingShow(thing) {
+//thingShow(document.getElementById('log'))
+    if (thing.style.display === 'none') {
+        thing.style.display = 'inline';
+    } else {
+        thing.style.display = 'none';
+    }
+}
+// tied in with the select between black and white , but its 
+// a button 
+function togglePlayer(thing) {
+    console.log(thing.value);
+    thing.value *= -1;
+    console.log('document.player',thing.value);
+    // make the status toggle reflect the select. 
+    document.player = document.getElementById('player_select').value;
+        setEvents(runningBoard);
+    // tied in with the select between black and white , but its 
+    // a button 
+}
+
+// document.player = document.getElementById('player_select').value 
+// this should be deprecated. 
+var _moveprocessor_ = function(arrayin) {
 
     setStatus("...");
 
@@ -682,7 +967,7 @@ var moveprocessor = function(arrayin) {
         if (pieceValue(runningBoard[to]) != 0 
             && pieceValue(runningBoard[from]) != pieceValue(runningBoard[to])) {
             // they are different and not zero
-        console.log("to place is ",runningBoard[to])
+            console.log("to place is ",runningBoard[to])
             if (Math.abs(runningBoard[to]) > 1 ) {
                 // can't land there 
                 setStatus (from + " can't land on  " + to + " because other pieces there");
@@ -708,188 +993,3 @@ var moveprocessor = function(arrayin) {
         clearMove();
     }
 }
-
-// # # # # # # # # # # # # # # # # # # # # # # # # # # # # # 
-function setStatus(message) {
-    document.getElementById("p2status").innerText = message;
-}
-
-// # # # # # # # # # # # # # # # # # # # # # # # # # # # # # 
-function clearMove() {
-    document.getElementById("from").innerText = '';
-    document.getElementById("to").innerText = '';
-
-    // clear anything that had been done to thecell 
-    document.getElementById('action').style.display = 'none';
-        ['01','02','03','04','05','06','07','08',
-        '09','10','11','12','13','14','15','16',
-        '17','18','19','20','21','22','23',
-        '24'].forEach(clearMoveFunction1);
-
-        // reset the background colors of the side bars 
-        ['b1','b2','k1','k2'].forEach(clearMoveFunction2);
-
-        // fix the event handlers on the thing
-        setEvents();
-}
-
-function clearMoveFunction1(item,index) {
-    // remove any background color so that the underlying colors
-    // show through 
-    // philosophical consideration whether it is better to assign it 
-    // to '' or unassigned. 
-    // ##   document.getElementById(item).style.backgroundColor='';
-    document.getElementById(item).style.backgroundColor=undefined
-}
-
-function clearMoveFunction2(item,index) {
-    document.getElementById(item).style.backgroundColor='#FA0';
-}
-
-// # # # # # # # # # # # # # # # # # # # # # # # # # # # # # 
-// apply the move triggers on all the places that pieces could be
-// # # # # # # # # # # # # # # # # # # # # # # # # # # # # # 
-function setEvents(arrayin) {
-
-    console.log('setEvents');
-
-    console.log(document.player);
-
-    console.log(runningBoard[from]);
-
-    [   '01','02','03','04','05','06','07','08',
-        '09','10','11','12','13','14','15','16',
-        '17','18','19','20','21','22','23','24',
-        'b1','b2','k1','k2'].forEach(setEventsFunction);
-
- 
-//    console.log(document.getElementById('from').innerText )
-    // document.player has the currently selected 
-    // player. Positive is black, negative is white 
-    // 
-
-    console.log('player :',window.player,' from:',
-    document.getElementById('from').innerText) ;
-
-}
-
-//#################################################################
-function setEventsFunction(item, index) {
-    // set it bydefault
-    document.getElementById(item).onclick = processMove;
-
-    var gotFrom = document.getElementById('from').innerText;
-
-    // if the from spot is non-blank, then we can land anywhere except 
-    // places where there are two or more of the opposing pieces
-    if (gotFrom == ''  
-        && runningBoard[item] == 0) { 
-        if (gotFrom == '') {
-            document.getElementById(item).onclick = undefined;
-        } 
-    } 
-    console.log('index:',index,'item:',item,
-        'runningBoard[index]',window.runningBoard[item],
-        'player',window.player,
-        pieceValue(window.runningBoard[item])
-      );
-
-    // check into whether this has 2+ of the other team
-    if (pieceValue(window.player) != pieceValue(window.runningBoard[index])
-        && Math.abs(window.runningBoard[index]) >= 2) {
-        console.log('cant land there',item);
-            document.getElementById(item).onclick = undefined;
-    }
-//    if (pieceValue(runningBoard[from])  != document.player) {
-//        document.getElementById(item).onclick = undefined;
-//    }
-    return; // VVV this doesnt work yet 
-
-   if (gotFrom == '') {
-       document.getElementById(item).onclick = processMove;
-        console.log('listen ',runningBoard[item],document.getElementById('from').innerText);
-    } else  if ( runningBoard[item] != 0) {
-       document.getElementById(item).onclick = processMove;
-        console.log('listen ',runningBoard[item],document.getElementById('from').innerText);
-       } else { }
-
-}
-
-function setEventsTemplate(arrayin) {
-
-    [   '01','02','03','04','05','06','07','08',
-        '09','10','11','12','13','14','15','16',
-        '17','18','19','20','21','22','23','24',
-        'b1','b2','k1','k2'].forEach(setEventsTemplateFunction);
-
- 
-
-    console.log('player :',window.player,' from:',
-    document.getElementById('from').innerText) ;
-}
-
-//#################################################################
-function setEventsTemplateFunction(item, index) {
-     return item;
-
-}
-//#################################################################
-/*
-Getting stuff out of an element summary
-
-- nodeValue is a little more confusing to use, but faster than innerHTML.
-- innerHTML parses content as HTML and takes longer.
-- textContent uses straight text, does not parse HTML, and is faster.
-- innerText Takes styles into consideration. It won't get hidden text for instance.
-
-innerText didn't exist in firefox until FireFox 45 according to caniuse but is now supported in all major browsers.
-
-//myBoard = move({'from':'08','to':'05','board':myBoard});
-//myBoard = move({'from':'06','to':'05','board':myBoard});
-//alert('after=' + myBoard['06']);
-makeBoardSelect();
-*/
-
-
-// set up the board here. We can rotate the board and flip it by using a different one. 
-function rotateBoard(argument) {
-    if (typeof argument == "string" ) {
-       return boardlayout[argument];
-    } else { 
-       console.log("ERR: no valid argument passed in, default to backgammon");
-       return boardlayout['backgammon'];
-    }
-}
-
-function makeBoardSelect () {
-    for (var i = boards.length - 1; i >= 0; i--) {
-        console.log(boards[i].long);
-    }
-}
-
-function getBoardLayout(argument) {
-    return(boards[argument]);
-}
-
-
-function thingShow(thing) {
-//thingShow(document.getElementById('log'))
-    if (thing.style.display === 'none') {
-        thing.style.display = 'inline';
-    } else {
-        thing.style.display = 'none';
-    }
-}
-// tied in with the select between black and white , but its 
-// a button 
-function togglePlayer(thing) {
-    console.log(thing.value);
-    thing.value *= -1;
-    console.log('document.player',thing.value);
-    // make the status toggle reflect the select. 
-    document.player = document.getElementById('player_select').value;
-    // tied in with the select between black and white , but its 
-    // a button 
-}
-
-// document.player = document.getElementById('player_select').value 
